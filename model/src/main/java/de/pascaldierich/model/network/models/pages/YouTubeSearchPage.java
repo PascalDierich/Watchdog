@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import de.pascaldierich.model.network.models.YouTubeSearch;
+import de.pascaldierich.model.network.models.items.YouTubeSearchItem;
 
 /**
  * Created by Pascal Dierich on Feb, 2017.
@@ -17,9 +17,9 @@ public class YouTubeSearchPage {
 
     // body
     @SerializedName("items")
-    private ArrayList<YouTubeSearch> mItems;
+    private ArrayList<YouTubeSearchItem> mItems;
     
-    public YouTubeSearchPage(int totalResults, ArrayList<YouTubeSearch> items) {
+    public YouTubeSearchPage(int totalResults, ArrayList<YouTubeSearchItem> items) {
         mTotalResults = totalResults;
         mItems = items;
     }
@@ -28,7 +28,7 @@ public class YouTubeSearchPage {
         return mTotalResults;
     }
     
-    public ArrayList<YouTubeSearch> getItems() {
+    public ArrayList<YouTubeSearchItem> getItems() {
         return mItems;
     }
 }
