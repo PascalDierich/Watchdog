@@ -1,8 +1,8 @@
 # YouTube Api v3 info
 
-###Search for list to get latest published Videos:
+### Search for list to get latest published Videos:
 
-### Authorization
+#### Authorization:
 __No Authorization required__
 
 #### Parameter:
@@ -10,7 +10,7 @@ __No Authorization required__
    * channelId -> String
    * publishedAfter -> YYYY-MM-DDThh:mm:ssZ (RFC 3339)
    * eventType -> 'completed'
-   * maxResults -> integer ( 0 <= maxResults <= 50)
+   * maxResults -> integer (1 <= maxResults <= 50)
 
 #### Response:
     {
@@ -63,17 +63,17 @@ __No Authorization required__
         ]
     }
 
- ## Get Channel id with list
+### Get Channel id with list:
 
-### Authorization:
+#### Authorization:
 __No Authorization required__
 
- ### Parameter:
+#### Parameter:
    * part -> 'id'
    * forUsername -> String
-   * maxResults -> integer (0 <= maxResults <= 50)
+   * maxResults -> integer (1 <= maxResults <= 50)
 
-### Response:
+#### Response:
     {
         "kind": "youtube#channelListResponse",
         "etag": "\"__string__\"",
