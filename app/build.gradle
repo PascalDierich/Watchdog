@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.jakewharton.hugo'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -23,6 +25,15 @@ dependencies {
     // Data Layer Dependency
     compile project(':model')
 
+    // Butterknife
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    // Support annotations
+    compile 'com.android.support:support-annotations:25.1.1'
+
+    // Facebooks Stetho
+    compile 'com.facebook.stetho:stetho:1.4.2'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
