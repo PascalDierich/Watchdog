@@ -2,6 +2,9 @@
 
 ###Search for list to get latest published Videos:
 
+### Authorization
+__No Authorization required__
+
 #### Parameter:
    * part -> 'snippet'
    * channelId -> String
@@ -61,6 +64,9 @@
     }
 
  ## Get Channel id with list
+
+### Authorization:
+__No Authorization required__
 
  ### Parameter:
    * part -> 'id'
