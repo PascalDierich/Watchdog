@@ -27,36 +27,36 @@ __No Authorization required__
                 "kind": "youtube#searchResult",
                 "etag": "\"__string__\"",
                 "id": {
-                "kind": "youtube#video",
-                "videoId": "__string__"
-            },
-            "snippet": {
-                "publishedAt": "__date by RFC 3339__",
-                "channelId": "__string__",
-                "title": "__string__",
-                "description": "__string__",
-
-                "thumbnails": {
-                    "default": {
-                        "url": "https://i.ytimg.com/vi/__string__.jpg",
-                        "width": 120,
-                        "height": 90
-                    },
-                    "medium": {
-                        "url": "https://i.ytimg.com/vi/__string__.jpg",
-                        "width": 320,
-                        "height": 180
-                    },
-                    "high": {
-                        "url": "https://i.ytimg.com/vi/__string__.jpg",
-                        "width": 480,
-                        "height": 360
-                    }
+                    "kind": "youtube#video",
+                    "videoId": "__string__"
                 },
-                "channelTitle": "__string__",
-                "liveBroadcastContent": "none"
-            }
-        },
+                "snippet": {
+                    "publishedAt": "__date by RFC 3339__",
+                    "channelId": "__string__",
+                    "title": "__string__",
+                    "description": "__string__",
+
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/__string__.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/__string__.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/__string__.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "__string__",
+                    "liveBroadcastContent": "none"
+                }
+            },
 
             {...}
 
