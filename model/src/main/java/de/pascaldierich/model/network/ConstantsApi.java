@@ -7,9 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 
 import static de.pascaldierich.model.network.ConstantsApi.GOOGLE_BASE_URL;
 import static de.pascaldierich.model.network.ConstantsApi.PLUS_COLLECTION;
+import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_CHANNEL_PART;
 import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_EVENT_TYPE;
-import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_PART_ID;
-import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_PART_VIDEOS;
+import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_SEARCH_PART;
 
 /**
  * Created by Pascal Dierich on Feb, 2017.
@@ -21,9 +21,9 @@ import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_PART_VIDEOS;
 @Retention(RetentionPolicy.SOURCE)
 @StringDef({
         PLUS_COLLECTION,
-        YOUTUBE_PART_VIDEOS,
+        YOUTUBE_SEARCH_PART,
         YOUTUBE_EVENT_TYPE,
-        YOUTUBE_PART_ID,
+        YOUTUBE_CHANNEL_PART,
         GOOGLE_BASE_URL
 })
 public @interface ConstantsApi {
@@ -35,9 +35,9 @@ public @interface ConstantsApi {
     /**
      * YouTube Api String Constants
      */
-    public static final String YOUTUBE_PART_VIDEOS = "snippet";
+    public static final String YOUTUBE_SEARCH_PART = "snippet";
     public static final String YOUTUBE_EVENT_TYPE = "completed";
-    public static final String YOUTUBE_PART_ID = "id";
+    public static final String YOUTUBE_CHANNEL_PART = "id";
 
     /**
      * Base URL's

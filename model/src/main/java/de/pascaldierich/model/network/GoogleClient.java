@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *      - YouTube
  *      - Google+
  */
-class GoogleClient {
+public class GoogleClient {
 
     private static Retrofit sGoogleClient;
 
