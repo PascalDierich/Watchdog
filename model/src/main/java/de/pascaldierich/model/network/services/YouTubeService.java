@@ -27,8 +27,10 @@ public interface YouTubeService {
                                       @Query("part") @ConstantsApi String part,
                                       @Query("channelId") @NonNull String channelId,
                                       @Query("publishedAfter") @NonNull String time,
-                                      @Query("eventType") @ConstantsApi String type,
-                                      @Query("maxResults") @IntRange(from = 1, to = 50) int maxResults);
+                                      @Query("eventType") @ConstantsApi String eventType,
+                                      @Query("maxResults") @IntRange(from = 1, to = 50) int maxResults,
+                                      @Query("order") @ConstantsApi String order,
+                                      @Query("type") @ConstantsApi String type);
 
 
     /*

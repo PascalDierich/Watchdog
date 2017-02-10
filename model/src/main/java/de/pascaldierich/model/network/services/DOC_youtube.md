@@ -11,6 +11,8 @@ __No Authorization required__
    * publishedAfter -> YYYY-MM-DDThh:mm:ssZ (RFC 3339)
    * eventType -> 'completed'
    * maxResults -> integer (1 <= maxResults <= 50)
+   * type -> 'video'
+   * order -> 'date'
 
 #### Response:
     {

@@ -20,6 +20,11 @@ android {
         }
     }
     buildTypes.each {
+        /**
+         * I use 2 different Api-Keys because of easier control
+         *      e.g. - shutdown one Feature
+         *           - Analytics
+         */
         it.buildConfigField 'String', 'YouTube_Api_Key', getApiKeyYouTube()
         it.buildConfigField 'String', 'GooglePlus_Api_Key', getApiKeyGooglePlus()
     }
@@ -46,7 +51,6 @@ def getApiKeyYouTube() {
     properties.load(new FileInputStream("/Users/pascaldierich/Watchdog_ApiKeys.txt"))
     return "\"" + properties.getProperty("YouTubeApiKey") +"\""
 }
-
 def getApiKeyGooglePlus() {
     Properties properties = new Properties()
     properties.load(new FileInputStream("/Users/pascaldierich/Watchdog_ApiKeys.txt"))
