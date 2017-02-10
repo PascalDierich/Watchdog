@@ -16,15 +16,12 @@ public class YouTubeChannelsPage {
     @SerializedName("kind")
     @Expose
     private String kind;
-
     @SerializedName("etag")
     @Expose
     private String etag;
-
-    @SerializedName("YouTubePageInfo")
+    @SerializedName("pageInfo")
     @Expose
     private YouTubePageInfo mYouTubePageInfo;
-
     @SerializedName("items")
     @Expose
     private ArrayList<YouTubeChannelItem> items = null;

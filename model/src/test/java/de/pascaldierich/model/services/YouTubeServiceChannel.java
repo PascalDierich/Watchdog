@@ -18,7 +18,6 @@ import static org.junit.Assert.assertTrue;
  * Created by Pascal Dierich on Feb, 2017.
  */
 public class YouTubeServiceChannel {
-    private static final String LOG_TAG = YouTubeServiceChannel.class.getSimpleName();
 
     private String[] testNames = {
         "SemperVideo", "Semper Video", "PascalDierich", "Pascal Dierich", "GoogleDevelopers", "Google Developers"
@@ -31,7 +30,7 @@ public class YouTubeServiceChannel {
         }
     }
 
-    public void TEST_WITH_NAME(String name) {
+    private void TEST_WITH_NAME(String name) {
         HttpLoggingInterceptor mLoggingInterceptor = new HttpLoggingInterceptor();
         mLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(mLoggingInterceptor).build();
@@ -55,16 +54,28 @@ public class YouTubeServiceChannel {
 
             assertTrue(youTubeChannelsPage != null);
 
+            System.out.println("NullPointer Check passed");
+
         } catch (IOException ioe) {
             assertTrue("IOException", false);
         }
-        assertTrue(youTubeChannelsPage.getEtag() != null);
-        assertTrue(youTubeChannelsPage.getPageInfo() != null);
-        assertTrue(youTubeChannelsPage.getItems() != null);
 
-        assertTrue(youTubeChannelsPage.getKind().equalsIgnoreCase("youtube#channelListResponse"));
+        CHECK_FOR_ELEMENTS(youTubeChannelsPage);
+    }
 
-        assertTrue(youTubeChannelsPage.getPageInfo().getTotalResults() >= 1);
+    private void CHECK_FOR_ELEMENTS(YouTubeChannelsPage page) {
+        assertTrue(page.getKind().equalsIgnoreCase("youtube#channelListResponse"));
+        assertTrue(!page.getEtag().isEmpty());
+        assertTrue(page.getPageInfo() != null);
+        System.out.println("Header Check passed");
+
+        assertTrue("totalResults < 0", page.getPageInfo().getTotalResults() >= 0);
+        assertTrue("ResultsPerPage != 5", page.getPageInfo().getResultsPerPage() == 5);
+        System.out.println("PageInfo Check passed");
+
+        assertTrue(page.getItems() != null);
+        System.out.println("Item Check passed");
+        System.out.println("Item.size == " + page.getItems().size());
 
     }
 }
