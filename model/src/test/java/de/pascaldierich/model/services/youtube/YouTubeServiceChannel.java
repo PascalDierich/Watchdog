@@ -1,4 +1,4 @@
-package de.pascaldierich.model.services;
+package de.pascaldierich.model.services.youtube;
 
 import org.junit.Test;
 
