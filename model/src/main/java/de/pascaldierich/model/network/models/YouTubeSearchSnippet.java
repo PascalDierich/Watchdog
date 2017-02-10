@@ -3,6 +3,8 @@ package de.pascaldierich.model.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import de.pascaldierich.model.network.models.thumbnails.YouTubeSearchThumbnail;
+
 /**
  * Created by Pascal Dierich on Feb, 2017.
  */

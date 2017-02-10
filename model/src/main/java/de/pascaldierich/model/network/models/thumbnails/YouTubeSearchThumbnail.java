@@ -1,4 +1,4 @@
-package de.pascaldierich.model.network.models;
+package de.pascaldierich.model.network.models.thumbnails;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
