@@ -23,7 +23,8 @@ public interface YouTubeService {
      *      GET https://www.googleapis.com/youtube/v3/search
      */
     @GET("youtube/v3/search")
-    Call<YouTubeSearchPage> getVideos(@Query("part") @ConstantsApi String part,
+    Call<YouTubeSearchPage> getVideos(@Query("key") @ConstantsApi String key,
+                                      @Query("part") @ConstantsApi String part,
                                       @Query("channelId") @NonNull String channelId,
                                       @Query("publishedAfter") @NonNull String time,
                                       @Query("eventType") @ConstantsApi String type,
@@ -35,7 +36,8 @@ public interface YouTubeService {
      *      GET https://www.googleapis.com/youtube/v3/channels
      */
     @GET("youtube/v3/channels")
-    Call<YouTubeChannelsPage> getChannelId(@Query("part") @ConstantsApi String part,
+    Call<YouTubeChannelsPage> getChannelId(@Query("key") @ConstantsApi String key,
+                                           @Query("part") @ConstantsApi String part,
                                            @Query("forUsername") @NonNull String name,
                                            @Query("maxResults") @IntRange(from = 1, to = 50) int maxResults);
 }

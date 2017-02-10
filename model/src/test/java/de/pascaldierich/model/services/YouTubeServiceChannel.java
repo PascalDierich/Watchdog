@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import de.pascaldierich.model.network.ConstantsApi;
+import de.pascaldierich.model.network.models.pages.YouTubeChannelsPage;
 import de.pascaldierich.model.network.services.YouTubeService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,8 +20,18 @@ import static org.junit.Assert.assertTrue;
 public class YouTubeServiceChannel {
     private static final String LOG_TAG = YouTubeServiceChannel.class.getSimpleName();
 
+    private String[] testNames = {
+        "SemperVideo", "Semper Video", "PascalDierich", "Pascal Dierich", "GoogleDevelopers", "Google Developers"
+    };
+
     @Test
-    public void YouTube_Api_Channel_Response_Not_Null() {
+    public void YOUTUBE_API_CHANNEL_RESPONSE_NOT_NULL() {
+        for (String name: testNames) {
+            TEST_WITH_NAME(name);
+        }
+    }
+
+    public void TEST_WITH_NAME(String name) {
         HttpLoggingInterceptor mLoggingInterceptor = new HttpLoggingInterceptor();
         mLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(mLoggingInterceptor).build();
@@ -32,18 +43,28 @@ public class YouTubeServiceChannel {
                 .build();
 
         YouTubeService youTubeService = mGoogleClient.create(YouTubeService.class);
-
+        YouTubeChannelsPage youTubeChannelsPage = null;
         try {
-            assertTrue(
-                    youTubeService.getChannelId(ConstantsApi.YOUTUBE_CHANNEL_PART, "Semper Video", 5)
+            youTubeChannelsPage =
+                    youTubeService.getChannelId(ConstantsApi.YOUTUBE_API_KEY,
+                            ConstantsApi.YOUTUBE_CHANNEL_PART,
+                            name,
+                            5)
                         .execute()
-                        .body() != null);
+                        .body();
 
-//            assertTrue(youTubeChannelsPages != null);
-//            Log.d(LOG_TAG, "YouTube_Api_Response_Not_Null: Response size = " + youTubeChannelsPages.getPageInfo());
+            assertTrue(youTubeChannelsPage != null);
 
         } catch (IOException ioe) {
             assertTrue("IOException", false);
         }
+        assertTrue(youTubeChannelsPage.getEtag() != null);
+        assertTrue(youTubeChannelsPage.getPageInfo() != null);
+        assertTrue(youTubeChannelsPage.getItems() != null);
+
+        assertTrue(youTubeChannelsPage.getKind().equalsIgnoreCase("youtube#channelListResponse"));
+
+        assertTrue(youTubeChannelsPage.getPageInfo().getTotalResults() >= 1);
+
     }
 }

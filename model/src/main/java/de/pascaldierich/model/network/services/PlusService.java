@@ -24,7 +24,8 @@ public interface PlusService {
      *      GET https://www.googleapis.com/plus/v1/people
      */
     @GET("plus/v1/people")
-    Call<PlusPeoplePage> getPeople(@Query("query") @NonNull String name,
+    Call<PlusPeoplePage> getPeople(@Query("key") @ConstantsApi String key,
+                                   @Query("query") @NonNull String name,
                                    @Query("maxResults") @IntRange(from = 1, to = 50) int maxResults);
     
     /*
@@ -32,6 +33,7 @@ public interface PlusService {
      *      GET https://www.googleapis.com/plus/v1/people/userId/activities
      */
     @GET("plus/v1/people/{userId}/activities")
-    Call<PlusActivitiesPage> getActivities(@Path("userId") @NonNull String userId,
+    Call<PlusActivitiesPage> getActivities(@Query("key") @ConstantsApi String key,
+                                           @Path("userId") @NonNull String userId,
                                            @Query("collection") @ConstantsApi String collection);
 }
