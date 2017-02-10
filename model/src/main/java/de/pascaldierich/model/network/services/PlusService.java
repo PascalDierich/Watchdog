@@ -32,8 +32,9 @@ public interface PlusService {
      * get list of Activities
      *      GET https://www.googleapis.com/plus/v1/people/userId/activities
      */
-    @GET("plus/v1/people/{userId}/activities")
-    Call<PlusActivitiesPage> getActivities(@Query("key") @ConstantsApi String key,
-                                           @Path("userId") @NonNull String userId,
-                                           @Query("collection") @ConstantsApi String collection);
+    @GET("plus/v1/people/{userId}/activities/{collection}")
+    Call<PlusActivitiesPage> getActivities(@Path("userId") @NonNull String userId,
+                                           @Path("collection") @ConstantsApi String collection,
+                                           @Query("key") @ConstantsApi String key,
+                                           @Query("maResults") @IntRange(from = 1, to = 100) int maxResults);
 }
