@@ -5,8 +5,12 @@ import android.support.annotation.StringDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import de.pascaldierich.model.BuildConfig;
+
 import static de.pascaldierich.model.network.ConstantsApi.GOOGLE_BASE_URL;
+import static de.pascaldierich.model.network.ConstantsApi.PLUS_API_KEY;
 import static de.pascaldierich.model.network.ConstantsApi.PLUS_COLLECTION;
+import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_API_KEY;
 import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_CHANNEL_PART;
 import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_EVENT_TYPE;
 import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_SEARCH_PART;
@@ -24,7 +28,9 @@ import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_SEARCH_PART;
         YOUTUBE_SEARCH_PART,
         YOUTUBE_EVENT_TYPE,
         YOUTUBE_CHANNEL_PART,
-        GOOGLE_BASE_URL
+        GOOGLE_BASE_URL,
+        PLUS_API_KEY,
+        YOUTUBE_API_KEY
 })
 public @interface ConstantsApi {
     /**
@@ -43,4 +49,10 @@ public @interface ConstantsApi {
      * Base URL's
      */
     public static final String GOOGLE_BASE_URL = "https://www.googleapis.com";
+
+    /**
+     * Api Keys
+     */
+    public static final String PLUS_API_KEY = BuildConfig.GooglePlus_Api_Key;
+    public static final String YOUTUBE_API_KEY  = BuildConfig.YouTube_Api_Key;
 }
