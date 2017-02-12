@@ -1,14 +1,16 @@
-package de.pascaldierich.model.network.models.youtube;
+package de.pascaldierich.model.network.models.youtube.channel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import de.pascaldierich.model.network.models.youtube.YouTubePageInfo;
+
 /**
  * Created by Pascal Dierich on Feb, 2017.
  */
-public class YouTubeSearchPage {
+public class YouTubeChannelsPage {
 
     @SerializedName("kind")
     @Expose
@@ -16,15 +18,12 @@ public class YouTubeSearchPage {
     @SerializedName("etag")
     @Expose
     private String etag;
-    @SerializedName("nextPageToken")
-    @Expose
-    private String nextPageToken;
     @SerializedName("pageInfo")
     @Expose
-    private YouTubePageInfo pageInfo;
+    private YouTubePageInfo mYouTubePageInfo;
     @SerializedName("items")
     @Expose
-    private ArrayList<YouTubeSearchItem> items = null;
+    private ArrayList<YouTubeChannelItem> items = null;
 
     public String getKind() {
         return kind;
@@ -42,28 +41,19 @@ public class YouTubeSearchPage {
         this.etag = etag;
     }
 
-    public String getNextPageToken() {
-        return nextPageToken;
-    }
-
-    public void setNextPageToken(String nextPageToken) {
-        this.nextPageToken = nextPageToken;
-    }
-
     public YouTubePageInfo getPageInfo() {
-        return pageInfo;
+        return mYouTubePageInfo;
     }
 
-    public void setPageInfo(YouTubePageInfo pageInfo) {
-        this.pageInfo = pageInfo;
+    public void setPageInfo(YouTubePageInfo YouTubePageInfo) {
+        this.mYouTubePageInfo = YouTubePageInfo;
     }
 
-    public ArrayList<YouTubeSearchItem> getItems() {
+    public ArrayList<YouTubeChannelItem> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<YouTubeSearchItem> items) {
+    public void setItems(ArrayList<YouTubeChannelItem> items) {
         this.items = items;
     }
 }
-

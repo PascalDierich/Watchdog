@@ -5,8 +5,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 import de.pascaldierich.model.network.ConstantsApi;
-import de.pascaldierich.model.network.models.youtube.YouTubeSearchItem;
-import de.pascaldierich.model.network.models.youtube.YouTubeSearchPage;
+import de.pascaldierich.model.network.models.youtube.search.YouTubeSearchItem;
+import de.pascaldierich.model.network.models.youtube.search.YouTubeSearchPage;
 import de.pascaldierich.model.network.services.YouTubeService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

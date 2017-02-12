@@ -4,8 +4,8 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import de.pascaldierich.model.network.ConstantsApi;
-import de.pascaldierich.model.network.models.youtube.YouTubeChannelsPage;
-import de.pascaldierich.model.network.models.youtube.YouTubeSearchPage;
+import de.pascaldierich.model.network.models.youtube.channel.YouTubeChannelsPage;
+import de.pascaldierich.model.network.models.youtube.search.YouTubeSearchPage;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

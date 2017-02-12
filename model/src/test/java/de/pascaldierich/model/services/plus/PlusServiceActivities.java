@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import de.pascaldierich.model.network.ConstantsApi;
 import de.pascaldierich.model.network.models.plus.activities.PlusActivitiesPage;
+import de.pascaldierich.model.network.models.plus.activities.item.PlusActivitiesItem;
+import de.pascaldierich.model.network.models.plus.activities.item.actor.PlusActivitiesItemActor;
 import de.pascaldierich.model.network.services.PlusService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class PlusServiceActivities {
 
     String[] ids = {
-            "113944603497026777117",
+//            "113944603497026777117",
             "106460744327009487967",
             "107736861938601589615"
     };
@@ -66,7 +68,53 @@ public class PlusServiceActivities {
     }
 
     private void CHECK_FOR_ELEMENTS(PlusActivitiesPage page) {
+        assertTrue(page.getKind().equalsIgnoreCase("plus#activityFeed"));
+        assertTrue(page.getEtag() != null);
+        assertTrue(page.getTitle() != null);
+//        assertTrue(page.getUpdated() != null);
+//        assertTrue(page.getId().equals("113944603497026777117")
+//                    || page.getId().equals("106460744327009487967")
+//                    || page.getId().equals("107736861938601589615"));
+        assertTrue(page.getItems() != null);
+        System.out.println("Header Check passed");
+
+        if (!page.getItems().isEmpty()) {
+            for (PlusActivitiesItem item: page.getItems()) {
+                assertTrue(item.getKind().equalsIgnoreCase("plus#activity"));
+                assertTrue(item.getTitle() != null);
+                assertTrue(item.getPublished() != null);
+                assertTrue(item.getUrl() != null);
+                assertTrue(item.getActor() != null);
+                assertTrue(item.getVerb() != null);
+                assertTrue(item.getObject() != null);
+                System.out.println("Item Check passed");
+
+                CHECK_FOR_ACTOR(item.getActor());
+
+                assertTrue(item.getActor().getImage().getUrl() != null);
+                System.out.println("Actor Item Check passed");
+
+                assertTrue(item.getObject().getUrl() != null);
+                assertTrue(item.getObject().getActor() != null);
+                assertTrue(item.getObject().getContent() != null);
+                assertTrue(item.getObject().getObjectType() != null);
+                System.out.println("Object Item Check passed");
+
+                CHECK_FOR_ACTOR(item.getObject().getActor());
+            }
+        }
+
+
+
+
 //        assertTrue(page.);
         // TODO: 10.02.17 check for Elements and create JSON-POJOs
+    }
+
+    private void CHECK_FOR_ACTOR(PlusActivitiesItemActor actor) {
+        assertTrue(actor.getDisplayName() != null);
+        assertTrue(actor.getUrl() != null);
+        assertTrue(actor.getImage() != null);
+        System.out.println("Actor Check passed");
     }
 }

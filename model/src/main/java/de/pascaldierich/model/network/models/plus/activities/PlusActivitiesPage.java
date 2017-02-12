@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import de.pascaldierich.model.network.models.plus.activities.item.PlusActivitiesItem;
+
 /**
  * Created by Pascal Dierich on Feb, 2017.
  */
@@ -35,7 +37,7 @@ public class PlusActivitiesPage {
     private String id;
     @SerializedName("items")
     @Expose
-    private ArrayList<Object> items = null;
+    private ArrayList<PlusActivitiesItem> items = null;
 
     public String getKind() {
         return kind;
@@ -101,11 +103,11 @@ public class PlusActivitiesPage {
         this.id = id;
     }
 
-    public ArrayList<Object> getItems() {
+    public ArrayList<PlusActivitiesItem> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Object> items) {
+    public void setItems(ArrayList<PlusActivitiesItem> items) {
         this.items = items;
     }
 

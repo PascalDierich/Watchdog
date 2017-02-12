@@ -1,15 +1,13 @@
-package de.pascaldierich.model.network.models.youtube;
+package de.pascaldierich.model.network.models.youtube.channel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import de.pascaldierich.model.network.models.youtube.YouTubeSearchId;
-import de.pascaldierich.model.network.models.youtube.YouTubeSearchSnippet;
-
 /**
  * Created by Pascal Dierich on Feb, 2017.
  */
-public class YouTubeSearchItem {
+public class YouTubeChannelItem {
+
     @SerializedName("kind")
     @Expose
     private String kind;
@@ -18,10 +16,7 @@ public class YouTubeSearchItem {
     private String etag;
     @SerializedName("id")
     @Expose
-    private YouTubeSearchId id;
-    @SerializedName("snippet")
-    @Expose
-    private YouTubeSearchSnippet snippet;
+    private String id;
 
     public String getKind() {
         return kind;
@@ -39,22 +34,11 @@ public class YouTubeSearchItem {
         this.etag = etag;
     }
 
-    public YouTubeSearchId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(YouTubeSearchId id) {
+    public void setId(String id) {
         this.id = id;
     }
-
-    public YouTubeSearchSnippet getSnippet() {
-        return snippet;
-    }
-
-    public void setSnippet(YouTubeSearchSnippet snippet) {
-        this.snippet = snippet;
-    }
-
-
-
 }

@@ -1,4 +1,4 @@
-package de.pascaldierich.model.network.models.youtube;
+package de.pascaldierich.model.network.models.youtube.search;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Pascal Dierich on Feb, 2017.
  */
-public class YouTubeChannelItem {
-
+public class YouTubeSearchItem {
     @SerializedName("kind")
     @Expose
     private String kind;
@@ -16,7 +15,10 @@ public class YouTubeChannelItem {
     private String etag;
     @SerializedName("id")
     @Expose
-    private String id;
+    private YouTubeSearchId id;
+    @SerializedName("snippet")
+    @Expose
+    private YouTubeSearchSnippet snippet;
 
     public String getKind() {
         return kind;
@@ -34,11 +36,22 @@ public class YouTubeChannelItem {
         this.etag = etag;
     }
 
-    public String getId() {
+    public YouTubeSearchId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(YouTubeSearchId id) {
         this.id = id;
     }
+
+    public YouTubeSearchSnippet getSnippet() {
+        return snippet;
+    }
+
+    public void setSnippet(YouTubeSearchSnippet snippet) {
+        this.snippet = snippet;
+    }
+
+
+
 }

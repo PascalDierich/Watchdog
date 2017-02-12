@@ -3,6 +3,8 @@ package de.pascaldierich.model.network.models.plus.activities.item.object;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import de.pascaldierich.model.network.models.plus.activities.item.actor.PlusActivitiesItemActor;
+
 /**
  * Created by Pascal Dierich on Feb, 2017.
  */
@@ -12,25 +14,16 @@ public class PlusActivitiesItemObject {
     private String objectType;
     @SerializedName("actor")
     @Expose
-    private Actor_ actor;
+    private PlusActivitiesItemActor actor;
     @SerializedName("content")
     @Expose
     private String content;
     @SerializedName("url")
     @Expose
     private String url;
-    @SerializedName("replies")
-    @Expose
-    private Replies replies;
-    @SerializedName("plusoners")
-    @Expose
-    private Plusoners plusoners;
-    @SerializedName("resharers")
-    @Expose
-    private Resharers resharers;
-    @SerializedName("attachments")
-    @Expose
-    private List<Attachment> attachments = null;
+//    @SerializedName("attachments")
+//    @Expose
+//    private List<Attachment> attachments = null;
 
     public String getObjectType() {
         return objectType;
@@ -40,11 +33,11 @@ public class PlusActivitiesItemObject {
         this.objectType = objectType;
     }
 
-    public Actor_ getActor() {
+    public PlusActivitiesItemActor getActor() {
         return actor;
     }
 
-    public void setActor(Actor_ actor) {
+    public void setActor(PlusActivitiesItemActor actor) {
         this.actor = actor;
     }
 
@@ -64,36 +57,11 @@ public class PlusActivitiesItemObject {
         this.url = url;
     }
 
-    public Replies getReplies() {
-        return replies;
-    }
-
-    public void setReplies(Replies replies) {
-        this.replies = replies;
-    }
-
-    public Plusoners getPlusoners() {
-        return plusoners;
-    }
-
-    public void setPlusoners(Plusoners plusoners) {
-        this.plusoners = plusoners;
-    }
-
-    public Resharers getResharers() {
-        return resharers;
-    }
-
-    public void setResharers(Resharers resharers) {
-        this.resharers = resharers;
-    }
-
-    public List<Attachment> getAttachments() {
-        return attachments;
-    }
-
-    public void setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
-    }
-    LOG_TAG = PlusActivitiesItemObject.class.getSimpleName();
+//    public List<Attachment> getAttachments() {
+//        return attachments;
+//    }
+//
+//    public void setAttachments(List<Attachment> attachments) {
+//        this.attachments = attachments;
+//    }
 }
