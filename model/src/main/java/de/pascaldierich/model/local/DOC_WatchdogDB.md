@@ -9,18 +9,19 @@
 
 ### Table Observables
 
-| displayName : String | Id : auto-generated Key | image : blob |
-|----------------------|-------------------------|--------------|
-| Pascal Dierich       | 1                       | [Bitmap]     |
-| Hans Peter           | 2                       | [Bitmap]     |
+|  _ID : Integer auto-generated |  displayName : String | thumbnail : blob |
+|-------------------------------|-----------------------|------------------|
+| 1                             | Pascal Dierich        | [Bitmap]         |
+| 2                             | Hans Peter            | [Bitmap]         |
+| 3                             | Bill Gates            | [Bitmap]         |
 
-### Table Sitese
+### Table Sites
 
-| Id : joined from Observables |  Site : String | Key : String     |
-|------------------------------|----------------|------------------|
-| 1 ( -> Pascal Dierich)       | YouTube        | /kvndfkjvndfever |
-| 2 ( -> Hans Peter)           | YouTube        | /nlkdsnvokdsv    |
-| 1 ( -> Pascal Dierich)       | Plus           | /nejkvndfkv      |
+|  _ID : Integer |  site : String | key : String     |
+|----------------|----------------|------------------|
+| 1              | YouTube        | /kvndfkjvndfever |
+| 2              | YouTube        | /nlkdsnvokdsv    |
+| 1              | Plus           | /nejkvndfkv      |
 
 ### Table Favorites:
 
