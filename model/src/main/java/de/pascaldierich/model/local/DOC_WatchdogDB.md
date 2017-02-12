@@ -1,6 +1,6 @@
-# Feed DB
+# Watchdog DB
 
-## Tables:
+### Tables:
 
 * Favorites
 * NewsFeed
@@ -14,7 +14,7 @@
 | Pascal Dierich       | 1                       | [Bitmap]     |
 | Hans Peter           | 2                       | [Bitmap]     |
 
-### Table Sites:
+### Table Sitese
 
 | Id : joined from Observables |  Site : String | Key : String     |
 |------------------------------|----------------|------------------|
