@@ -1,4 +1,4 @@
-package de.pascaldierich.model.network.models.thumbnails;
+package de.pascaldierich.model.network.models.youtube;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

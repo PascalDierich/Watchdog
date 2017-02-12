@@ -5,8 +5,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 import de.pascaldierich.model.network.ConstantsApi;
-import de.pascaldierich.model.network.models.items.PlusPeopleItem;
-import de.pascaldierich.model.network.models.pages.PlusPeoplePage;
+import de.pascaldierich.model.network.models.plus.people.PlusPeopleItem;
+import de.pascaldierich.model.network.models.plus.people.PlusPeoplePage;
 import de.pascaldierich.model.network.services.PlusService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

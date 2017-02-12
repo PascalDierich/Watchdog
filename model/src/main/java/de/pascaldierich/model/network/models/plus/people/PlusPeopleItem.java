@@ -1,9 +1,7 @@
-package de.pascaldierich.model.network.models.items;
+package de.pascaldierich.model.network.models.plus.people;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import de.pascaldierich.model.network.models.thumbnails.PlusPeopleThumbnail;
 
 /**
  * Created by Pascal Dierich on Feb, 2017.

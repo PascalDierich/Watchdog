@@ -1,9 +1,9 @@
-package de.pascaldierich.model.network.models;
+package de.pascaldierich.model.network.models.youtube;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import de.pascaldierich.model.network.models.thumbnails.YouTubeSearchThumbnail;
+import de.pascaldierich.model.network.models.youtube.YouTubeSearchThumbnail;
 
 /**
  * Created by Pascal Dierich on Feb, 2017.

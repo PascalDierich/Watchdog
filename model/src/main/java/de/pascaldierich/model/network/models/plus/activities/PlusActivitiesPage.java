@@ -1,4 +1,4 @@
-package de.pascaldierich.model.network.models.pages;
+package de.pascaldierich.model.network.models.plus.activities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

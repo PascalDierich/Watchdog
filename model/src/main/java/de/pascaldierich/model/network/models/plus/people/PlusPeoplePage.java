@@ -1,11 +1,9 @@
-package de.pascaldierich.model.network.models.pages;
+package de.pascaldierich.model.network.models.plus.people;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-
-import de.pascaldierich.model.network.models.items.PlusPeopleItem;
 
 /**
  * Created by Pascal Dierich on Feb, 2017.

@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import de.pascaldierich.model.network.ConstantsApi;
-import de.pascaldierich.model.network.models.pages.YouTubeChannelsPage;
+import de.pascaldierich.model.network.models.youtube.YouTubeChannelsPage;
 import de.pascaldierich.model.network.services.YouTubeService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

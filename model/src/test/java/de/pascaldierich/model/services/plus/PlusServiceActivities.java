@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import de.pascaldierich.model.network.ConstantsApi;
-import de.pascaldierich.model.network.models.pages.PlusActivitiesPage;
+import de.pascaldierich.model.network.models.plus.activities.PlusActivitiesPage;
 import de.pascaldierich.model.network.services.PlusService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -62,9 +62,11 @@ public class PlusServiceActivities {
             assertTrue("IOException", false);
         }
 
-//        CHECK_FOR_ELEMENTS(plusActivitiesPage);
+        CHECK_FOR_ELEMENTS(plusActivitiesPage);
     }
 
-
-
+    private void CHECK_FOR_ELEMENTS(PlusActivitiesPage page) {
+//        assertTrue(page.);
+        // TODO: 10.02.17 check for Elements and create JSON-POJOs
+    }
 }

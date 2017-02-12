@@ -4,8 +4,8 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import de.pascaldierich.model.network.ConstantsApi;
-import de.pascaldierich.model.network.models.pages.PlusActivitiesPage;
-import de.pascaldierich.model.network.models.pages.PlusPeoplePage;
+import de.pascaldierich.model.network.models.plus.activities.PlusActivitiesPage;
+import de.pascaldierich.model.network.models.plus.people.PlusPeoplePage;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
