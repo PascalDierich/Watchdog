@@ -9,7 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class WatchdogDBHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "watchdog.db";
+    // public for test
+    public static final String DB_NAME = "watchdog.db";
 
     public WatchdogDBHelper(Context context, int version) {
         super(context, DB_NAME, null, version);
