@@ -8,7 +8,11 @@
                  android:supportsRtl="true"
     >
 
-        <!--TODO: add ContentProvider (secrect) -->
+        <!--TODO: add ContentProvider -->
+        <provider
+            android:authorities="de.pascaldierich.watchdogs"
+            android:name=".local.WatchdogProvider"
+            android:exported="false"/>
 
     </application>
 </manifest>

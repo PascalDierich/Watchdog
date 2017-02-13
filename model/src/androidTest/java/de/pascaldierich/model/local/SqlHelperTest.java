@@ -42,27 +42,9 @@ public class SqlHelperTest {
     private void CHECK_TABLE_OBSERVABLE_INSERT() throws Exception {
         SQLiteDatabase db = database.getWritableDatabase();
 
-        for (ContentValues values : createObservablesValues()) {
+        for (ContentValues values : Utilitys.createObservablesValues()) {
             long _id = db.insert("Observables", null, values);
         }
-    }
-
-    private ContentValues[] createObservablesValues() {
-        ContentValues[] values = new ContentValues[5];
-        String[] names = {
-                "Pascal Dierich",
-                "Bill Gates",
-                "Hans Peter",
-                "Mark Zuckerberg",
-                "Jesus Christ"
-        };
-
-        for (int i = 0; i < 5; i++) {
-            values[i] = new ContentValues();
-            values[i].put("displayName", names[i]);
-            values[i].put("thumbnail", new byte[] {});
-        }
-        return values;
     }
 
     private void CHECK_TABLE_OBSERVABLE_QUERY() throws Exception {
@@ -89,38 +71,9 @@ public class SqlHelperTest {
     private void CHECK_TABLE_SITES_WRITE() {
         SQLiteDatabase db = database.getWritableDatabase();
 
-        for (ContentValues values : createSitesValues()) {
+        for (ContentValues values : Utilitys.createSitesValues()) {
             long _id = db.insert("Sites", null, values);
         }
-    }
-
-    private ContentValues[] createSitesValues() {
-        ContentValues[] values = new ContentValues[5];
-        String[] sites = {
-                "YouTube",
-                "Plus",
-                "Plus",
-                "YouTube",
-                "YouTube"
-        };
-
-        String[] keys = {
-                "/fjrkwnv",
-                "/vmwvwev",
-                "/vuonseiuv",
-                "/ovijv",
-                "/vklmrevlrmev"
-        };
-
-        int a = 0;
-        for (int i = 0; i < 5; i++) {
-            values[i] = new ContentValues();
-            a = i;
-            values[i].put("_ID", ++a);
-            values[i].put("site", sites[i]);
-            values[i].put("key", keys[i]);
-        }
-        return values;
     }
 
     private void CHECK_TABLE_SITES_QUERY() {

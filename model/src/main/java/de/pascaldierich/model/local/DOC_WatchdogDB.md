@@ -23,6 +23,18 @@
 | 2              | YouTube        | /nlkdsnvokdsv    |
 | 1              | Plus           | /nejkvndfkv      |
 
-### Table Favorites:
+### Table Favorites
+
+|  _ID : Integer auto-generated | userId : Integer  | thumbnailUrl : String | description : String | title : String | postId : String | timeSaved : timestamp auto-generated | site : String    | timeDownloaded : timestamp auto-generated |
+|-------------------------------|-------------------|-----------------------|----------------------|----------------|-----------------|--------------------------------------|------------------|-------------------------------------------|
+| 1                             | 1                 | xyz.jpg               | [description]        | [title]        | /[uniquePostId] | [timestamp]                          | YouTube          | [timestamp]                               |
+| 2                             | 2                 | yzx.jpg               | [description]        | [title]        | /[uniquePostId] | [timestamp]                          | Plus             | [timestamp]                               |
+| 3                             | 1                 | zxy.jpg               | [description]        | [title]        | /[uniquePostId] | [timestamp]                          | YouTube          | [timestamp]                               |
 
 ### Table NewsFeed
+
+|  _ID : Integer auto-generated | userId : Integer  | thumbnailUrl : String | description : String | title : String | postId : String | site : String    | timeDownloaded : timestamp auto-generated |
+|-------------------------------|-------------------|-----------------------|----------------------|----------------|-----------------|------------------|-------------------------------------------|
+| 1                             | 1                 | xyz.jpg               | [description]        | [title]        | /[uniquePostId] | YouTube          | [timestamp]                               |
+| 2                             | 2                 | yzx.jpg               | [description]        | [title]        | /[uniquePostId] | Plus             | [timestamp]                               |
+| 3                             | 1                 | zxy.jpg               | [description]        | [title]        | /[uniquePostId] | YouTube          | [timestamp]                               |
