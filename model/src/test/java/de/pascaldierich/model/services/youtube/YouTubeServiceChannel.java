@@ -19,8 +19,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class YouTubeServiceChannel {
 
+//    private String[] testNames = {
+//        "SemperVideo", "Semper Video", "PascalDierich", "Pascal Dierich", "GoogleDevelopers", "Google Developers"
+//    };
+
     private String[] testNames = {
-        "SemperVideo", "Semper Video", "PascalDierich", "Pascal Dierich", "GoogleDevelopers", "Google Developers"
+            "Pascal Dierich"
     };
 
     @Test

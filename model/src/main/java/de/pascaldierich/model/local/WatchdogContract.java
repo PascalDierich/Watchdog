@@ -14,6 +14,7 @@ abstract class WatchdogContract {
     static final String OBSERVABLES_PATH = "observables";
     static final String SITES_PATH = "sites";
     static final String NEWS_FEED_PATH = "newsfeed";
+    static final String FAVORITES_PATH = "favorites";
 
     /**
      * Table 'Observables'
@@ -73,7 +74,7 @@ abstract class WatchdogContract {
     /**
      * Table 'NewsFeed'
      * <p>
-     * This table saves the new posts which got downloaded.
+     * This table holds the new posts which got downloaded.
      * The userId is equivalent to the Observables ID column.
      */
     static final class NewsFeed implements BaseColumns {
@@ -105,6 +106,43 @@ abstract class WatchdogContract {
 
         static Uri buildNewsFeedUriWithId(long id) {
             return ContentUris.withAppendedId(CONTENT_URI_NEWS_FEED, id);
+        }
+    }
+
+    /**
+     * Table 'Favorites'
+     * <p>
+     * This table saves the favorites Posts locally.
+     * The userId is equivalent to the Observables ID column.
+     */
+    static final class Favorites implements BaseColumns {
+        static final String TABLE_NAME = "Favorites";
+
+        static final Uri CONTENT_URI_FAVORITES =
+                BASE_CONTENT_URI.buildUpon().appendPath(FAVORITES_PATH).build();
+
+        // Columns Names
+        static final String COLUMN_ID = "_ID"; // auto-generated Integer ID
+        static final String COLUMN_USER_ID = "userId"; // Observables Id for identification
+        static final String COLUMN_THUMBNAIL_URL = "thumbnailUrl"; // Url for thumbnail
+        static final String COLUMN_DESCRIPTION = "description"; // String, description of Post
+        static final String COLUMN_TITLE = "title"; // String, title of Post
+        static final String COLUMN_POST_ID = "postId"; // unique Post Id form site
+        static final String COLUMN_SITE = "site"; // String of @interface SupportedNetworks
+        static final String COLUMN_TIME_SAVED = "timeSaved"; // auto-generated Timestamp
+
+        // Columns Id's
+        static final int COLUMN_ID_ID = 0;
+        static final int COLUMN_USER_ID_ID = 1;
+        static final int COLUMN_THUMBNAIL_URL_ID = 2;
+        static final int COLUMN_DESCRIPTION_ID = 3;
+        static final int COLUMN_TITLE_ID = 4;
+        static final int COLUMN_POST_ID_ID = 5;
+        static final int COLUMN_SITE_ID = 6;
+        static final int COLUMN_TIME_SAVED_ID = 7;
+
+        static Uri buildNewsFeedUriWithId(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI_FAVORITES, id);
         }
     }
 }

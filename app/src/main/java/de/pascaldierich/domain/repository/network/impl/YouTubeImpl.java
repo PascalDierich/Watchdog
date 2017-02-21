@@ -27,7 +27,7 @@ public class YouTubeImpl implements NetworkRepository.YouTube {
      * @param time, String as RFC3339: publishedAfter Parameter in Api-Request
      * @param range, int: number of maxResults in Api-Response
      * @return TODO write return param
-     * @throws IOException
+     * @exception IOException
      */
     @Override
     public YouTubeSearchPage searchYouTube(@NonNull String id,
@@ -42,7 +42,7 @@ public class YouTubeImpl implements NetworkRepository.YouTube {
      * @param name, String: (@WARNING: UserInput) Name of the requested Observable
      * @param range, int: number of maxResults in Api-Response
      * @return TODO write return param
-     * @throws IOException
+     * @exception IOException
      */
     @Override
     public YouTubeChannelsPage getIdYouTube(@NonNull String name,

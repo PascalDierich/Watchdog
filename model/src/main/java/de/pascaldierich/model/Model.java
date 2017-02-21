@@ -17,7 +17,9 @@ import de.pascaldierich.model.network.services.YouTubeService;
 
 /**
  * Singleton Repository Class for interacting with 'model' module
- *      -> lazy instantiation
+ *      -> lazy instantiation (!not Thread save!)
+ *
+ * @version 1.0
  */
 public class Model {
     /*
@@ -53,11 +55,11 @@ public class Model {
      *      returns ApiResponse for latest News as POJO
      *
      * getId:
-     *      return ApiResponse as POJO whith one or more possibly Id's
+     *      returns ApiResponse as POJO with one or more possibly Id's
      */
 
     /**
-     * Call the YouTube Search Service
+     * Call the YouTube Search Service.
      * <p>
      * @param id, String: userId defined as key in 'Sites' table
      * @param time, String as RFC3339: publishedAfter Parameter in Api-Request
@@ -69,7 +71,7 @@ public class Model {
                                            @NonNull String time,
                                            @IntRange(from = 1, to = 50) int range) throws IOException {
 
-        // TODO: 21.02.17 change return POJO.
+        // TODO: 21.02.17 change return POJO searchYouTube.
         // 1. Problem Dependency goes inside domain-layer
         // 2. POJO is too big and most information is not usable.
         //   --> define model class inside domain-layer
@@ -91,7 +93,7 @@ public class Model {
     /**
      * Get possibly YouTube-intern-Id's for given name
      * <p>
-     * @param name, String: (@WARNING: UserInput) Name of the requested Observable
+     * @param name, String: Name of the requested Observable
      * @param range, int: number of maxResults in Api-Response
      * @return POJO, YouTubeChannelsPage
      * @throws IOException
@@ -99,7 +101,7 @@ public class Model {
     public YouTubeChannelsPage getIdYouTube(@NonNull String name,
                                             @IntRange(from = 1, to = 50) int range) throws IOException {
 
-        // TODO: 21.02.17 change return POJO.
+        // TODO: 21.02.17 change return POJO getIdYouTube.
         // 1. Problem Dependency goes inside domain-layer
         // 2. POJO is too big and most information is not usable.
         //   --> define model class inside domain-layer

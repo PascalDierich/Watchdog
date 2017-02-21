@@ -23,19 +23,23 @@ public interface NetworkRepository {
         /**
          * Search in YouTube Api for the latest (@param time)
          * X (@param range) Activities for given User (@param id).
+         * <p>
          * @param id, String: userId defined as key in 'Sites' table
          * @param time, String as RFC3339: publishedAfter Parameter in Api-Request
          * @param range, int: number of maxResults in Api-Response
          * @return YouTubeSearchPage: model-POJO for interactors
+         * @exception IOException
          */
         YouTubeSearchPage searchYouTube(String id, String time, int range) throws IOException;
 
         /**
          * Get X (@param range) results for userId request
-         * from YouTube for given Name (@param name)
-         * @param name, String: (@WARNING: UserInput) Name of the requested Observable
+         * from YouTube for given Name (@param name).
+         * <p>
+         * @param name, String: (WARNING: UserInput) Name of the requested Observable
          * @param range, int: number of maxResults in Api-Response
          * @return YouTubeChannelsPage: model-POJO for interactors
+         * @exception IOException
          */
         YouTubeChannelsPage getIdYouTube(String name, int range) throws IOException;
     }
