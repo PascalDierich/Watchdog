@@ -68,6 +68,13 @@ public class Model {
     public YouTubeSearchPage searchYouTube(@NonNull String id,
                                            @NonNull String time,
                                            @IntRange(from = 1, to = 50) int range) throws IOException {
+
+        // TODO: 21.02.17 change return POJO.
+        // 1. Problem Dependency goes inside domain-layer
+        // 2. POJO is too big and most information is not usable.
+        //   --> define model class inside domain-layer
+        //      --> return model class from domain-layer
+
         return GoogleClient.getService(YouTubeService.class)
                 .getVideos(
                         ConstantsApi.YOUTUBE_API_KEY,
@@ -91,6 +98,13 @@ public class Model {
      */
     public YouTubeChannelsPage getIdYouTube(@NonNull String name,
                                             @IntRange(from = 1, to = 50) int range) throws IOException {
+
+        // TODO: 21.02.17 change return POJO.
+        // 1. Problem Dependency goes inside domain-layer
+        // 2. POJO is too big and most information is not usable.
+        //   --> define model class inside domain-layer
+        //      --> return model class from domain-layer
+
         return GoogleClient.getService(YouTubeService.class)
                 .getChannelId(
                         ConstantsApi.YOUTUBE_API_KEY,
