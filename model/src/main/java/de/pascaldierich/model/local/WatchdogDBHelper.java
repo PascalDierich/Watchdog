@@ -45,7 +45,16 @@ public class WatchdogDBHelper extends SQLiteOpenHelper {
     }
 
     private String getNewsFeedStatement() {
-        return "";
+        return "CREATE TABLE " + WatchdogContract.NewsFeed.TABLE_NAME + " ("
+                + WatchdogContract.NewsFeed.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + WatchdogContract.NewsFeed.COLUMN_USER_ID + " INTEGER NOT NULL,"
+                + WatchdogContract.NewsFeed.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL,"
+                + WatchdogContract.NewsFeed.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
+                + WatchdogContract.NewsFeed.COLUMN_TITLE + " TEXT NOT NULL,"
+                + WatchdogContract.NewsFeed.COLUMN_POST_ID + " TEXT NOT NULL,"
+                + WatchdogContract.NewsFeed.COLUMN_SITE + " TEXT NOT NULL,"
+                + WatchdogContract.NewsFeed.COLUMN_TIME_DOWNLOADED + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+                + ");";
     }
 
     @Override
