@@ -27,15 +27,15 @@ abstract class WatchdogContract {
         static final String TABLE_NAME = "Observables";
 
         static final Uri CONTENT_URI_OBSERVABLES =
-                BASE_CONTENT_URI.buildUpon().appendPath(OBSERVABLES_PATH).build(); // TODO: 12.02.17 check Path
+                BASE_CONTENT_URI.buildUpon().appendPath(OBSERVABLES_PATH).build();
 
         // Columns Names
-        static final String COLUMN_ID = "_ID"; // -> unique ID used by other tables for identification
-        static final String COLUMN_NAME = "displayName"; // -> Name to show the User
-        static final String COLUMN_THUMBNAIL = "thumbnail"; // -> possible to save image
+        static final String COLUMN_USER_ID = "userId"; // unique ID used by other tables for identification
+        static final String COLUMN_NAME = "displayName"; // name to show the User
+        static final String COLUMN_THUMBNAIL = "thumbnail"; // possible to save image
 
         // Columns Id's
-        static final int COLUMN_ID_ID = 0;
+        static final int COLUMN_USER_ID_ID = 0;
         static final int COLUMN_NAME_ID = 1;
         static final int COLUMN_THUMBNAIL_ID = 2;
 

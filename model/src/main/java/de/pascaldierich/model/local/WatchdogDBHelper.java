@@ -26,7 +26,7 @@ public class WatchdogDBHelper extends SQLiteOpenHelper {
 
     private String getObservablesStatement() {
         return "CREATE TABLE " + WatchdogContract.Observables.TABLE_NAME + " ("
-                + WatchdogContract.Observables.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + WatchdogContract.Observables.COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + WatchdogContract.Observables.COLUMN_NAME + " TEXT NOT NULL,"
                 + WatchdogContract.Observables.COLUMN_THUMBNAIL + " BLOB"
                 + ");";
