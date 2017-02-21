@@ -8,7 +8,6 @@
                  android:supportsRtl="true"
     >
 
-        <!--TODO: add ContentProvider -->
         <provider
             android:authorities="de.pascaldierich.watchdogs"
             android:name=".local.WatchdogProvider"
