@@ -141,7 +141,7 @@ abstract class WatchdogContract {
         static final int COLUMN_SITE_ID = 6;
         static final int COLUMN_TIME_SAVED_ID = 7;
 
-        static Uri buildNewsFeedUriWithId(long id) {
+        static Uri buildFavoritesUriWithId(long id) {
             return ContentUris.withAppendedId(CONTENT_URI_FAVORITES, id);
         }
     }

@@ -20,8 +20,8 @@ public class WatchdogDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(getObservablesStatement());
         db.execSQL(getSitesStatement());
-    
-        // TODO: 12.02.17 execute Post-Tables 
+        db.execSQL(getFavoritesStatement());
+        db.execSQL(getNewsFeedStatement());
     }
 
     private String getObservablesStatement() {
@@ -41,7 +41,16 @@ public class WatchdogDBHelper extends SQLiteOpenHelper {
     }
 
     private String getFavoritesStatement() {
-        return "";
+        return "CREATE TABLE " + WatchdogContract.Favorites.TABLE_NAME + " ("
+                + WatchdogContract.Favorites.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + WatchdogContract.Favorites.COLUMN_USER_ID + " INTEGER NOT NULL,"
+                + WatchdogContract.Favorites.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL,"
+                + WatchdogContract.Favorites.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
+                + WatchdogContract.Favorites.COLUMN_TITLE + " TEXT NOT NULL,"
+                + WatchdogContract.Favorites.COLUMN_POST_ID + " TEXT NOT NULL,"
+                + WatchdogContract.Favorites.COLUMN_SITE + " TEXT NOT NULL,"
+                + WatchdogContract.Favorites.COLUMN_TIME_SAVED + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+                + ");";
     }
 
     private String getNewsFeedStatement() {
