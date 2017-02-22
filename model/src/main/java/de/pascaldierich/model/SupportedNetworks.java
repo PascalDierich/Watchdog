@@ -22,9 +22,10 @@ import static de.pascaldierich.model.SupportedNetworks.YOUTUBE;
 })
 public @interface SupportedNetworks {
 
-    /**
-     * Name of supported Networks
+    /*
+     * intern names of supported Networks
      */
+
     public static final String YOUTUBE = "youtube";
     public static final String GOOGLE_PLUS = "plus";
 
