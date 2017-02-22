@@ -20,11 +20,6 @@ android {
         }
     }
     buildTypes.each {
-        /**
-         * I use 2 different Api-Keys because of easier control
-         *      e.g. - shutdown one Feature
-         *           - Analytics
-         */
         it.buildConfigField 'String', 'YouTube_Api_Key', getApiKeyYouTube()
         it.buildConfigField 'String', 'GooglePlus_Api_Key', getApiKeyGooglePlus()
     }

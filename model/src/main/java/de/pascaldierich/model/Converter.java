@@ -27,9 +27,10 @@ public class Converter {
     // This boolean value indicates if there are SQL-specific values (_ID and timestamp)
     private boolean gotDownloaded;
 
-    /**
+    /********************************************************************************************
      * getPost methods
-     */
+     *
+     ********************************************************************************************/
 
     /**
      * Converts downloaded YouTubeSearch result to Post Collection
@@ -111,9 +112,10 @@ public class Converter {
     }
     
 
-    /**
+    /********************************************************************************************
      * getSite methods
-     */
+     *
+     ********************************************************************************************/
 
     /**
      * Converts downloaded YouTubeChannel result to Site Collection
@@ -185,9 +187,10 @@ public class Converter {
     }
 
 
-    /**
+    /********************************************************************************************
      * getObservable methods
-     */
+     *
+     ********************************************************************************************/
 
     /**
      * Converts Cursor result to Observable Collection
@@ -226,7 +229,7 @@ public class Converter {
     }
 
 
-    /**
+    /********************************************************************************************
      * getContentValues methods
      *
      * Parameters are annotated with 'NonNull' and the methods assumes
@@ -234,7 +237,7 @@ public class Converter {
      *      --> Because the Parameters come directly from the app
      *
      * The keys are named by the equivalent table-rows!
-     */
+     ********************************************************************************************/
 
     /**
      * Converts observable model to ContentValues.
