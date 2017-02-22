@@ -48,12 +48,14 @@ public class Converter {
 
         // Because Model.class only gets called after ConnectionTest,
         // this indicates that the channelId is invalid.
-        if (page == null) throw new ModelException("Parameter is null");
+        if (page == null)
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_NULL, "Parameter is null");
 
         // Because the JSON String got converted to POJO correctly (because not null),
         // this indicates that there were no found entries.
         //      --> No new Posts
-        if (page.getItems().isEmpty()) throw new ModelException("Parameter holds no data");
+        if (page.getItems().isEmpty())
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_EMPTY, "Parameter holds no data");
 
         try {
             for (int i = 0; i < page.getItems().size(); i++) {
@@ -69,7 +71,7 @@ public class Converter {
             }
             return result;
         } catch (RuntimeException e) {
-            throw new ModelException("Runtime Exception -> " + e.getMessage());
+            throw new ModelException(ModelErrors.Codes.Converter.RUNTIME_ERROR, e.getMessage());
         }
     }
 
@@ -86,12 +88,13 @@ public class Converter {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = true;
 
-        if (entries == null) throw new ModelException("Parameter is null");
+        if (entries == null)
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_NULL, "Parameter is null");
 
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
-            throw new ModelException("Parameter holds no data");
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_EMPTY, "Parameter holds no data");
         }
 
         do {
@@ -132,12 +135,14 @@ public class Converter {
 
         // Because Model.class only gets called after ConnectionTest,
         // this indicates that the channelId is invalid.
-        if (page == null) throw new ModelException("Parameter is null");
+        if (page == null)
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_NULL, "Parameter is null");
 
         // Because the JSON String got converted to POJO correctly (because not null),
         // this indicates that there were no found entries.
         //      --> No new Posts
-        if (page.getItems().isEmpty()) throw new ModelException("Parameter holds no data");
+        if (page.getItems().isEmpty())
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_EMPTY, "Parameter holds no data");
 
         try {
             for (int i = 0; i < page.getItems().size(); i++) {
@@ -149,7 +154,7 @@ public class Converter {
             }
             return result;
         } catch (RuntimeException e) {
-            throw new ModelException("Runtime Exception -> " + e.getMessage());
+            throw new ModelException(ModelErrors.Codes.Converter.RUNTIME_ERROR, e.getMessage());
         }
     }
 
@@ -166,12 +171,13 @@ public class Converter {
         ArrayList<Site> result = new ArrayList<>();
         gotDownloaded = true;
 
-        if (entries == null) throw new ModelException("Parameter is null");
+        if (entries == null)
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_NULL, "Parameter is null");
 
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
-            throw new ModelException("Parameter holds no data");
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_EMPTY, "Parameter holds no data");
         }
 
         do {
@@ -203,12 +209,13 @@ public class Converter {
     public ArrayList<Observable> getObservable(@Nullable Cursor entries) throws ModelException {
         ArrayList<Observable> result = new ArrayList<>();
 
-        if (entries == null) throw new ModelException("Parameter is null");
+        if (entries == null)
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_NULL, "Parameter is null");
 
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
-            throw new ModelException("Parameter holds no data");
+            throw new ModelException(ModelErrors.Codes.Converter.PARAMETER_EMPTY, "Parameter holds no data");
         }
 
         do {

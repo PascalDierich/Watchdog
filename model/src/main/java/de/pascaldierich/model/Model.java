@@ -30,6 +30,14 @@ import de.pascaldierich.model.network.services.YouTubeService;
  * Model is the only instantiated class inside 'app'
  * and works as Boundary between them.
  *
+ * Model always assumes the transmitted data is NonNull and got tested.
+ * <b>Every Layer is responsible for transmitting correct data.</b>
+ *
+ * Model converts data for 'app' in <b>3</b> possible POJO's defined in package domainmodels.
+ *      Observable -> represents an Observable ¯\_(ツ)_/¯
+ *      Post -> represents one Post, Tweet, Video (depends on Network)
+ *      Site -> represents one entry from 'Sites'
+ *
  * @version 1.0
  */
 public class Model {

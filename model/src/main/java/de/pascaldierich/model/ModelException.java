@@ -8,10 +8,21 @@ package de.pascaldierich.model;
  * TODO: write JAVADOC
  */
 public class ModelException extends Exception{
+    @ModelErrors.Codes
+    private int errorCode;
     
-    // TODO: 22.02.17 define Exception messages and error-codes  
-    
-    public ModelException(String message) {
+    public ModelException(@ModelErrors.Codes int errorCode, @ModelErrors.Messages String message) {
         super(message);
+        this.errorCode = errorCode;
+    }
+
+    /**
+     * Returns errorCode and errorMessage
+     *
+     * @return errorCode + " " + super.getMessage().
+     */
+    @Override
+    public String getMessage() {
+        return errorCode + ", " + super.getMessage();
     }
 }
