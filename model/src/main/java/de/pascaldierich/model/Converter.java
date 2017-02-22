@@ -4,8 +4,10 @@ package de.pascaldierich.model;
  * Created by Pascal Dierich on Feb, 2017.
  */
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -35,11 +37,11 @@ public class Converter {
      * <b>gotDownloaded = false</b>
      *
      * @param page,   YouTubeSearchPage: API response
-     * @param userId, String: network-specific userId
+     * @param userId, int: intern Id for this Observable
      * @return result, ArrayList<Post>: Collection of all Posts
      * @throws ModelException
      */
-    public ArrayList<Post> getPost(@Nullable YouTubeSearchPage page, String userId) throws ModelException {
+    public ArrayList<Post> getPost(@Nullable YouTubeSearchPage page, int userId) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = false;
 
@@ -95,7 +97,7 @@ public class Converter {
             result.add(new Post()
                     .setGotDownloaded(gotDownloaded)
                     .set_ID(entries.getInt(WatchdogContract.Posts.COLUMN_ID_ID))
-                    .setUserId(entries.getString(WatchdogContract.Posts.COLUMN_USER_ID_ID))
+                    .setUserId(entries.getInt(WatchdogContract.Posts.COLUMN_USER_ID_ID))
                     .setThumbnailUrl(entries.getString(WatchdogContract.Posts.COLUMN_THUMBNAIL_URL_ID))
                     .setDescription(entries.getString(WatchdogContract.Posts.COLUMN_DESCRIPTION_ID))
                     .setTitle(entries.getString(WatchdogContract.Posts.COLUMN_TITLE_ID))
@@ -149,6 +151,39 @@ public class Converter {
         }
     }
 
+    /**
+     * Converts Cursor result to Site Collection
+     * <p>
+     * <b>gotDownloaded = true</b>
+     *
+     * @param entries, Cursor: Provider response
+     * @return result, ArrayList<Site>: Collection of all given Sites in Cursor
+     * @throws ModelException
+     */
+    public ArrayList<Site> getSite(@Nullable Cursor entries) throws ModelException {
+        ArrayList<Site> result = new ArrayList<>();
+        gotDownloaded = true;
+
+        if (entries == null) throw new ModelException("Parameter is null");
+
+        try {
+            entries.moveToFirst();
+        } catch (SQLException e) {
+            throw new ModelException("Parameter holds no data");
+        }
+
+        do {
+            result.add(new Site()
+                    .setGotDownloaded(gotDownloaded)
+                    .setUserId(entries.getInt(WatchdogContract.Sites.COLUMN_USER_ID_ID))
+                    .setSite(entries.getString(WatchdogContract.Sites.COLUMN_SITE_ID))
+                    .setKey(entries.getString(WatchdogContract.Sites.COLUMN_KEY_ID))
+            );
+        } while (entries.moveToNext());
+
+        return result;
+    }
+
 
     /**
      * getObservable methods
@@ -162,7 +197,7 @@ public class Converter {
      * @return result, ArrayList<Observable>: Collection of all given Observables in Cursor
      * @throws ModelException
      */
-    public ArrayList<Observable> getObservables(@Nullable Cursor entries) throws ModelException {
+    public ArrayList<Observable> getObservable(@Nullable Cursor entries) throws ModelException {
         ArrayList<Observable> result = new ArrayList<>();
 
         if (entries == null) throw new ModelException("Parameter is null");
@@ -186,6 +221,73 @@ public class Converter {
             }
             result.add(item);
         } while (entries.moveToNext());
+
+        return result;
+    }
+
+
+    /**
+     * getContentValues methods
+     *
+     * Parameters are annotated with 'NonNull' and the methods assumes
+     * that the Object are already checked and can get converted directly.
+     *      --> Because the Parameters come directly from the app
+     *
+     * The keys are named by the equivalent table-rows!
+     */
+
+    /**
+     * Converts observable model to ContentValues.
+     * <p>
+     *
+     * @param observable, Observable
+     * @return result, ContentValues: converted Observable with ColumnName's as key
+     */
+    public ContentValues getContentValues(@NonNull Observable observable) {
+        ContentValues result = new ContentValues();
+
+        // Thumbnail is optional
+        if (observable.getGotThumbnail())
+            result.put(WatchdogContract.Observables.COLUMN_THUMBNAIL, observable.getThumbnail());
+
+        result.put(WatchdogContract.Observables.COLUMN_NAME, observable.getDisplayName());
+
+        return result;
+    }
+
+    /**
+     * Converts site model to ContentValues.
+     * <p>
+     *
+     * @param site, Site
+     * @return result, ContentValues: converted Site with ColumnName's as key
+     */
+    public ContentValues getContentValues(@NonNull Site site) {
+        ContentValues result = new ContentValues();
+
+        result.put(WatchdogContract.Sites.COLUMN_SITE, site.getSite());
+        result.put(WatchdogContract.Sites.COLUMN_KEY, site.getKey());
+
+        return result;
+    }
+
+    /**
+     * Converts post model to ContentValues.
+     * This method is independent from the different Post-tables.
+     * <p>
+     *
+     * @param post, Post
+     * @return result, ContentValues: converted Post with ColumnName's as key
+     */
+    public ContentValues getContentValues(@NonNull Post post) {
+        ContentValues result = new ContentValues();
+
+        result.put(WatchdogContract.Posts.COLUMN_USER_ID, post.getUserId());
+        result.put(WatchdogContract.Posts.COLUMN_THUMBNAIL_URL, post.getThumbnailUrl());
+        result.put(WatchdogContract.Posts.COLUMN_DESCRIPTION, post.getDescription());
+        result.put(WatchdogContract.Posts.COLUMN_TITLE, post.getTitle());
+        result.put(WatchdogContract.Posts.COLUMN_POST_ID, post.getPostId());
+        result.put(WatchdogContract.Posts.COLUMN_SITE, post.getSite());
 
         return result;
     }

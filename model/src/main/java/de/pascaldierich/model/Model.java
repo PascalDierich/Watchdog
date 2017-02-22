@@ -7,6 +7,7 @@ package de.pascaldierich.model;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
@@ -32,9 +33,9 @@ import de.pascaldierich.model.network.services.YouTubeService;
  */
 public class Model {
 
-    /*
+    /******************
         Instantiation
-     */
+     ******************/
 
     // Converter for app - model models
     private Converter mConverter;
@@ -74,13 +75,15 @@ public class Model {
      * Call the YouTube Search Service.
      * <p>
      *
-     * @param id,    String: userId defined in 'Sites' table
+     * @param key, String: userKey defined in 'Sites' table
+     * @param observableId, int: intern Id defined in 'Observables' table
      * @param time,  String as RFC3339: publishedAfter Parameter in Api-Request
      * @param range, int: number of maxResults in Api-Response
      * @return POJO Collection, ArrayList<Post>
      * @throws ModelException
      */
-    public ArrayList<Post> searchYouTube(@NonNull String id,
+    public ArrayList<Post> searchYouTube(@NonNull String key,
+                                         int observableId,
                                          @NonNull String time,
                                          @IntRange(from = 1, to = 50) int range) throws ModelException {
 
@@ -89,7 +92,7 @@ public class Model {
                     .getVideos(
                             ConstantsApi.YOUTUBE_API_KEY,
                             ConstantsApi.YOUTUBE_SEARCH_PART,
-                            id,
+                            key,
                             time,
                             ConstantsApi.YOUTUBE_SEARCH_EVENT_TYPE,
                             range,
@@ -97,7 +100,7 @@ public class Model {
                             ConstantsApi.YOUTUBE_SEARCH_TYPE
                     ).execute().body();
 
-            return mConverter.getPost(page, id);
+            return mConverter.getPost(page, observableId);
         } catch (IOException e) {
             throw new ModelException(e.getMessage());
         }
@@ -136,6 +139,10 @@ public class Model {
      *
      */
 
+    /*
+        get Methods (read)
+     */
+
     /**
      * Returns all Observables saved in DB
      * <p>
@@ -159,7 +166,33 @@ public class Model {
 
         Cursor entries = loaderWeakReference.get().loadInBackground();
 
-        return mConverter.getObservables(entries);
+        return mConverter.getObservable(entries);
+    }
+
+    /**
+     * Returns all Sites saved in DB
+     * <p>
+     *
+     * @param context, Context: to access DB
+     * @return POJO Collection, ArrayList<Site>
+     * @throws ModelException
+     */
+    public ArrayList<Site> getSites(Context context) throws ModelException {
+        // Instantiation
+        CursorLoader mLoader = new CursorLoader(context);
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+
+        // Setup CursorLoader
+        loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
+        loaderWeakReference.get().setProjection(new String[] {
+                WatchdogContract.Sites.COLUMN_USER_ID,
+                WatchdogContract.Sites.COLUMN_SITE,
+                WatchdogContract.Sites.COLUMN_KEY});
+        loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
+
+        Cursor entries = loaderWeakReference.get().loadInBackground();
+
+        return mConverter.getSite(entries);
     }
 
     /**
@@ -224,4 +257,44 @@ public class Model {
         return mConverter.getPost(entries);
     }
 
+
+    /*
+        set Methods (write)
+     */
+
+    public void setObservable(Context context, Observable observables) throws ModelException {
+        try {
+            context.getContentResolver()
+                    .insert(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
+                            mConverter.getContentValues(observables));
+        } catch (SQLException e) {
+            throw new ModelException(e.getMessage());
+        } catch (UnsupportedOperationException ex) {
+            throw new ModelException("intern database error");
+        }
+    }
+
+    public void setSite(Context context, Site site) throws ModelException {
+        try {
+            context.getContentResolver()
+                    .insert(WatchdogContract.Sites.CONTENT_URI_SITES,
+                            mConverter.getContentValues(site));
+        } catch (SQLException e) {
+            throw new ModelException(e.getMessage());
+        } catch (UnsupportedOperationException ex) {
+            throw new ModelException("intern database error");
+        }
+    }
+
+    public void setFavorite(Context context, Post post) throws ModelException {
+        try {
+            context.getContentResolver()
+                    .insert(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES,
+                            mConverter.getContentValues(post));
+        } catch (SQLException e) {
+            throw new ModelException(e.getMessage());
+        } catch (UnsupportedOperationException ex) {
+            throw new ModelException("intern database error");
+        }
+    }
 }

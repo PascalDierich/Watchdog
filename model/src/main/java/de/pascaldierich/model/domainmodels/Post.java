@@ -17,7 +17,7 @@ import de.pascaldierich.model.SupportedNetworks;
 public class Post {
     private boolean gotDownloaded;
     private int _ID; // _ID is only set if gotDownloaded = true.
-    private String userId;
+    private int userId;
     private String thumbnailUrl;
     private String description;
     private String title;
@@ -44,11 +44,11 @@ public class Post {
         return this;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public Post setUserId(String userId) {
+    public Post setUserId(int userId) {
         this.userId = userId;
         return this;
     }

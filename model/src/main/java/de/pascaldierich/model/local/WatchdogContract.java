@@ -53,18 +53,18 @@ public abstract class WatchdogContract {
     public static final class Sites implements BaseColumns {
         static final String TABLE_NAME = "Sites";
 
-        static final Uri CONTENT_URI_SITES =
+        public static final Uri CONTENT_URI_SITES =
                 BASE_CONTENT_URI.buildUpon().appendPath(SITES_PATH).build();
 
         // Columns Names
-        static final String COLUMN_USER_ID = "userId"; // -> Observables Id for identification
-        static final String COLUMN_SITE = "site"; // -> Name of the Site for checking defined in SupportedNetworks.class
-        static final String COLUMN_KEY = "key"; // -> unique User-Id for equivalent social Network
+        public static final String COLUMN_USER_ID = "userId"; // -> Observables Id for identification
+        public static final String COLUMN_SITE = "site"; // -> Name of the Site for checking defined in SupportedNetworks.class
+        public static final String COLUMN_KEY = "key"; // -> unique User-Id for equivalent social Network
 
         // Columns Id's
-        static final int COLUMN_USER_ID_ID = 0;
-        static final int COLUMN_SITE_ID = 1;
-        static final int COLUMN_KEY_ID = 2;
+        public static final int COLUMN_USER_ID_ID = 0;
+        public static final int COLUMN_SITE_ID = 1;
+        public static final int COLUMN_KEY_ID = 2;
 
         static Uri buildSitesUriWithId(long id) {
             return ContentUris.withAppendedId(CONTENT_URI_SITES, id);

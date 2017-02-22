@@ -68,7 +68,7 @@ public class WatchdogProvider extends ContentProvider {
             }
             case CODE_FAVORITES: {
                 return mHelper.getReadableDatabase().query(
-                        WatchdogContract.Favorites.TABLE_NAME,
+                        WatchdogContract.Posts.Favorites.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -79,7 +79,7 @@ public class WatchdogProvider extends ContentProvider {
             }
             case CODE_NEWS_FEED: {
                 return mHelper.getReadableDatabase().query(
-                        WatchdogContract.NewsFeed.TABLE_NAME,
+                        WatchdogContract.Posts.NewsFeed.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -123,17 +123,17 @@ public class WatchdogProvider extends ContentProvider {
                 }
             }
             case CODE_FAVORITES: {
-                long _id = db.insert(WatchdogContract.Favorites.TABLE_NAME, null, values);
+                long _id = db.insert(WatchdogContract.Posts.Favorites.TABLE_NAME, null, values);
                 if (_id > 0) {
-                    return WatchdogContract.Favorites.buildFavoritesUriWithId(_id);
+                    return WatchdogContract.Posts.Favorites.buildFavoritesUriWithId(_id);
                 } else {
                     throw new SQLException("failed to insert row: " + CODE_FAVORITES);
                 }
             }
             case CODE_NEWS_FEED: {
-                long _id = db.insert(WatchdogContract.NewsFeed.TABLE_NAME, null, values);
+                long _id = db.insert(WatchdogContract.Posts.NewsFeed.TABLE_NAME, null, values);
                 if (_id > 0) {
-                    return WatchdogContract.NewsFeed.buildNewsFeedUriWithId(_id);
+                    return WatchdogContract.Posts.NewsFeed.buildNewsFeedUriWithId(_id);
                 } else {
                     throw new SQLException("failed to insert row: " + CODE_NEWS_FEED);
                 }
