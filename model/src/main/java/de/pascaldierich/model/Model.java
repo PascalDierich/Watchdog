@@ -4,14 +4,20 @@ package de.pascaldierich.model;
  * Created by Pascal Dierich on Feb, 2017.
  */
 
+import android.content.Context;
+import android.content.CursorLoader;
+import android.database.Cursor;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.model.domainmodels.Site;
+import de.pascaldierich.model.local.WatchdogContract;
 import de.pascaldierich.model.network.ConstantsApi;
 import de.pascaldierich.model.network.GoogleClient;
 import de.pascaldierich.model.network.models.youtube.channel.YouTubeChannelsPage;
@@ -20,7 +26,7 @@ import de.pascaldierich.model.network.services.YouTubeService;
 
 /**
  * Singleton Repository Class for interacting with 'model' module
- * -> lazy instantiation (!not Thread save!)
+ *      -> lazy instantiation (!not Thread save!)
  *
  * @version 1.0
  */
@@ -31,7 +37,7 @@ public class Model {
      */
 
     // Converter for app - model models
-    Converter mConverter;
+    private Converter mConverter;
 
     private static Model sInstance = null;
 
@@ -50,12 +56,9 @@ public class Model {
         sInstance = null;
     }
 
-
-    /*
-        Network Methods
-     */
-
     /**
+     * Network Methods:
+     *
      * Model consists of 2 kind of network methods.
      * <b>search</b> and <b>getId</b>.
      * on both methods you have to append the intern network name (@interface SupportedNetworks).
@@ -128,9 +131,97 @@ public class Model {
     }
 
 
-    /*
-        Storage Methods
+    /**
+     * Storage Methods:
+     *
      */
 
+    /**
+     * Returns all Observables saved in DB
+     * <p>
+     *
+     * @param context, Context: to access DB
+     * @return POJO Collection, ArrayList<Observable>
+     * @throws ModelException
+     */
+    public ArrayList<Observable> getObservables(Context context) throws ModelException {
+        // Instantiation
+        CursorLoader mLoader = new CursorLoader(context);
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+
+        // Setup CursorLoader
+        loaderWeakReference.get().setUri(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES);
+        loaderWeakReference.get().setProjection(new String[] {
+                WatchdogContract.Observables.COLUMN_USER_ID,
+                WatchdogContract.Observables.COLUMN_NAME,
+                WatchdogContract.Observables.COLUMN_THUMBNAIL});
+        loaderWeakReference.get().setSortOrder(WatchdogContract.Observables.COLUMN_USER_ID);
+
+        Cursor entries = loaderWeakReference.get().loadInBackground();
+
+        return mConverter.getObservables(entries);
+    }
+
+    /**
+     * Returns all Posts in 'Favorites'
+     * <p>
+     *
+     * @param context, Context: to access DB
+     * @return POJO Collection, ArrayList<Post>
+     * @throws ModelException
+     */
+    public ArrayList<Post> getFavorites(Context context) throws ModelException {
+        // Instantiation
+        CursorLoader mLoader = new CursorLoader(context);
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+
+        // Setup CursorLoader
+        loaderWeakReference.get().setUri(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES);
+        loaderWeakReference.get().setProjection(new String[] {
+                WatchdogContract.Posts.COLUMN_ID,
+                WatchdogContract.Posts.COLUMN_USER_ID,
+                WatchdogContract.Posts.COLUMN_THUMBNAIL_URL,
+                WatchdogContract.Posts.COLUMN_DESCRIPTION,
+                WatchdogContract.Posts.COLUMN_TITLE,
+                WatchdogContract.Posts.COLUMN_POST_ID,
+                WatchdogContract.Posts.COLUMN_SITE,
+                WatchdogContract.Posts.Favorites.COLUMN_TIME_SAVED});
+        loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
+
+        Cursor entries = loaderWeakReference.get().loadInBackground();
+
+        return mConverter.getPost(entries);
+    }
+
+    /**
+     * Returns all Posts in 'NewsFeed'
+     * <p>
+     *
+     * @param context, Context: to access DB
+     * @return POJO Collection, ArrayList<Post>
+     * @throws ModelException
+     */
+    public ArrayList<Post> getNewsFeed(Context context) throws ModelException {
+        // Instantiation
+        CursorLoader mLoader = new CursorLoader(context);
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+
+        // Setup CursorLoader
+        loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);
+        loaderWeakReference.get().setProjection(new String[] {
+                WatchdogContract.Posts.COLUMN_ID,
+                WatchdogContract.Posts.COLUMN_USER_ID,
+                WatchdogContract.Posts.COLUMN_THUMBNAIL_URL,
+                WatchdogContract.Posts.COLUMN_DESCRIPTION,
+                WatchdogContract.Posts.COLUMN_TITLE,
+                WatchdogContract.Posts.COLUMN_POST_ID,
+                WatchdogContract.Posts.COLUMN_SITE,
+                WatchdogContract.Posts.NewsFeed.COLUMN_TIME_DOWNLOADED});
+        loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
+
+        Cursor entries = loaderWeakReference.get().loadInBackground();
+
+        return mConverter.getPost(entries);
+    }
 
 }

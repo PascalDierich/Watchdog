@@ -16,7 +16,7 @@ import de.pascaldierich.model.SupportedNetworks;
  */
 public class Post {
     private boolean gotDownloaded;
-    private int _ID;
+    private int _ID; // _ID is only set if gotDownloaded = true.
     private String userId;
     private String thumbnailUrl;
     private String description;
@@ -24,6 +24,7 @@ public class Post {
     private String postId;
     @SupportedNetworks
     private String site;
+    private String timestamp; // timestamp is only set if gotDownloaded = true.
 
     public boolean getGotDownloaded() {
         return gotDownloaded;
@@ -97,4 +98,12 @@ public class Post {
         return this;
     }
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public Post setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
 }

@@ -41,28 +41,28 @@ public class WatchdogDBHelper extends SQLiteOpenHelper {
     }
 
     private String getFavoritesStatement() {
-        return "CREATE TABLE " + WatchdogContract.Favorites.TABLE_NAME + " ("
-                + WatchdogContract.Favorites.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + WatchdogContract.Favorites.COLUMN_USER_ID + " INTEGER NOT NULL,"
-                + WatchdogContract.Favorites.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL,"
-                + WatchdogContract.Favorites.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
-                + WatchdogContract.Favorites.COLUMN_TITLE + " TEXT NOT NULL,"
-                + WatchdogContract.Favorites.COLUMN_POST_ID + " TEXT NOT NULL,"
-                + WatchdogContract.Favorites.COLUMN_SITE + " TEXT NOT NULL,"
-                + WatchdogContract.Favorites.COLUMN_TIME_SAVED + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+        return "CREATE TABLE " + WatchdogContract.Posts.Favorites.TABLE_NAME + " ("
+                + WatchdogContract.Posts.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + WatchdogContract.Posts.COLUMN_USER_ID + " INTEGER NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_TITLE + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_POST_ID + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_SITE + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.Favorites.COLUMN_TIME_SAVED + " DATETIME DEFAULT CURRENT_TIMESTAMP"
                 + ");";
     }
 
     private String getNewsFeedStatement() {
-        return "CREATE TABLE " + WatchdogContract.NewsFeed.TABLE_NAME + " ("
-                + WatchdogContract.NewsFeed.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + WatchdogContract.NewsFeed.COLUMN_USER_ID + " INTEGER NOT NULL,"
-                + WatchdogContract.NewsFeed.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL,"
-                + WatchdogContract.NewsFeed.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
-                + WatchdogContract.NewsFeed.COLUMN_TITLE + " TEXT NOT NULL,"
-                + WatchdogContract.NewsFeed.COLUMN_POST_ID + " TEXT NOT NULL,"
-                + WatchdogContract.NewsFeed.COLUMN_SITE + " TEXT NOT NULL,"
-                + WatchdogContract.NewsFeed.COLUMN_TIME_DOWNLOADED + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+        return "CREATE TABLE " + WatchdogContract.Posts.NewsFeed.TABLE_NAME + " ("
+                + WatchdogContract.Posts.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + WatchdogContract.Posts.COLUMN_USER_ID + " INTEGER NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_TITLE + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_POST_ID + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.COLUMN_SITE + " TEXT NOT NULL,"
+                + WatchdogContract.Posts.NewsFeed.COLUMN_TIME_DOWNLOADED + " DATETIME DEFAULT CURRENT_TIMESTAMP"
                 + ");";
     }
 
