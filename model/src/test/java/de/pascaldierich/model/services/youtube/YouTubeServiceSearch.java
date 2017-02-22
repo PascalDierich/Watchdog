@@ -22,6 +22,7 @@ public class YouTubeServiceSearch {
 
     private String time = "2016-01-01T00:00:00Z"; // RFC3339
     private String[] ids = {
+            "error",
             "UC_x5XG1OV2P6uZZ5FSM9Ttw",
             "UCCI6C8hD-hTZi2JEmS7zvQw"
     };
@@ -33,7 +34,7 @@ public class YouTubeServiceSearch {
         }
     }
 
-    private void TEST_WITH_ID(String id, String time) {
+    public static void TEST_WITH_ID(String id, String time) {
         HttpLoggingInterceptor mLoggingInterceptor = new HttpLoggingInterceptor();
         mLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(mLoggingInterceptor).build();
@@ -66,7 +67,7 @@ public class YouTubeServiceSearch {
         CHECK_FOR_ELEMENTS(youTubeSearchPage);
     }
 
-    private void CHECK_FOR_ELEMENTS(YouTubeSearchPage youTubeSearchPage) {
+    public static void CHECK_FOR_ELEMENTS(YouTubeSearchPage youTubeSearchPage) {
         assertTrue(youTubeSearchPage.getKind().equalsIgnoreCase("youtube#searchListResponse"));
         assertTrue(youTubeSearchPage.getEtag() != null);
         assertTrue(youTubeSearchPage.getPageInfo() != null);

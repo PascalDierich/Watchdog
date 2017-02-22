@@ -9,31 +9,44 @@ package de.pascaldierich.model.domainmodels;
  * @see {local.DOC_Watchdog.md}
  */
 public class Site {
+    private boolean gotDownloaded;
     private int userId;
     private String site;
     private String key;
+
+    public boolean getGotDownloaded() {
+        return gotDownloaded;
+    }
+
+    public Site setGotDownloaded(boolean gotDownloaded) {
+        this.gotDownloaded = gotDownloaded;
+        return this;
+    }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public Site setUserId(int userId) {
         this.userId = userId;
+        return this;
     }
 
     public String getSite() {
         return site;
     }
 
-    public void setSite(String site) {
+    public Site setSite(String site) {
         this.site = site;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public Site setKey(String key) {
         this.key = key;
+        return this;
     }
 }

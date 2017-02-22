@@ -4,74 +4,97 @@ package de.pascaldierich.model.domainmodels;
  * Created by Pascal Dierich on Feb, 2017.
  */
 
+import de.pascaldierich.model.SupportedNetworks;
+
 /**
  * POJO for representing post-entries
  *      -> 'NewsFeed' table and 'Favorites' table
  *      -> downloaded posts for domain-layer
+ *
  * @see {local.DOC_Watchdog.md}
+ * @see {local.WatchdogContract.class}
  */
 public class Post {
+    private boolean gotDownloaded;
     private int _ID;
-    private int userId;
+    private String userId;
     private String thumbnailUrl;
     private String description;
     private String title;
     private String postId;
+    @SupportedNetworks
     private String site;
+
+    public boolean getGotDownloaded() {
+        return gotDownloaded;
+    }
+
+    public Post setGotDownloaded(boolean gotDownloaded) {
+        this.gotDownloaded = gotDownloaded;
+        return this;
+    }
 
     public int get_ID() {
         return _ID;
     }
 
-    public void set_ID(int _ID) {
+    public Post set_ID(int _ID) {
         this._ID = _ID;
+        return this;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public Post setUserId(String userId) {
         this.userId = userId;
+        return this;
     }
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
+    public Post setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Post setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Post setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public Post setPostId(String postId) {
         this.postId = postId;
+        return this;
     }
 
     public String getSite() {
         return site;
     }
 
-    public void setSite(String site) {
+    public Post setSite(@SupportedNetworks String site) {
         this.site = site;
+        return this;
     }
+
 }

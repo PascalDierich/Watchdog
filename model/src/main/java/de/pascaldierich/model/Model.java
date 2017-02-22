@@ -8,10 +8,14 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import de.pascaldierich.model.domainmodels.Post;
+import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.model.network.ConstantsApi;
 import de.pascaldierich.model.network.GoogleClient;
+import de.pascaldierich.model.network.models.youtube.channel.YouTubeChannelsPage;
+import de.pascaldierich.model.network.models.youtube.search.YouTubeSearchPage;
 import de.pascaldierich.model.network.services.YouTubeService;
 
 /**
@@ -66,55 +70,61 @@ public class Model {
     /**
      * Call the YouTube Search Service.
      * <p>
-     * @param id,    String: userId defined as key in 'Sites' table
+     *
+     * @param id,    String: userId defined in 'Sites' table
      * @param time,  String as RFC3339: publishedAfter Parameter in Api-Request
      * @param range, int: number of maxResults in Api-Response
-     * @return POJO, Post
-     * @throws IOException
+     * @return POJO Collection, ArrayList<Post>
+     * @throws ModelException
      */
-    public Post searchYouTube(@NonNull String id,
-                              @NonNull String time,
-                              @IntRange(from = 1, to = 50) int range) throws IOException {
+    public ArrayList<Post> searchYouTube(@NonNull String id,
+                                         @NonNull String time,
+                                         @IntRange(from = 1, to = 50) int range) throws ModelException {
 
-        return mConverter.getPost(
-                GoogleClient.getService(YouTubeService.class)
-                        .getVideos(
-                                ConstantsApi.YOUTUBE_API_KEY,
-                                ConstantsApi.YOUTUBE_SEARCH_PART,
-                                id,
-                                time,
-                                ConstantsApi.YOUTUBE_SEARCH_EVENT_TYPE,
-                                range,
-                                ConstantsApi.YOUTUBE_SEARCH_ORDER,
-                                ConstantsApi.YOUTUBE_SEARCH_TYPE
-                        ).execute().body());
+        try {
+            YouTubeSearchPage page = GoogleClient.getService(YouTubeService.class)
+                    .getVideos(
+                            ConstantsApi.YOUTUBE_API_KEY,
+                            ConstantsApi.YOUTUBE_SEARCH_PART,
+                            id,
+                            time,
+                            ConstantsApi.YOUTUBE_SEARCH_EVENT_TYPE,
+                            range,
+                            ConstantsApi.YOUTUBE_SEARCH_ORDER,
+                            ConstantsApi.YOUTUBE_SEARCH_TYPE
+                    ).execute().body();
+
+            return mConverter.getPost(page, id);
+        } catch (IOException e) {
+            throw new ModelException(e.getMessage());
+        }
     }
 
     /**
-     * Get possibly YouTube-intern-Id's for given name
+     * Get possible YouTube-intern-Id's for given name
      * <p>
+     *
      * @param name,  String: Name of the requested Observable
      * @param range, int: number of maxResults in Api-Response
-     * @return POJO, YouTubeChannelsPage
-     * @throws IOException
+     * @return POJO Collection, ArrayList<Site>
+     * @throws ModelException
      */
-    public Post getIdYouTube(@NonNull String name,
-                             @IntRange(from = 1, to = 50) int range) throws IOException {
+    public ArrayList<Site> getIdYouTube(@NonNull String name,
+                                        @IntRange(from = 1, to = 50) int range) throws ModelException {
 
-        // TODO: 21.02.17 change return POJO getIdYouTube.
-        // 1. Problem Dependency goes inside domain-layer
-        // 2. POJO is too big and most information is not usable.
-        //   --> define model class inside domain-layer
-        //      --> return model class from domain-layer
+        try {
+            YouTubeChannelsPage page = GoogleClient.getService(YouTubeService.class)
+                    .getChannelId(
+                            ConstantsApi.YOUTUBE_API_KEY,
+                            ConstantsApi.YOUTUBE_CHANNEL_PART,
+                            name,
+                            range
+                    ).execute().body();
 
-        return mConverter.getPost(
-                GoogleClient.getService(YouTubeService.class)
-                        .getChannelId(
-                                ConstantsApi.YOUTUBE_API_KEY,
-                                ConstantsApi.YOUTUBE_CHANNEL_PART,
-                                name,
-                                range
-                        ).execute().body());
+            return mConverter.getSite(page);
+        } catch (IOException e) {
+            throw new ModelException(e.getMessage());
+        }
     }
 
 
