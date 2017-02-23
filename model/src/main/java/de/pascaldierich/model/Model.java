@@ -31,7 +31,7 @@ import de.pascaldierich.model.network.services.YouTubeService;
  * and works as Boundary between them.
  *
  * Model always assumes the transmitted data is NonNull and got tested.
- * <b>Every Layer is responsible for transmitting correct data.</b>
+ * <b>Every Layer is responsible for transmitting data correctly.</b>
  *
  * Model converts data for 'app' in <b>3</b> possible POJO's defined in package domainmodels.
  *      Observable -> represents an Observable ¯\_(ツ)_/¯
@@ -118,7 +118,7 @@ public class Model {
 
             return mConverter.getPost(page, observableId);
         } catch (IOException e) {
-            throw new ModelException(e.getMessage());
+            throw new ModelException(-1);
         }
     }
 
@@ -145,7 +145,7 @@ public class Model {
 
             return mConverter.getSite(page);
         } catch (IOException e) {
-            throw new ModelException(e.getMessage());
+            throw new ModelException(-1);
         }
     }
 
@@ -182,10 +182,12 @@ public class Model {
                 WatchdogContract.Observables.COLUMN_NAME,
                 WatchdogContract.Observables.COLUMN_THUMBNAIL});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Observables.COLUMN_USER_ID);
-
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getObservable(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getObservable(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -209,9 +211,12 @@ public class Model {
                 WatchdogContract.Sites.COLUMN_KEY});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getSite(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getSite(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -240,9 +245,12 @@ public class Model {
         loaderWeakReference.get().setSelectionArgs(new String[]{Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getSite(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getSite(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -271,9 +279,12 @@ public class Model {
         loaderWeakReference.get().setSelectionArgs(new String[]{site});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getSite(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getSite(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -302,9 +313,12 @@ public class Model {
                 WatchdogContract.Posts.Favorites.COLUMN_TIME_SAVED});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getPost(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getPost(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -338,9 +352,12 @@ public class Model {
         loaderWeakReference.get().setSelectionArgs(new String[]{Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getPost(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getPost(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -369,9 +386,12 @@ public class Model {
                 WatchdogContract.Posts.NewsFeed.COLUMN_TIME_DOWNLOADED});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getPost(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getPost(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
     /**
@@ -405,9 +425,12 @@ public class Model {
         loaderWeakReference.get().setSelectionArgs(new String[]{Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
 
-        Cursor entries = loaderWeakReference.get().loadInBackground();
-
-        return mConverter.getPost(entries);
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getPost(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
     }
 
 
@@ -429,9 +452,9 @@ public class Model {
                     .insert(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
                             mConverter.getContentValues(observables));
         } catch (SQLException e) {
-            throw new ModelException(e.getMessage());
-        } catch (UnsupportedOperationException ex) {
-            throw new ModelException("intern database error");
+            throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
 
@@ -449,9 +472,9 @@ public class Model {
                     .insert(WatchdogContract.Sites.CONTENT_URI_SITES,
                             mConverter.getContentValues(site));
         } catch (SQLException e) {
-            throw new ModelException(e.getMessage());
-        } catch (UnsupportedOperationException ex) {
-            throw new ModelException("intern database error");
+            throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
 
@@ -469,9 +492,9 @@ public class Model {
                     .insert(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES,
                             mConverter.getContentValues(post));
         } catch (SQLException e) {
-            throw new ModelException(e.getMessage());
-        } catch (UnsupportedOperationException ex) {
-            throw new ModelException("intern database error");
+            throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
 
@@ -489,9 +512,9 @@ public class Model {
                     .insert(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED,
                             mConverter.getContentValues(post));
         } catch (SQLException e) {
-            throw new ModelException(e.getMessage());
-        } catch (UnsupportedOperationException ex) {
-            throw new ModelException("intern database error");
+            throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
 

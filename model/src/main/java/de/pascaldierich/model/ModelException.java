@@ -8,21 +8,21 @@ package de.pascaldierich.model;
  * TODO: write JAVADOC
  */
 public class ModelException extends Exception{
-    @ModelErrors.Codes
-    private int errorCode;
+    @ModelErrorsCodes
+    private int errorCode = ModelErrorsCodes.UNKNOWN_FATAL_ERROR;
     
-    public ModelException(@ModelErrors.Codes int errorCode, @ModelErrors.Messages String message) {
-        super(message);
+    public ModelException(@ModelErrorsCodes int errorCode) {
+        super();
         this.errorCode = errorCode;
     }
 
     /**
-     * Returns errorCode and errorMessage
+     * Returns errorCode
      *
-     * @return errorCode + " " + super.getMessage().
+     * @return errorCode, int: @ModelErrorCodes
      */
-    @Override
-    public String getMessage() {
-        return errorCode + ", " + super.getMessage();
+    @ModelErrorsCodes
+    public int getErrorCode() {
+        return errorCode;
     }
 }
