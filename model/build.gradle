@@ -46,11 +46,11 @@ dependencies {
 def getApiKeyYouTube() {
     Properties properties = new Properties()
     properties.load(new FileInputStream("/Users/pascaldierich/Watchdog_ApiKeys.txt"))
-    return "\"" + properties.getProperty("YouTubeApiKey") +"\""
+    return "\"" + properties.getProperty("YouTubeApiKey") + "\""
 }
 
 def getApiKeyGooglePlus() {
     Properties properties = new Properties()
     properties.load(new FileInputStream("/Users/pascaldierich/Watchdog_ApiKeys.txt"))
-    return "\"" + properties.getProperty("GooglePlusApiKey") +"\""
+    return "\"" + properties.getProperty("GooglePlusApiKey") + "\""
 }

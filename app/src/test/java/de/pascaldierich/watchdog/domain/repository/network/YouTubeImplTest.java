@@ -55,7 +55,7 @@ public class YouTubeImplTest {
         Assert.assertTrue(page.getItems() != null);
 
         if (page.getItems().size() > 0) {
-            for (YouTubeSearchItem item: page.getItems()) {
+            for (YouTubeSearchItem item : page.getItems()) {
                 Assert.assertTrue(item != null);
                 Assert.assertTrue(item.getKind().equalsIgnoreCase("youtube#searchResult"));
                 Assert.assertTrue(item.getEtag() != null);

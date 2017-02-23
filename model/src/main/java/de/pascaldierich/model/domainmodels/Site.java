@@ -6,9 +6,10 @@ package de.pascaldierich.model.domainmodels;
 
 /**
  * POJO for representing site-entries in 'Sites' table
+ *
  * @see {local.DOC_Watchdog.md}
  */
-public class Site {
+public final class Site {
     private boolean gotDownloaded;
     private int userId;
     private String site;

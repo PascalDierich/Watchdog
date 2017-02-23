@@ -6,9 +6,10 @@ package de.pascaldierich.model.domainmodels;
 
 /**
  * POJO for representing observable-entries in 'Observables' table
+ *
  * @see {local.DOC_Watchdog.md}
  */
-public class Observable {
+public final class Observable {
     private boolean gotThumbnail;
     private int userId;
     private String displayName;

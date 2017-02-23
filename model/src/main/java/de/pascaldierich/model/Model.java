@@ -29,14 +29,14 @@ import de.pascaldierich.model.network.services.YouTubeService;
  * Api for 'app'.
  * Model is the only instantiated class inside 'app'
  * and works as Boundary between them.
- *
+ * <p>
  * Model always assumes the transmitted data is NonNull and got tested.
  * <b>Every Layer is responsible for transmitting data correctly.</b>
- *
+ * <p>
  * Model converts data for 'app' in <b>3</b> possible POJO's defined in package domainmodels.
- *      Observable -> represents an Observable ¯\_(ツ)_/¯
- *      Post -> represents one Post, Tweet, Video (depends on Network)
- *      Site -> represents one entry from 'Sites'
+ * Observable -> represents an Observable ¯\_(ツ)_/¯
+ * Post -> represents one Post, Tweet, Video (depends on Network)
+ * Site -> represents one entry from 'Sites'
  *
  * @version 1.0
  */
@@ -44,7 +44,7 @@ public class Model {
 
     /********************************************************************************************
      * Instantiation:
-     *
+     * <p>
      * WeakReference Singleton with 'initialization-on-demand holder idiom'.
      ********************************************************************************************/
 
@@ -85,10 +85,10 @@ public class Model {
      * Call the YouTube Search Service.
      * <p>
      *
-     * @param key, String: userKey defined in 'Sites' table
+     * @param key,          String: userKey defined in 'Sites' table
      * @param observableId, int: intern Id defined in 'Observables' table
-     * @param time,  String as RFC3339: publishedAfter Parameter in Api-Request
-     * @param range, int: number of maxResults in Api-Response
+     * @param time,         String as RFC3339: publishedAfter Parameter in Api-Request
+     * @param range,        int: number of maxResults in Api-Response
      * @return POJO Collection, ArrayList<Post>
      * @throws ModelException
      */
@@ -217,7 +217,7 @@ public class Model {
      * Returns all Sites to specific Observable found by observableId
      * <p>
      *
-     * @param context, Context: to access DB
+     * @param context,      Context: to access DB
      * @param observableId, int: unique Id defined in table 'Observables'
      * @return POJO Collection, ArrayList<Site>: each Site for given Observable
      * @throws ModelException
@@ -236,7 +236,7 @@ public class Model {
         // set selection to column 'userId'
         loaderWeakReference.get().setSelection("WHERE userId =?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
-        loaderWeakReference.get().setSelectionArgs(new String[]{Integer.toString(observableId)});
+        loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
 
         try {
@@ -252,7 +252,7 @@ public class Model {
      * <p>
      *
      * @param context, Context: to access DB
-     * @param site, String: name of supported Network
+     * @param site,    String: name of supported Network
      * @return POJO Collection, ArrayList<Site>: each Site for given Network
      * @throws ModelException
      */
@@ -270,7 +270,7 @@ public class Model {
         // set selection to column 'site'
         loaderWeakReference.get().setSelection("WHERE site =?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
-        loaderWeakReference.get().setSelectionArgs(new String[]{site});
+        loaderWeakReference.get().setSelectionArgs(new String[] {site});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
 
         try {
@@ -319,7 +319,7 @@ public class Model {
      * Returns all Posts in 'Favorites' for given observableId
      * <p>
      *
-     * @param context, Context: to access DB
+     * @param context,      Context: to access DB
      * @param observableId, int: unique Id defined in table 'Observables'
      * @return POJO Collection, ArrayList<Post>: each Post inside 'Favorites' for given observableId
      * @throws ModelException
@@ -343,7 +343,7 @@ public class Model {
         // set selection to column 'userId'
         loaderWeakReference.get().setSelection("WHERE userId =?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
-        loaderWeakReference.get().setSelectionArgs(new String[]{Integer.toString(observableId)});
+        loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
 
         try {
@@ -392,7 +392,7 @@ public class Model {
      * Returns all Posts in 'NewsFeed' for given observableId
      * <p>
      *
-     * @param context, Context: to access DB
+     * @param context,      Context: to access DB
      * @param observableId, int: unique Id defined in table 'Observables'
      * @return POJO Collection, ArrayList<Post>: each Post inside 'NewsFeed' for given observableId
      * @throws ModelException
@@ -416,7 +416,7 @@ public class Model {
         // set selection to column 'userId'
         loaderWeakReference.get().setSelection("WHERE userId =?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
-        loaderWeakReference.get().setSelectionArgs(new String[]{Integer.toString(observableId)});
+        loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
 
         try {
@@ -436,7 +436,7 @@ public class Model {
      * Write a new Observable in table 'Observables'
      * <p>
      *
-     * @param context, Context: to access ContentResolver
+     * @param context,     Context: to access ContentResolver
      * @param observables, Observable, POJO to write in 'Observables'
      * @throws ModelException
      */
@@ -457,7 +457,7 @@ public class Model {
      * <p>
      *
      * @param context, Context: to access ContentResolver
-     * @param site, Site, POJO to write in 'Sites'
+     * @param site,    Site, POJO to write in 'Sites'
      * @throws ModelException
      */
     public void setSite(Context context, Site site) throws ModelException {
@@ -477,7 +477,7 @@ public class Model {
      * <p>
      *
      * @param context, Context: to access ContentResolver
-     * @param post, Post, POJO to write in 'Favorites'
+     * @param post,    Post, POJO to write in 'Favorites'
      * @throws ModelException
      */
     public void setFavorite(Context context, Post post) throws ModelException {
@@ -497,7 +497,7 @@ public class Model {
      * <p>
      *
      * @param context, Context: to access ContentResolver
-     * @param post, Post, POJO to write in 'NewsFeed'
+     * @param post,    Post, POJO to write in 'NewsFeed'
      * @throws ModelException
      */
     public void setNewsFeed(Context context, Post post) throws ModelException {

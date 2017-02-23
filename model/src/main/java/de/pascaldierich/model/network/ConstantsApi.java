@@ -60,5 +60,5 @@ public @interface ConstantsApi {
      * Api Keys
      */
     public static final String PLUS_API_KEY = BuildConfig.GooglePlus_Api_Key;
-    public static final String YOUTUBE_API_KEY  = BuildConfig.YouTube_Api_Key;
+    public static final String YOUTUBE_API_KEY = BuildConfig.YouTube_Api_Key;
 }

@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Retrofits Client for Google Services
- *      - YouTube
- *      - Google+
+ * - YouTube
+ * - Google+
  */
 public class GoogleClient {
 

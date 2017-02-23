@@ -29,7 +29,7 @@ public class YouTubeServiceSearch {
 
     @Test
     public void YOUTUBE_API_SEARCH_RESPONSE_NOT_NULL() {
-        for (String id: ids) {
+        for (String id : ids) {
             TEST_WITH_ID(id, time);
         }
     }
@@ -78,9 +78,9 @@ public class YouTubeServiceSearch {
         System.out.println("PageInfo Check passed");
 
         assertTrue(youTubeSearchPage.getItems() != null);
-    
+
         if (youTubeSearchPage.getItems().size() > 0) {
-            for (YouTubeSearchItem item: youTubeSearchPage.getItems()) {
+            for (YouTubeSearchItem item : youTubeSearchPage.getItems()) {
                 assertTrue(item != null);
                 assertTrue(item.getKind().equalsIgnoreCase("youtube#searchResult"));
                 assertTrue(item.getEtag() != null);

@@ -7,7 +7,7 @@ package de.pascaldierich.model;
 /**
  * TODO: write JAVADOC
  */
-public class ModelException extends Exception{
+public class ModelException extends Exception {
     @ModelErrorsCodes
     private int errorCode = ModelErrorsCodes.UNKNOWN_FATAL_ERROR;
     

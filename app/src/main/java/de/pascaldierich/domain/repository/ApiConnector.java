@@ -10,7 +10,7 @@ import de.pascaldierich.model.Model;
 
 /**
  * ApiConnector
- *
+ * <p>
  * Provides Model-Instance with WeakReference
  */
 public abstract class ApiConnector {

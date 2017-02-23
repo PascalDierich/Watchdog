@@ -79,7 +79,7 @@ public class PlusServiceActivities {
         System.out.println("Header Check passed");
 
         if (!page.getItems().isEmpty()) {
-            for (PlusActivitiesItem item: page.getItems()) {
+            for (PlusActivitiesItem item : page.getItems()) {
                 assertTrue(item.getKind().equalsIgnoreCase("plus#activity"));
                 assertTrue(item.getTitle() != null);
                 assertTrue(item.getPublished() != null);
@@ -103,8 +103,6 @@ public class PlusServiceActivities {
                 CHECK_FOR_ACTOR(item.getObject().getActor());
             }
         }
-
-
 
 
 //        assertTrue(page.);

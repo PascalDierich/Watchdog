@@ -8,55 +8,41 @@ import java.lang.ref.WeakReference;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
-import de.pascaldierich.domain.interactors.base.AbstractInteractor;
+import de.pascaldierich.domain.interactors.storage.Storage;
+import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Site;
 
 /**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
-/**
  * Interactor to save a new Site to intern storage
  */
-public class AddNew extends AbstractInteractor implements AddNewInteractor {
-    private Callback mCallback;
-    private WeakReference<Context> wContext;
+public class Set extends Storage implements StorageInteractor {
+    private StorageInteractor.SetCallback mCallback;
     private Site mItem;
 
     /**
      * Constructor
      * <p>
      *
-     * @param executor, Executor:
+     * @param executor,   Executor:
      * @param mainThread, MainThread:
-     * @param callback, AddNewInteractor.Callback: usually represented by 'this'
-     * @param context, WeakReference<Context>: Context to access DB
-     * @param item, Site: new Site to store
+     * @param callback,   AddNewInteractor.Callback: usually represented by 'this'
+     * @param context,    WeakReference<Context>: Context to access DB
+     * @param item,       Site: new Site to store
      */
-    public AddNew(@NonNull Executor executor, @NonNull MainThread mainThread,
-                  @NonNull Callback callback, @NonNull WeakReference<Context> context,
-                  @Nullable Site item) {
-        super(executor, mainThread);
+    public Set(@NonNull Executor executor, @NonNull MainThread mainThread,
+               @NonNull WeakReference<Context> context,
+               @NonNull StorageInteractor.SetCallback callback,
+               @Nullable Site item) {
+        super(executor, mainThread, context);
 
         mCallback = callback;
-        wContext = context;
         mItem = item;
     }
 
     /**
-     * Set a new Context
-     * <p>
-     *
-     * @param context, WeakReference<Context>: Context to access DB
-     */
-    public void setContext(@NonNull WeakReference<Context> context) {
-        this.wContext = context;
-    }
-
-    /**
-     * set a new Site to store
+     * Set a new Site
      * <p>
      *
      * @param item, Site: new Site to store
@@ -91,7 +77,8 @@ public class AddNew extends AbstractInteractor implements AddNewInteractor {
         } catch (final ModelException modelE) {
             mMainThread.post(new Runnable() {
                 @Override
-                public void run() {mCallback.onFailure(modelE.getErrorCode());
+                public void run() {
+                    mCallback.onFailure(modelE.getErrorCode());
                 }
             });
         }

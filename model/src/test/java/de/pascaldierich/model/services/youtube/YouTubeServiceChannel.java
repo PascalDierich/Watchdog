@@ -29,7 +29,7 @@ public class YouTubeServiceChannel {
 
     @Test
     public void YOUTUBE_API_CHANNEL_RESPONSE_NOT_NULL() {
-        for (String name: testNames) {
+        for (String name : testNames) {
             TEST_WITH_NAME(name);
         }
     }
@@ -53,8 +53,8 @@ public class YouTubeServiceChannel {
                             ConstantsApi.YOUTUBE_CHANNEL_PART,
                             name,
                             5)
-                        .execute()
-                        .body();
+                            .execute()
+                            .body();
 
             assertTrue(youTubeChannelsPage != null);
 

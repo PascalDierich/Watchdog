@@ -8,13 +8,13 @@ import de.pascaldierich.model.SupportedNetworks;
 
 /**
  * POJO for representing post-entries
- *      -> 'NewsFeed' table and 'Favorites' table
- *      -> downloaded posts for domain-layer
+ * -> 'NewsFeed' table and 'Favorites' table
+ * -> downloaded posts for domain-layer
  *
  * @see {local.DOC_Watchdog.md}
  * @see {local.WatchdogContract.class}
  */
-public class Post {
+public final class Post {
     private boolean gotDownloaded;
     private int _ID; // _ID is only set if gotDownloaded = true.
     private int userId;

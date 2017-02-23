@@ -1,5 +1,7 @@
 package de.pascaldierich.domain.interactors.base;
 
+import android.support.annotation.NonNull;
+
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 
@@ -15,7 +17,7 @@ public abstract class AbstractInteractor implements BaseInteractor {
     private volatile boolean mIsCanceled;
     private volatile boolean mIsRunning;
 
-    protected AbstractInteractor(Executor threadExecutor, MainThread mainThread) {
+    public AbstractInteractor(@NonNull Executor threadExecutor, @NonNull MainThread mainThread) {
         mThreadExecutor = threadExecutor;
         mMainThread = mainThread;
     }

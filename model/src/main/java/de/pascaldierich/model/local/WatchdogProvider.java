@@ -88,7 +88,7 @@ public class WatchdogProvider extends ContentProvider {
                         sortOrder
                 );
             }
-            default :
+            default:
                 throw new UnsupportedOperationException("Not supported URI: " + uri);
         }
     }
