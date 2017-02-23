@@ -1,5 +1,6 @@
 package de.pascaldierich.domain.interactors.storage.observable;
 
+import de.pascaldierich.domain.interactors.base.BaseCallback;
 import de.pascaldierich.domain.interactors.base.BaseInteractor;
 
 /**
@@ -11,10 +12,10 @@ import de.pascaldierich.domain.interactors.base.BaseInteractor;
  */
 public interface AddNewInteractor extends BaseInteractor {
 
+    interface Callback extends BaseCallback {
 
-    interface Callback {
+        void onSuccess();
 
     }
-
 
 }

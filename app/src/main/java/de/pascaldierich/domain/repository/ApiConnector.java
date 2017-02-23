@@ -13,7 +13,7 @@ import de.pascaldierich.model.Model;
  *
  * Provides Model-Instance with WeakReference
  */
-public class ApiConnector {
+public abstract class ApiConnector {
     public static WeakReference<Model> getApi() {
         return Model.getInstance();
     }
