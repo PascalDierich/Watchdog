@@ -45,28 +45,22 @@ public class Model {
     /********************************************************************************************
      * Instantiation:
      *
-     * Singleton with lazy instantiation.
-     * <b>not Thread save!</b>
+     * WeakReference Singleton with 'initialization-on-demand holder idiom'.
      ********************************************************************************************/
 
     // Converter for app - model models
     private Converter mConverter;
 
-    private static Model sInstance = null;
-
     private Model() {
         mConverter = new Converter();
     }
 
-    public static Model getInstance() {
-        if (sInstance == null) {
-            sInstance = new Model();
-        }
-        return sInstance;
+    public static WeakReference<Model> getInstance() {
+        return ModelHolder.INSTANCE;
     }
 
-    public static void finished() {
-        sInstance = null;
+    private static class ModelHolder {
+        private static final WeakReference<Model> INSTANCE = new WeakReference<>(new Model());
     }
 
     /********************************************************************************************
