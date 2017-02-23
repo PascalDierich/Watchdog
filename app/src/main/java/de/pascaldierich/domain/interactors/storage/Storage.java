@@ -26,7 +26,7 @@ public abstract class Storage extends AbstractInteractor implements StorageInter
      * @param context context, WeakReference<Context>: Context to access DB
      */
     public Storage(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-                      @NonNull WeakReference<Context> context) {
+                   @NonNull WeakReference<Context> context) {
         super(threadExecutor, mainThread);
     }
 
