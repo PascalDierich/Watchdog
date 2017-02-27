@@ -1,9 +1,5 @@
 package de.pascaldierich.model.domainmodels;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
 import de.pascaldierich.model.SupportedNetworks;
 
 /**
