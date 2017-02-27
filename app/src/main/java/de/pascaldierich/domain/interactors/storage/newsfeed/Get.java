@@ -11,8 +11,10 @@ import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.Storage;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.repository.ApiConnector;
+import de.pascaldierich.model.Model;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Post;
+import hugo.weaving.DebugLog;
 
 /**
  * Interactor to get a Post from 'NewsFeed'
@@ -72,14 +74,16 @@ public class Get extends Storage implements StorageInteractor {
     /**
      * run Interactor
      */
+    @DebugLog
     @Override
     public void run() {
         try {
             final ArrayList<Post> result;
+            WeakReference<Model> Model = ApiConnector.getApi();
             if (mObservableId < 1)
-                result = ApiConnector.getApi().get().getNewsFeed(wContext.get());
+                result = Model.get().getNewsFeed(wContext.get());
             else
-                result = ApiConnector.getApi().get().getNewsFeed(wContext.get(), mObservableId);
+                result = Model.get().getNewsFeed(wContext.get(), mObservableId);
 
             mMainThread.post(new Runnable() {
                 @Override

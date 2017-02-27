@@ -2,7 +2,6 @@ package de.pascaldierich.domain.interactors.storage;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public interface StorageInteractor extends BaseInteractor {
         /**
          * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
          */
-        void onSuccess(@Nullable ArrayList<?> result);
+        void onSuccess(@NonNull ArrayList<?> result);
 
     }
 

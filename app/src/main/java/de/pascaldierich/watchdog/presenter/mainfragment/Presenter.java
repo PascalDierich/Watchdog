@@ -1,14 +1,17 @@
 package de.pascaldierich.watchdog.presenter.mainfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.model.ModelErrorsCodes;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
+import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractObservableListPresenter
         implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback {
@@ -26,17 +29,21 @@ public class Presenter extends AbstractObservableListPresenter
         mView = view;
     }
 
-    public static Presenter onStart(Executor executor, MainThread mainThread, Bundle savedInstance,
+    public static Presenter onCreate(Executor executor, MainThread mainThread, Bundle savedInstance,
                                     ObservableListPresenter.View view) {
         return new Presenter(executor, mainThread, savedInstance, view);
     }
 
-    /**
-     * onResume calls the super().getInitialData() method from AbstractXXXPresenter
-     */
+    @DebugLog
+    @Override
+    public void onStart() {
+        // read out intern Storage to get all Observables
+        super.getObservables(mExecutor, mMainThread, mView.getWeakContext(), this);
+    }
+
     @Override
     public void onResume() {
-        super.getInitialData(mExecutor, mMainThread, mView.getWeakContext(), this);
+
     }
 
     @Override
@@ -49,9 +56,8 @@ public class Presenter extends AbstractObservableListPresenter
      * @param result
      */
     @Override
-    public void onSuccess(@Nullable ArrayList<?> result) {
-        // TODO: 27.02.17 Check result
-        super.extractNewsNumbers(result);
+    public void onSuccess(@NonNull ArrayList<?> result) {
+        mView.setData((ArrayList<Observable>) result);
     }
 
     /**
@@ -59,26 +65,33 @@ public class Presenter extends AbstractObservableListPresenter
      */
     @Override
     public void onError(@ErrorPresenter int errorCode) {
-
+        mView.showError();
     }
 
     /**
-     * @param observableId
+     *
+     * @param observableId, int: unique Observables identifier
      */
     @Override
     public void onObservableSelected(int observableId) {
+        // TODO: 27.02.17 define keys in strings.xml
+        Bundle bundle = new Bundle();
+        for (int i = 0; i < mObservables.size(); i++) {
+            if (mObservables.get(i).getUserId() == observableId) {
+                bundle.putString("displayName", mObservables.get(i).getDisplayName());
+                bundle.putInt("observableId", observableId);
 
-    }
+                if (mObservables.get(i).getGotThumbnail()) {
+                    bundle.putByteArray("thumbnail", mObservables.get(i).getThumbnail());
+                    bundle.putBoolean("gotThumbnail", true);
+                } else {
+                    bundle.putBoolean("gotThumbnail", false);
+                }
+                break;
+            }
+        }
 
-    /**
-     * search in NewsFeedPosts for specific news from observableId (param).
-     *
-     * @param observableId
-     */
-    @Override
-    public void searchNewsFeed(int observableId) {
-        super.getNews(observableId);
-
+        mView.startActivity(new Intent().putExtra("Observable", bundle));
     }
 
     @Override

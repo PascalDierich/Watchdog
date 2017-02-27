@@ -9,20 +9,29 @@ import java.util.ArrayList;
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
-import de.pascaldierich.domain.interactors.storage.newsfeed.Get;
-import de.pascaldierich.model.domainmodels.Post;
+import de.pascaldierich.domain.interactors.storage.observable.Get;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
+import hugo.weaving.DebugLog;
 
 public abstract class AbstractObservableListPresenter extends AbstractPresenter {
-    private ArrayList<Post> mNewsFeed;
 
+    // Collection of all Observables in 'Observables'
+    protected ArrayList<Observable> mObservables;
+
+    /**
+     * @see {@link AbstractPresenter}
+     */
     protected AbstractObservableListPresenter(Executor executor, MainThread mainThread, Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
-        mNewsFeed = new ArrayList<>();
+        mObservables = new ArrayList<>();
     }
 
-
-    protected void getInitialData(Executor executor, MainThread mainThread,
+    /**
+     * @see {@link Get}
+     */
+    @DebugLog
+    protected void getObservables(Executor executor, MainThread mainThread,
                                   WeakReference<Context> context, StorageInteractor.GetCallback presenter) {
 
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
@@ -33,13 +42,5 @@ public abstract class AbstractObservableListPresenter extends AbstractPresenter 
         ));
 
         wInteractor.get().run();
-    }
-
-    protected void extractNewsNumbers(ArrayList<?> newsFeed) {
-
-    }
-
-    protected void getNews(int observableId) {
-
     }
 }

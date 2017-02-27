@@ -10,23 +10,10 @@ package de.pascaldierich.watchdog.presenter.base;
 public interface BaseUIPresenter {
 
     /**
-     * in onCreate the Singleton-Presenter is going to be created
-     * @param executor
-     * @param mainThread
-     * @param savedInstance
+     * onStart is used to get initialData.
      */
-//    void onCreate(Executor executor, MainThread mainThread, Bundle savedInstance);
+    void onStart();
 
-    /**
-     * onStart returns a Presenter-Instance
-     * @param <T>
-     * @return
-     */
-//    <T extends AbstractPresenter> T onStart();
-
-    /**
-     * onResume calls the super().getInitialData() method from AbstractXXXPresenter
-     */
     void onResume();
 
     void onPause();

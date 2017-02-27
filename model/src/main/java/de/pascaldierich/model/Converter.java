@@ -97,6 +97,9 @@ public class Converter {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
 
+        if (entries.getCount() == 0)
+            throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
+
         do {
             result.add(new Post()
                     .setGotDownloaded(gotDownloaded)
@@ -180,6 +183,9 @@ public class Converter {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
 
+        if (entries.getCount() == 0)
+            throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
+
         do {
             result.add(new Site()
                     .setGotDownloaded(gotDownloaded)
@@ -217,6 +223,9 @@ public class Converter {
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
+
+        if (entries.getCount() == 0)
+            throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
 
         do {
             Observable item = new Observable();

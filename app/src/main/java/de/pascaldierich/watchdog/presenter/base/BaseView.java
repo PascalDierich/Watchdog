@@ -8,4 +8,6 @@ public interface BaseView {
 
     WeakReference<Context> getWeakContext();
 
+    void showError();
+
 }

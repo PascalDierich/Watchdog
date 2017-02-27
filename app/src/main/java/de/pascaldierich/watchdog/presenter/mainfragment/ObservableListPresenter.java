@@ -1,31 +1,29 @@
 package de.pascaldierich.watchdog.presenter.mainfragment;
 
+import android.content.Intent;
+
+import java.util.ArrayList;
+
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface ObservableListPresenter extends BaseUIPresenter {
     /**
-     * search in NewsFeedPosts for specific news from observableId (param).
-     * @param observableId
-     */
-    void searchNewsFeed(int observableId);
-
-    /**
+     * called by onClickListener for CardView
      *
-     * @param observableId
+     * @param observableId, int: unique Observables identifier
      */
     void onObservableSelected(int observableId);
 
     interface View extends BaseView {
 
         /**
-         * show initial Data
+         * show Observables
          */
-        void setData();
+        void setData(ArrayList<Observable> observables);
 
-
-
-        void startNewsFeed();
+        void startActivity(Intent intent);
 
     }
 
