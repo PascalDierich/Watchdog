@@ -24,6 +24,7 @@ import de.pascaldierich.model.network.GoogleClient;
 import de.pascaldierich.model.network.models.youtube.channel.YouTubeChannelsPage;
 import de.pascaldierich.model.network.models.youtube.search.YouTubeSearchPage;
 import de.pascaldierich.model.network.services.YouTubeService;
+import hugo.weaving.DebugLog;
 
 /**
  * Api for 'app'.
@@ -92,6 +93,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> searchYouTube(@NonNull String key,
                                          int observableId,
                                          @NonNull String time,
@@ -125,6 +127,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Site>
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Site> getIdYouTube(@NonNull String name,
                                         @IntRange(from = 1, to = 50) int range) throws ModelException {
 
@@ -164,6 +167,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Observable>
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Observable> getObservables(Context context) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -192,6 +196,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Site>
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Site> getSites(Context context) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -222,6 +227,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Site>: each Site for given Observable
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Site> getSites(Context context, int observableId) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -256,6 +262,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Site>: each Site for given Network
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Site> getSites(Context context, @SupportedNetworks String site) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -289,6 +296,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>: each Post inside 'Favorites'
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> getFavorites(Context context) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -324,6 +332,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>: each Post inside 'Favorites' for given observableId
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> getFavorites(Context context, int observableId) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -362,6 +371,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>: each Post inside 'NewsFeed'
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> getNewsFeed(Context context) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -397,6 +407,7 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>: each Post inside 'NewsFeed' for given observableId
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> getNewsFeed(Context context, int observableId) throws ModelException {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
@@ -440,6 +451,7 @@ public class Model {
      * @param observables, Observable, POJO to write in 'Observables'
      * @throws ModelException
      */
+    @DebugLog
     public void setObservable(Context context, Observable observables) throws ModelException {
         try {
             context.getContentResolver()
@@ -460,6 +472,7 @@ public class Model {
      * @param site,    Site, POJO to write in 'Sites'
      * @throws ModelException
      */
+    @DebugLog
     public void setSite(Context context, Site site) throws ModelException {
         try {
             context.getContentResolver()
@@ -480,6 +493,7 @@ public class Model {
      * @param post,    Post, POJO to write in 'Favorites'
      * @throws ModelException
      */
+    @DebugLog
     public void setFavorite(Context context, Post post) throws ModelException {
         try {
             context.getContentResolver()
@@ -500,6 +514,7 @@ public class Model {
      * @param post,    Post, POJO to write in 'NewsFeed'
      * @throws ModelException
      */
+    @DebugLog
     public void setNewsFeed(Context context, Post post) throws ModelException {
         try {
             context.getContentResolver()

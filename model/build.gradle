@@ -31,6 +31,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
+    // Hugo
+    compile 'com.jakewharton.hugo:hugo-annotations:1.2.1'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -40,6 +42,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
 }
 
 

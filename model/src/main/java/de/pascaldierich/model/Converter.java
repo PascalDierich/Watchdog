@@ -18,6 +18,7 @@ import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.model.local.WatchdogContract;
 import de.pascaldierich.model.network.models.youtube.channel.YouTubeChannelsPage;
 import de.pascaldierich.model.network.models.youtube.search.YouTubeSearchPage;
+import hugo.weaving.DebugLog;
 
 /**
  * app - model Converter.
@@ -42,6 +43,7 @@ public class Converter {
      * @return result, ArrayList<Post>: Collection of all Posts
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> getPost(@Nullable YouTubeSearchPage page, int userId) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = false;
@@ -84,6 +86,7 @@ public class Converter {
      * @return result, ArrayList<Post>: Collection of all given Posts in Cursor
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Post> getPost(@Nullable Cursor entries) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = true;
@@ -132,6 +135,7 @@ public class Converter {
      * @return result, ArrayList<Site>: Collection of all Sites
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Site> getSite(@Nullable YouTubeChannelsPage page) throws ModelException {
         ArrayList<Site> result = new ArrayList<>();
         gotDownloaded = false;
@@ -170,6 +174,7 @@ public class Converter {
      * @return result, ArrayList<Site>: Collection of all given Sites in Cursor
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Site> getSite(@Nullable Cursor entries) throws ModelException {
         ArrayList<Site> result = new ArrayList<>();
         gotDownloaded = true;
@@ -212,6 +217,7 @@ public class Converter {
      * @return result, ArrayList<Observable>: Collection of all given Observables in Cursor
      * @throws ModelException
      */
+    @DebugLog
     public ArrayList<Observable> getObservable(@Nullable Cursor entries) throws ModelException {
         ArrayList<Observable> result = new ArrayList<>();
 
@@ -262,6 +268,7 @@ public class Converter {
      * @param observable, Observable
      * @return result, ContentValues: converted Observable with ColumnName's as key
      */
+    @DebugLog
     public ContentValues getContentValues(@NonNull Observable observable) {
         ContentValues result = new ContentValues();
 
@@ -281,6 +288,7 @@ public class Converter {
      * @param site, Site
      * @return result, ContentValues: converted Site with ColumnName's as key
      */
+    @DebugLog
     public ContentValues getContentValues(@NonNull Site site) {
         ContentValues result = new ContentValues();
 
@@ -298,6 +306,7 @@ public class Converter {
      * @param post, Post
      * @return result, ContentValues: converted Post with ColumnName's as key
      */
+    @DebugLog
     public ContentValues getContentValues(@NonNull Post post) {
         ContentValues result = new ContentValues();
 

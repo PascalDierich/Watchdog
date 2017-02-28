@@ -8,16 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresenter;
 import de.pascaldierich.watchdog.presenter.fragments.main.Presenter;
+import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
 
 public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
     private Presenter mPresenter;
-    private Bundle mSavedInstanceState;
+    private ObservablesContainerAdapter mAdapter;
 
     private View mRootView;
 
@@ -27,12 +30,19 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     }
 
     @Override
+    public void showError() {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: 27.02.17 set Layout
-        mSavedInstanceState = savedInstanceState;
+        mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
+                savedInstanceState, this);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
@@ -44,22 +54,22 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter = Presenter.onStart(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                mSavedInstanceState, this);
+        mPresenter.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        mPresenter.onResume();
     }
 
     /**
-     * show initial Data
+     * show Observables
+     *
+     * @param observables
      */
     @Override
-    public void setData() {
+    public void setData(ArrayList<Observable> observables) {
+
 
     }
 }

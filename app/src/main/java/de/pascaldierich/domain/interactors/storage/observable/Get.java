@@ -13,6 +13,7 @@ import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Observable;
+import hugo.weaving.DebugLog;
 
 /**
  * Interactor to get an Observable from intern storage
@@ -40,6 +41,7 @@ public class Get extends Storage implements StorageInteractor {
     /**
      * run Interactor
      */
+    @DebugLog
     @Override
     public void run() {
         try {
