@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
+import de.pascaldierich.domain.interactors.network.GetIdInteractor;
+import de.pascaldierich.domain.interactors.network.YouTube;
 import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
@@ -28,10 +31,18 @@ public abstract class AbstractMainPresenter extends AbstractPresenter {
     }
 
     @DebugLog
-    protected void getPossibleIds(@SupportedNetworks String site, @NonNull String name) {
+    protected void getPossibleIds(@SupportedNetworks String site, @NonNull String name,
+                                  GetIdInteractor.GetIdCallback presenter) {
         switch (site) {
             case SupportedNetworks.YOUTUBE: {
-                // TODO: 28.02.17 add Interactor
+                WeakReference<YouTube> wInteractor = new WeakReference<YouTube>(new YouTube(
+                        super.mExecutor,
+                        super.mMainThread,
+                        presenter,
+                        name
+                ));
+
+                wInteractor.get().run();
             }
             default: {
                 // TODO: 28.02.17 define Error-routine

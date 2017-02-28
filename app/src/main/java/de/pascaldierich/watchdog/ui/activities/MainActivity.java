@@ -1,16 +1,17 @@
-package de.pascaldierich.watchdog.ui;
+package de.pascaldierich.watchdog.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import de.pascaldierich.watchdog.R;
+import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
 
-public class ObservableActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_observable);
+        setContentView(R.layout.activity_main);
     }
 
     @Override

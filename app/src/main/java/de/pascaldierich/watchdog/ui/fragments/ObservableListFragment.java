@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.ui;
+package de.pascaldierich.watchdog.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
