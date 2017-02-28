@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.presenter.mainfragment;
+package de.pascaldierich.watchdog.presenter.fragments.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +38,7 @@ public class Presenter extends AbstractObservableListPresenter
     @Override
     public void onStart() {
         // read out intern Storage to get all Observables
-        super.getObservables(mExecutor, mMainThread, mView.getWeakContext(), this);
+        super.getObservables(mView.getWeakContext(), this);
     }
 
     @Override

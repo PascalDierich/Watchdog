@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.presenter.mainfragment;
+package de.pascaldierich.watchdog.presenter.fragments.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -31,12 +31,11 @@ public abstract class AbstractObservableListPresenter extends AbstractPresenter 
      * @see {@link Get}
      */
     @DebugLog
-    protected void getObservables(Executor executor, MainThread mainThread,
-                                  WeakReference<Context> context, StorageInteractor.GetCallback presenter) {
+    protected void getObservables(WeakReference<Context> context, StorageInteractor.GetCallback presenter) {
 
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
-                executor,
-                mainThread,
+                super.mExecutor,
+                super.mMainThread,
                 context,
                 presenter
         ));

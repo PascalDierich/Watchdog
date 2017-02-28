@@ -12,8 +12,8 @@ import java.lang.ref.WeakReference;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
-import de.pascaldierich.watchdog.presenter.mainfragment.ObservableListPresenter;
-import de.pascaldierich.watchdog.presenter.mainfragment.Presenter;
+import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresenter;
+import de.pascaldierich.watchdog.presenter.fragments.main.Presenter;
 
 public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
     private Presenter mPresenter;

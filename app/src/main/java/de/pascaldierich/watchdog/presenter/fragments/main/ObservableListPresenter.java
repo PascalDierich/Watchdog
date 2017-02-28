@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.presenter.mainfragment;
+package de.pascaldierich.watchdog.presenter.fragments.main;
 
 import android.content.Intent;
 
@@ -23,6 +23,7 @@ public interface ObservableListPresenter extends BaseUIPresenter {
          */
         void setData(ArrayList<Observable> observables);
 
+        // TODO: change method signature and behaviour for twoPaneMode
         void startActivity(Intent intent);
 
     }
