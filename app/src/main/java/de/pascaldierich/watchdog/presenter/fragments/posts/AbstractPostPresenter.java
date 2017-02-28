@@ -3,6 +3,7 @@ package de.pascaldierich.watchdog.presenter.fragments.posts;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
     /**
      * @see {@link AbstractPresenter}
      */
-    protected AbstractPostPresenter(Executor executor, MainThread mainThread, Bundle savedInstance) {
+    protected AbstractPostPresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
         mPosts = new ArrayList<>();
     }
