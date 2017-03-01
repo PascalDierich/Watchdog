@@ -43,7 +43,6 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         mRootView = inflater.inflate(R.layout.fragment_observable_list, container, false);

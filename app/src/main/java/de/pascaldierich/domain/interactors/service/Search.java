@@ -52,13 +52,11 @@ public class Search {
             Site site;
 
             for (int i = 0; i < sites.size(); i++) {
-                site = sites.get(i);
-
-                switch (site.getSite()) {
+                switch (sites.get(i).getSite()) {
                     // Check for all SupportedNetworks
                     case SupportedNetworks.YOUTUBE: {
                         result.addAll(ApiConnector.getApi().get().searchYouTube(
-                                site.getKey(), site.getUserId(), mTime, mRange));
+                                sites.get(i).getKey(), sites.get(i).getUserId(), mTime, mRange));
                         break;
                     }
                 }
