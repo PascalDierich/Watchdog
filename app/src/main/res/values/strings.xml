@@ -4,4 +4,15 @@
 
     <string name="sync_account_type">watchdog.pascaldierich.de</string>
 
+    <!--
+        intern communication
+    -->
+
+    <string name="observableKey" translatable="false">Observable</string>
+    <string name="observableKey_displayName" translatable="false">displayName</string>
+    <string name="observableKey_observableId" translatable="false">observableId</string>
+    <string name="observableKey_thumbnail" translatable="false">thumbnail</string>
+    <string name="observableKey_gotThumbnail" translatable="false">gotThumbnail</string>
+
+
 </resources>

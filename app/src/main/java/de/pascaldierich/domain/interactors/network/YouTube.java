@@ -64,7 +64,7 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
     public void run() {
         try {
             final ArrayList<Site> result
-                    = ApiConnector.getApi().get().getIdYouTube(mName, 10); // TODO: 28.02.17 define global-range
+                    = ApiConnector.getApi().get().getIdYouTube(mName, mRange);
 
             mMainThread.post(new Runnable() {
                 @Override

@@ -14,7 +14,7 @@ import de.pascaldierich.model.domainmodels.Site;
 
 /**
  * Interactor to search for new Posts.
- * Gets called by TODO: add Service name
+ * Gets called by WatchdogSyncService.class
  *      -> so no need to worry about background Thread
  */
 public class Search {

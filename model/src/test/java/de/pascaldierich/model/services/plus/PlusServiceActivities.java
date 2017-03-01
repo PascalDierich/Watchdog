@@ -106,7 +106,6 @@ public class PlusServiceActivities {
 
 
 //        assertTrue(page.);
-        // TODO: 10.02.17 check for Elements and create JSON-POJOs
     }
 
     private void CHECK_FOR_ACTOR(PlusActivitiesItemActor actor) {

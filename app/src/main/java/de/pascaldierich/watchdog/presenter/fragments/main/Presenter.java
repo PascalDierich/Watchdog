@@ -10,6 +10,7 @@ import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
+import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import hugo.weaving.DebugLog;
 
@@ -74,24 +75,29 @@ public class Presenter extends AbstractObservableListPresenter
      */
     @Override
     public void onObservableSelected(int observableId) {
-        // TODO: 27.02.17 define keys in strings.xml
         Bundle bundle = new Bundle();
         for (int i = 0; i < mObservables.size(); i++) {
             if (mObservables.get(i).getUserId() == observableId) {
-                bundle.putString("displayName", mObservables.get(i).getDisplayName());
-                bundle.putInt("observableId", observableId);
+                bundle.putString(mView.getWeakContext().get().getString(R.string.observableKey_displayName),
+                        mObservables.get(i).getDisplayName());
+                bundle.putInt(mView.getWeakContext().get().getString(R.string.observableKey_observableId),
+                        observableId);
 
                 if (mObservables.get(i).getGotThumbnail()) {
-                    bundle.putByteArray("thumbnail", mObservables.get(i).getThumbnail());
-                    bundle.putBoolean("gotThumbnail", true);
+                    bundle.putByteArray(mView.getWeakContext().get().getString(R.string.observableKey_thumbnail),
+                            mObservables.get(i).getThumbnail());
+                    bundle.putBoolean(mView.getWeakContext().get().getString(R.string.observableKey_gotThumbnail),
+                            true);
                 } else {
-                    bundle.putBoolean("gotThumbnail", false);
+                    bundle.putBoolean(mView.getWeakContext().get().getString(R.string.observableKey_gotThumbnail),
+                            false);
                 }
                 break;
             }
         }
 
-        mView.startActivity(new Intent().putExtra("Observable", bundle));
+        mView.startActivity(new Intent().putExtra(mView.getWeakContext().get().getString(R.string.observableKey),
+                bundle));
     }
 
     @Override
