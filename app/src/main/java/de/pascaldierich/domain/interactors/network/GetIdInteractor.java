@@ -1,5 +1,6 @@
 package de.pascaldierich.domain.interactors.network;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -17,6 +18,14 @@ public interface GetIdInteractor extends BaseInteractor {
      * @param name, String: Name to search for
      */
     void setName(@NonNull String name);
+
+    /**
+     * Set a new Range
+     * <p>
+     *
+     * @param range, int: max numbers of Result
+     */
+    void setRange(@IntRange(from = 1, to = 50) int range);
 
     interface GetIdCallback extends BaseCallback {
 

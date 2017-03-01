@@ -5,7 +5,6 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface MainPresenter extends BaseUIPresenter {
 
-
     interface View extends BaseView {
 
         /**

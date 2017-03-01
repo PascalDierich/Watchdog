@@ -16,7 +16,12 @@ import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
-public abstract class AbstractMainPresenter extends AbstractPresenter {
+abstract class AbstractMainPresenter extends AbstractPresenter {
+
+    /**
+     * max number of Result for Id-Request
+     */
+    private final int RANGE = 10;
 
     // Collection of new 'Sites'
     protected ArrayList<Site> mSites;
@@ -39,7 +44,8 @@ public abstract class AbstractMainPresenter extends AbstractPresenter {
                         super.mExecutor,
                         super.mMainThread,
                         presenter,
-                        name
+                        name,
+                        RANGE
                 ));
 
                 wInteractor.get().run();

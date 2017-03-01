@@ -1,5 +1,6 @@
 package de.pascaldierich.domain.interactors.network;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -14,32 +15,46 @@ import de.pascaldierich.model.domainmodels.Site;
 public class YouTube extends AbstractInteractor implements GetIdInteractor {
     private GetIdInteractor.GetIdCallback mCallback;
     private String mName;
+    private int mRange;
 
-    // TODO: 01.03.17 add int range parameter to constructor's
     public YouTube(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-                   @NonNull GetIdInteractor.GetIdCallback callback) {
+                   @NonNull GetIdInteractor.GetIdCallback callback, @IntRange(from = 1, to = 50) int range) {
         super(threadExecutor, mainThread);
 
         mCallback = callback;
+        mRange = range;
     }
 
     public YouTube(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-                   @NonNull GetIdInteractor.GetIdCallback callback, String name) {
+                   @NonNull GetIdInteractor.GetIdCallback callback, String name,
+                   @IntRange(from = 1, to = 50) int range) {
         super(threadExecutor, mainThread);
 
         mCallback = callback;
         mName = name;
+        mRange = range;
     }
 
     /**
      * Set a new Name
      * <p>
      *
-     * @param name
+     * @param name, String: Name to search for
      */
     @Override
     public void setName(@NonNull String name) {
         mName = name;
+    }
+
+    /**
+     * Set a new Range
+     * <p>
+     *
+     * @param range, int: max numbers of Result
+     */
+    @Override
+    public void setRange(@IntRange(from = 1, to = 50) int range) {
+        mRange = range;
     }
 
     /**
