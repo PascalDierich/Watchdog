@@ -48,7 +48,10 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        if (mItems == null)
+            return -1;
+        else
+            return mItems.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

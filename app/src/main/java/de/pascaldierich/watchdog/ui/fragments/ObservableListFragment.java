@@ -3,6 +3,8 @@ package de.pascaldierich.watchdog.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.model.domainmodels.Observable;
@@ -22,6 +25,10 @@ import hugo.weaving.DebugLog;
 
 public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
     private Presenter mPresenter;
+
+    @BindView(R.id.observables_container) RecyclerView mObservablesContainer;
+
+
     private ObservablesContainerAdapter mAdapter;
 
     private View mRootView;
@@ -40,16 +47,21 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this.getActivity());
 
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
+
+        mAdapter = new ObservablesContainerAdapter(null);
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         mRootView = inflater.inflate(R.layout.fragment_observable_list, container, false);
+        ButterKnife.bind(this, mRootView);
+
+        mObservablesContainer.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mObservablesContainer.setAdapter(mAdapter);
 
         return mRootView;
     }
@@ -72,7 +84,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
      */
     @Override
     public void setData(ArrayList<Observable> observables) {
-
-
+        mAdapter.setItems(observables);
+        mAdapter.notifyDataSetChanged();
     }
 }

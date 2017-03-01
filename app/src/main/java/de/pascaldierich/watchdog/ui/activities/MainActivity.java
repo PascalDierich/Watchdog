@@ -17,6 +17,9 @@ import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
     private Presenter mPresenter;
 
+    private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
+    private static final String POST_LIST_FRAGMENT_TAG = "PL_FragmentTag";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.postList_container, null, "") // TODO: 28.02.17 create PostListFragment.class
+                    .replace(R.id.postList_container, null, POST_LIST_FRAGMENT_TAG) // TODO: 28.02.17 create PostListFragment.class
                     .commit();
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.observableList_container, new ObservableListFragment(), "") // TODO: 28.02.17 define TAG
+                .replace(R.id.observableList_container, new ObservableListFragment(), OBSERVABLE_LIST_FRAGMENT_TAG)
                 .commit();
     }
 
