@@ -2,6 +2,7 @@ package de.pascaldierich.sync;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -25,5 +26,12 @@ public class WatchdogSyncService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return sSyncAdapter.getSyncAdapterBinder();
+    }
+
+
+    public class LocalBinder extends Binder {
+        public WatchdogSyncService getService() {
+            return WatchdogSyncService.this;
+        }
     }
 }

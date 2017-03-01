@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
+import de.pascaldierich.domain.interactors.storage.StorageInteractor;
+import de.pascaldierich.domain.interactors.storage.observable.Set;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
@@ -15,7 +17,15 @@ import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractObservableListPresenter
-        implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback {
+        implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback,
+        StorageInteractor.SetCallback {
+
+    // Test method, delete after use
+    @DebugLog
+    @Override
+    public void onSuccess() {
+
+    }
 
     private ObservableListPresenter.View mView;
 
@@ -38,6 +48,12 @@ public class Presenter extends AbstractObservableListPresenter
     @DebugLog
     @Override
     public void onStart() {
+        // Test data start
+        Set interactor = new Set(super.mExecutor, super.mMainThread, mView.getWeakContext(),
+                this, new Observable().setDisplayName("Pascal dierich").setGotThumbnail(false));
+        interactor.run();
+        // Test data end
+
         // read out intern Storage to get all Observables
         super.getObservables(mView.getWeakContext(), this);
     }
@@ -47,6 +63,7 @@ public class Presenter extends AbstractObservableListPresenter
 
     }
 
+    @DebugLog
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
         // TODO: 27.02.17 define Error-Codes
@@ -56,6 +73,7 @@ public class Presenter extends AbstractObservableListPresenter
     /**
      * @param result
      */
+    @DebugLog
     @Override
     public void onSuccess(@NonNull ArrayList<?> result) {
         mView.setData((ArrayList<Observable>) result);

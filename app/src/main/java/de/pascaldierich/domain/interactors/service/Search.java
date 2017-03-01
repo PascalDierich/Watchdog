@@ -49,7 +49,6 @@ public class Search {
         try {
             ArrayList<Site> sites = ApiConnector.getApi().get().getSites(wContext.get());
             ArrayList<Post> result = new ArrayList<>();
-            Site site;
 
             for (int i = 0; i < sites.size(); i++) {
                 switch (sites.get(i).getSite()) {

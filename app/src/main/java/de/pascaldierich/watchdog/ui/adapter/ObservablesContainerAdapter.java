@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.ui.Converter;
@@ -29,7 +30,7 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.id.observable_container, parent, false);
+                .inflate(R.layout.container_observable, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,8 +40,12 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
         holder.vDisplayName.setText(item.getDisplayName());
 
         if (item.getGotThumbnail()) { // if there is a profil pic
-            holder.vProfilPic.setImageBitmap( // TODO: 28.02.17 use Picasso
-                    Converter.getBitmap(item.getThumbnail()));
+            try {
+                holder.vProfilPic.setImageBitmap( // TODO: 28.02.17 use Picasso
+                        Converter.getBitmap(item.getThumbnail()));
+            } catch (NullPointerException npe) { // just in case there is no boolean set
+                // do nothing, last statement in void
+            }
         }
 
 //        holder.itemView.setTag(item);
@@ -63,6 +68,7 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
 
         ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -28,7 +28,6 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
 
     @BindView(R.id.observables_container) RecyclerView mObservablesContainer;
 
-
     private ObservablesContainerAdapter mAdapter;
 
     private View mRootView;
