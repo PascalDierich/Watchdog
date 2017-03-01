@@ -15,6 +15,7 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
     private GetIdInteractor.GetIdCallback mCallback;
     private String mName;
 
+    // TODO: 01.03.17 add int range parameter to constructor's
     public YouTube(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                    @NonNull GetIdInteractor.GetIdCallback callback) {
         super(threadExecutor, mainThread);

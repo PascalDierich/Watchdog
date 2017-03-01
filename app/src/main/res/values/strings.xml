@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Watchdog</string>
+
+    <string name="app_name" translatable="false">Watchdog</string>
+
+    <string name="sync_account_type">watchdog.pascaldierich.de</string>
+
 </resources>

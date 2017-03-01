@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.lang.ref.WeakReference;
 
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
+import de.pascaldierich.sync.WatchdogSyncAdapter;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.activities.main.MainPresenter;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
+
+        WatchdogSyncAdapter.initializeSyncAdapter(this);
     }
 
     @Override

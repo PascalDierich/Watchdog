@@ -17,15 +17,33 @@
             </intent-filter>
         </activity>
 
+        <!--
+            Sync-Service
+        -->
         <service
             android:name="de.pascaldierich.sync.WatchdogSyncService"
-            android:exported="true"
+            android:exported="false"
             android:process=":sync">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
             <meta-data android:name="android.content.SyncAdapter"
                        android:resource="@xml/syncadapter" />
+        </service>
+
+        <!--
+            Authenticator-Service
+        -->
+        <service
+            android:name="de.pascaldierich.sync.AuthenticatorService"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
         </service>
 
     </application>

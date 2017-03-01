@@ -2,8 +2,8 @@
 
 <sync-adapter
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="de.pascaldierich.watchdogs"
-    android:accountType="com.android.example.datasync"
+    android:contentAuthority="@string/content_authority"
+    android:accountType="@string/sync_account_type"
     android:userVisible="false"
     android:supportsUploading="false"
     android:allowParallelSyncs="true"

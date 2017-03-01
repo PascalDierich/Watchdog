@@ -11,24 +11,37 @@ import android.content.SyncResult;
 import android.os.Bundle;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import de.pascaldierich.domain.interactors.service.Search;
+import de.pascaldierich.watchdog.R;
 import hugo.weaving.DebugLog;
 
 public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
 
+    public static final int SYNC_INTERVAL = 60 * 120;
+    public static final int FLEX_TIME = SYNC_INTERVAL / 2;
+
+    public static final int RANGE = 5;
 
     public WatchdogSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
     }
 
     @DebugLog
+    private String getTime() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date());
+    }
+
+    @DebugLog
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         WeakReference<Search> wInteractor = new WeakReference<Search>(new Search(
-                "",
-                new WeakReference<Context>(getContext()), // TODO: define Parameter
-                5
+                getTime(), // time
+                new WeakReference<Context>(getContext()),
+                RANGE
         ));
 
         wInteractor.get().run();
@@ -42,7 +55,8 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
         ContentResolver.requestSync(new SyncRequest.Builder()
                 .syncPeriodic(syncInterval, flexTime)
-                .setSyncAdapter(getSyncAccount(context), "") // TODO: add authority
+                .setSyncAdapter(getSyncAccount(context),
+                        context.getString(de.pascaldierich.model.R.string.content_authority))
                 .setExtras(new Bundle())
                 .build());
     }
@@ -52,7 +66,8 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(getSyncAccount(context),
-                "", bundle); // TODO: add authority
+                context.getString(de.pascaldierich.model.R.string.content_authority),
+                bundle);
     }
 
     public static Account getSyncAccount(Context context) {
@@ -60,8 +75,8 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
 
         Account newAccount = new Account(
-                "", ""  // TODO: add app_name and sync_account_type
-        );
+                context.getString(R.string.app_name),
+                context.getString(R.string.sync_account_type));
 
         if (accountManager.getPassword(newAccount) == null) {
 
@@ -75,9 +90,10 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static void onAccountCreated(Account newAccount, Context context) {
-        WatchdogSyncAdapter.configurePeriodicSync(context, 1, 1); // TODO: define Sync-intervals int, int
+        WatchdogSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, FLEX_TIME);
 
-        ContentResolver.setSyncAutomatically(newAccount, "", true); // TODO: add authority
+        ContentResolver.setSyncAutomatically(newAccount,
+                context.getString(de.pascaldierich.model.R.string.content_authority), true);
 
         syncImmediately(context);
     }
