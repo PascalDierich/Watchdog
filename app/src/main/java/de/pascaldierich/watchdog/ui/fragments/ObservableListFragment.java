@@ -130,6 +130,24 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
             case R.id.menu_newNewsFeed: {
                 
             }
+            case R.id.menu_removeObservables: {
+                try {
+                    ProObservable.removeObservables(this.getContext());
+                    break;
+                } catch (ModelException e) {
+                    Log.d(LOG_TAG, "onOptionsItemSelected: " + e.getErrorCode());
+                }
+            }
+            case R.id.menu_removeSites: {
+
+            }
+            case R.id.menu_removeFavorites: {
+
+            }
+            case R.id.menu_removeNewsFeed: {
+
+            }
+
             default:
                 Toast.makeText(this.getContext(), "option number " + id, Toast.LENGTH_SHORT).show();
             

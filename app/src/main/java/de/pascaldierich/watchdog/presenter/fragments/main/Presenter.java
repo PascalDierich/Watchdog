@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
-import de.pascaldierich.domain.interactors.storage.observable.Set;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
@@ -48,12 +47,6 @@ public class Presenter extends AbstractObservableListPresenter
     @DebugLog
     @Override
     public void onStart() {
-        // Test data start
-        Set interactor = new Set(super.mExecutor, super.mMainThread, mView.getWeakContext(),
-                this, new Observable().setDisplayName("Pascal dierich").setGotThumbnail(false));
-        interactor.run();
-        // Test data end
-
         // read out intern Storage to get all Observables
         super.getObservables(mView.getWeakContext(), this);
     }

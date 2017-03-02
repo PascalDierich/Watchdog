@@ -29,7 +29,7 @@ public abstract class ProObservable {
     }
     
     public static void removeObservables(Context context) throws ModelException {
-        // TODO: 02.03.17 add remove methods in Model-Api 
+        ApiConnector.getApi().get().removeObservable(context);
     }
     
     private static ArrayList<Observable> createObservables() {

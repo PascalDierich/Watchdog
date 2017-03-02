@@ -532,4 +532,39 @@ public class Model {
         remove Methods (delete)
      */
 
+    /**
+     * delete all Observables
+     * <p>
+     *
+     * @param context, Context: to access ContentResolver
+     */
+    @DebugLog
+    public void removeObservable(Context context) throws ModelException {
+        try {
+            context.getContentResolver()
+                    .delete(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
+                            null, null);
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
+    }
+
+    /**
+     * delete specific Observables
+     * <p>
+     *
+     * @param context, Context: to access ContentResolver
+     * @param observableId, int: unique Id defined in table 'Observables'
+     */
+    @DebugLog
+    public void removeObservable(Context context, int observableId) throws ModelException {
+        try {
+            context.getContentResolver()
+                    .delete(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
+                            "WHERE userId =?", new String[] {Integer.toString(observableId)});
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
+    }
+
 }

@@ -146,8 +146,41 @@ public class WatchdogProvider extends ContentProvider {
     @IntRange(from = -1, to = 1)
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        // TODO: 21.02.17 define delete method for contentProvider
-        return -1;
+        int rowsDeleted = -1;
+        final SQLiteDatabase database = mHelper.getWritableDatabase();
+
+        if (selection == null) selection = "1";
+
+        switch (sMatcher.match(uri)) {
+            case CODE_OBSERVABLES: {
+                rowsDeleted = database.delete(
+                        WatchdogContract.Observables.TABLE_NAME, selection, selectionArgs
+                );
+                break;
+            }
+            case CODE_SITES: {
+                rowsDeleted = database.delete(
+                        WatchdogContract.Sites.TABLE_NAME, selection, selectionArgs
+                );
+                break;
+            }
+            case CODE_FAVORITES: {
+                rowsDeleted = database.delete(
+                        WatchdogContract.Posts.Favorites.TABLE_NAME, selection, selectionArgs
+                );
+                break;
+            }
+            case CODE_NEWS_FEED: {
+                rowsDeleted = database.delete(
+                        WatchdogContract.Posts.NewsFeed.TABLE_NAME, selection, selectionArgs
+                );
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Not supported URI: " + uri);
+        }
+        if (rowsDeleted > 0) getContext().getContentResolver().notifyChange(uri, null);
+        return rowsDeleted;
     }
 
     @IntRange(from = -1, to = 1)
