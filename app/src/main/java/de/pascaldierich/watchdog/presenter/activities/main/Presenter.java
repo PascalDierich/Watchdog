@@ -90,4 +90,11 @@ public class Presenter extends  AbstractMainPresenter
     }
 
 
+    @Override
+    public void onClickFab() {
+        mView.startSetObservableFragment();
+
+        // TODO: 02.03.17 start new Dialog-Fragment (pay attention on twoPaneMode)
+        // TODO: 02.03.17 create new Dialog-Presenter
+    }
 }

@@ -2,9 +2,8 @@ package de.pascaldierich.watchdog.ui.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,21 +15,18 @@ import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.activities.main.MainPresenter;
 import de.pascaldierich.watchdog.presenter.activities.main.Presenter;
 import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
+import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
     private Presenter mPresenter;
 
+    // Fragment Tags for FragmentManager
     private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
     private static final String POST_LIST_FRAGMENT_TAG = "PL_FragmentTag";
+    private static final String SET_OBSERVABLE_FRAGMENT_TAG = "SO_FragmentTag";
 
-    // Dialog-Layout
-    @BindView(R.id.dialog_newObservables)
-    CardView mDialogNew;
-    @BindView(R.id.dialog_newObservables_textName)
-    TextView mDialogTextName;
-    @BindView(R.id.dialog_newObservables_textYouTubeName)
-    TextView mDialogTextYouTube;
-
+    // Layout
+    @BindView(R.id.fab_newObservable) FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        mFab = (FloatingActionButton) findViewById(R.id.fab_newObservable);
 
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
-            // TODO: 02.03.17 remove brackets
+            // TODO: 02.03.17 implement full twoPaneMode
 //            getSupportFragmentManager().beginTransaction()
 //                    .replace(R.id.postList_container, null, POST_LIST_FRAGMENT_TAG) // TODO: 28.02.17 create PostListFragment.class
 //                    .commit();
@@ -77,16 +75,25 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
     /**
      * @return twoPaneMode, boolean:
-     *      true -> twoPaneMode active ( > sw600dp )
-     *      false -> twoPaneMode inactive ( < sw600dp )
+     * true -> twoPaneMode active ( > sw600dp )
+     * false -> twoPaneMode inactive ( < sw600dp )
      */
     public boolean getUiMode() {
         return findViewById(R.id.postList_container) != null;
     }
 
-    @OnClick(R.id.fab_newObservable) void onClick() {
-        // TODO: 02.03.17 Fab-ClickListener Event.
-        // call Presenter -> show Dialog and handle input.
-        // call Interactor to set data in db.
+    /**
+     * this onClick method opens a dialog to create a new Observable.
+     */
+    @OnClick(R.id.fab_newObservable)
+    void onClick() {
+        mPresenter.onClickFab();
+    }
+
+    @Override
+    public void startSetObservableFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.setObservable_dialog, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
+                .commit();
     }
 }

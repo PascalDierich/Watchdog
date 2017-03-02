@@ -5,6 +5,8 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface MainPresenter extends BaseUIPresenter {
 
+    void onClickFab();
+
     interface View extends BaseView {
 
         /**
@@ -16,6 +18,10 @@ public interface MainPresenter extends BaseUIPresenter {
 
         void setUiMode(boolean twoPaneMode);
 
+        /**
+         * shows the setObservable Fragment
+         */
+        void startSetObservableFragment();
     }
 
 }
