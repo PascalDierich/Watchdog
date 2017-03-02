@@ -17,6 +17,6 @@ import hugo.weaving.DebugLog;
 @DebugLog
 public abstract class ApiConnector {
     public static WeakReference<Model> getApi() {
-        return Model.getInstance();
+        return new WeakReference<Model>(Model.getInstance());
     }
 }

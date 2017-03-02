@@ -37,7 +37,7 @@ public class Presenter extends AbstractPostPresenter
     @DebugLog
     @Override
     public void onStart() {
-        super.getPosts(mView.getWeakContext(), this, mView.getSelectedPage());
+        super.getPosts(mView.getContext(), this, mView.getSelectedPage());
     }
 
     @Override
@@ -73,12 +73,12 @@ public class Presenter extends AbstractPostPresenter
 
     @Override
     public void onPageChanged(boolean selectedPage) {
-        super.getPosts(mView.getWeakContext(), this, selectedPage);
+        super.getPosts(mView.getContext(), this, selectedPage);
     }
 
     @Override
     public void onSavePost(Post post) {
-        super.setFavorites(mView.getWeakContext(), this, post);
+        super.setFavorites(mView.getContext(), this, post);
     }
 
     @Override

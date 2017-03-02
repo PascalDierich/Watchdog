@@ -35,7 +35,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
      * @see {@link Get}
      */
     @DebugLog
-    protected void getPosts(WeakReference<Context> context, StorageInteractor.GetCallback presenter,
+    protected void getPosts(Context context, StorageInteractor.GetCallback presenter,
                             boolean selectedPage) {
         if (selectedPage) {
             WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>
@@ -64,7 +64,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
      * @see {@link Set}
      */
     @DebugLog
-    protected void setFavorites(WeakReference<Context> context, StorageInteractor.SetCallback presenter,
+    protected void setFavorites(Context context, StorageInteractor.SetCallback presenter,
                                 @NonNull Post post) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
                 super.mExecutor,

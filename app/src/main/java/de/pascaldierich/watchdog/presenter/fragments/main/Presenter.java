@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
-import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
@@ -16,15 +15,7 @@ import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractObservableListPresenter
-        implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback,
-        StorageInteractor.SetCallback {
-
-    // Test method, delete after use
-    @DebugLog
-    @Override
-    public void onSuccess() {
-
-    }
+        implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback {
 
     private ObservableListPresenter.View mView;
 
@@ -48,7 +39,7 @@ public class Presenter extends AbstractObservableListPresenter
     @Override
     public void onStart() {
         // read out intern Storage to get all Observables
-        super.getObservables(mView.getWeakContext(), this);
+        super.getObservables(mView.getContext(), this);
     }
 
     @Override
@@ -89,25 +80,25 @@ public class Presenter extends AbstractObservableListPresenter
         Bundle bundle = new Bundle();
         for (int i = 0; i < mObservables.size(); i++) {
             if (mObservables.get(i).getUserId() == observableId) {
-                bundle.putString(mView.getWeakContext().get().getString(R.string.observableKey_displayName),
+                bundle.putString(mView.getContext().getString(R.string.observableKey_displayName),
                         mObservables.get(i).getDisplayName());
-                bundle.putInt(mView.getWeakContext().get().getString(R.string.observableKey_observableId),
+                bundle.putInt(mView.getContext().getString(R.string.observableKey_observableId),
                         observableId);
 
                 if (mObservables.get(i).getGotThumbnail()) {
-                    bundle.putByteArray(mView.getWeakContext().get().getString(R.string.observableKey_thumbnail),
+                    bundle.putByteArray(mView.getContext().getString(R.string.observableKey_thumbnail),
                             mObservables.get(i).getThumbnail());
-                    bundle.putBoolean(mView.getWeakContext().get().getString(R.string.observableKey_gotThumbnail),
+                    bundle.putBoolean(mView.getContext().getString(R.string.observableKey_gotThumbnail),
                             true);
                 } else {
-                    bundle.putBoolean(mView.getWeakContext().get().getString(R.string.observableKey_gotThumbnail),
+                    bundle.putBoolean(mView.getContext().getString(R.string.observableKey_gotThumbnail),
                             false);
                 }
                 break;
             }
         }
 
-        mView.startActivity(new Intent().putExtra(mView.getWeakContext().get().getString(R.string.observableKey),
+        mView.startActivity(new Intent().putExtra(mView.getContext().getString(R.string.observableKey),
                 bundle));
     }
 

@@ -46,7 +46,7 @@ public class Model {
     /********************************************************************************************
      * Instantiation:
      * <p>
-     * WeakReference Singleton with 'initialization-on-demand holder idiom'.
+     * Singleton with 'initialization-on-demand holder idiom'.
      ********************************************************************************************/
 
     // Converter for app - model models
@@ -56,12 +56,12 @@ public class Model {
         mConverter = new Converter();
     }
 
-    public static WeakReference<Model> getInstance() {
+    public static Model getInstance() {
         return ModelHolder.INSTANCE;
     }
 
     private static class ModelHolder {
-        private static final WeakReference<Model> INSTANCE = new WeakReference<>(new Model());
+        private static final Model INSTANCE = new Model();
     }
 
     /********************************************************************************************

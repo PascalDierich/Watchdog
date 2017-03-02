@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.lang.ref.WeakReference;
-
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.Storage;
@@ -32,7 +30,7 @@ public class Set extends Storage implements StorageInteractor {
      * @param item,       Site: new Site to store
      */
     public Set(@NonNull Executor executor, @NonNull MainThread mainThread,
-               @NonNull WeakReference<Context> context,
+               @NonNull Context context,
                @NonNull StorageInteractor.SetCallback callback,
                @Nullable Site item) {
         super(executor, mainThread, context);
@@ -66,7 +64,7 @@ public class Set extends Storage implements StorageInteractor {
                 });
             }
 
-            ApiConnector.getApi().get().setSite(wContext.get(), mItem);
+            ApiConnector.getApi().get().setSite(mContext, mItem);
 
             mMainThread.post(new Runnable() {
                 @Override

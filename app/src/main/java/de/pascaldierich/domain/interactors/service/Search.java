@@ -3,7 +3,6 @@ package de.pascaldierich.domain.interactors.service;
 import android.content.Context;
 import android.support.annotation.IntRange;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.repository.ApiConnector;
@@ -19,7 +18,7 @@ import de.pascaldierich.model.domainmodels.Site;
  */
 public class Search {
     private String mTime;
-    private WeakReference<Context> wContext;
+    private Context mContext;
     private int mRange;
 
     /*
@@ -36,9 +35,9 @@ public class Search {
      * @param context, WeakReference<Context>: Context to access DB
      * @param range, int: number of maxResult per Observable per Network
      */
-    public Search(String time, WeakReference<Context> context, @IntRange(from = 1, to = 50) int range) {
+    public Search(String time, Context context, @IntRange(from = 1, to = 50) int range) {
         mTime = time;
-        wContext = context;
+        mContext = context;
         mRange = range;
     }
 
@@ -47,7 +46,7 @@ public class Search {
      */
     public void run() {
         try {
-            ArrayList<Site> sites = ApiConnector.getApi().get().getSites(wContext.get());
+            ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
             ArrayList<Post> result = new ArrayList<>();
 
             for (int i = 0; i < sites.size(); i++) {
@@ -63,7 +62,7 @@ public class Search {
 
             // TODO: implement insertAndThrow method in Provider >:(
             for (int a = 0; a < result.size(); a++) {
-                ApiConnector.getApi().get().setNewsFeed(wContext.get(), result.get(a));
+                ApiConnector.getApi().get().setNewsFeed(mContext, result.get(a));
             }
         } catch (ModelException modelEx) {
             // TODO: 23.02.17 define Error-Routine

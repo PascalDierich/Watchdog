@@ -3,7 +3,6 @@ package de.pascaldierich.domain.interactors.storage.favorites;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
@@ -32,7 +31,7 @@ public class Get extends Storage implements StorageInteractor {
      * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-               @NonNull WeakReference<Context> context,
+               @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback) {
         super(threadExecutor, mainThread, context);
 
@@ -51,7 +50,7 @@ public class Get extends Storage implements StorageInteractor {
      * @param observableId, int: unique Observable Id defined by model
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-               @NonNull WeakReference<Context> context,
+               @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback, int observableId) {
         super(threadExecutor, mainThread, context);
 
@@ -77,9 +76,9 @@ public class Get extends Storage implements StorageInteractor {
         try {
             final ArrayList<Post> result;
             if (mObservableId < 1)
-                result = ApiConnector.getApi().get().getFavorites(wContext.get());
+                result = ApiConnector.getApi().get().getFavorites(mContext);
             else
-                result = ApiConnector.getApi().get().getFavorites(wContext.get(), mObservableId);
+                result = ApiConnector.getApi().get().getFavorites(mContext, mObservableId);
 
             mMainThread.post(new Runnable() {
                 @Override

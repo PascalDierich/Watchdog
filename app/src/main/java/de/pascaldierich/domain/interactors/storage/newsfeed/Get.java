@@ -34,7 +34,7 @@ public class Get extends Storage implements StorageInteractor {
      * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-               @NonNull WeakReference<Context> context,
+               @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback) {
         super(threadExecutor, mainThread, context);
 
@@ -53,7 +53,7 @@ public class Get extends Storage implements StorageInteractor {
      * @param observableId, int: unique Observable Id defined by model
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-               @NonNull WeakReference<Context> context,
+               @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback, int observableId) {
         super(threadExecutor, mainThread, context);
 
@@ -81,9 +81,9 @@ public class Get extends Storage implements StorageInteractor {
             final ArrayList<Post> result;
             WeakReference<Model> Model = ApiConnector.getApi();
             if (mObservableId < 1)
-                result = Model.get().getNewsFeed(wContext.get());
+                result = Model.get().getNewsFeed(mContext);
             else
-                result = Model.get().getNewsFeed(wContext.get(), mObservableId);
+                result = Model.get().getNewsFeed(mContext, mObservableId);
 
             mMainThread.post(new Runnable() {
                 @Override

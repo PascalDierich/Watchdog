@@ -1,6 +1,5 @@
 package de.pascaldierich.watchdog.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -28,7 +26,6 @@ import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresenter;
 import de.pascaldierich.watchdog.presenter.fragments.main.Presenter;
 import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
-import hugo.weaving.DebugLog;
 
 public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
     private static final String LOG_TAG = ObservableListFragment.class.getSimpleName();
@@ -40,12 +37,6 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     private ObservablesContainerAdapter mAdapter;
 
     private View mRootView;
-
-    @DebugLog
-    @Override
-    public WeakReference<Context> getWeakContext() {
-        return new WeakReference<Context>(getContext());
-    }
 
     @Override
     public void showError() {

@@ -31,12 +31,12 @@ public abstract class AbstractObservableListPresenter extends AbstractPresenter 
      * @see {@link Get}
      */
     @DebugLog
-    protected void getObservables(WeakReference<Context> context, StorageInteractor.GetCallback presenter) {
+    protected void getObservables(Context context, StorageInteractor.GetCallback presenter) {
 
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
                 super.mExecutor,
                 super.mMainThread,
-                context,
+                context, // TODO: 02.03.17 remove WeakReference by context
                 presenter
         ));
 

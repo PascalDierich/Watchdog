@@ -3,7 +3,6 @@ package de.pascaldierich.domain.interactors.storage.observable;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
@@ -31,7 +30,7 @@ public class Get extends Storage implements StorageInteractor {
      * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-               @NonNull WeakReference<Context> context,
+               @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback) {
         super(threadExecutor, mainThread, context);
 
@@ -46,7 +45,7 @@ public class Get extends Storage implements StorageInteractor {
     public void run() {
         try {
             final ArrayList<Observable> result =
-                    ApiConnector.getApi().get().getObservables(wContext.get());
+                    ApiConnector.getApi().get().getObservables(mContext);
 
             mMainThread.post(new Runnable() {
                 @Override

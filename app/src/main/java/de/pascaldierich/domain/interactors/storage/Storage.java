@@ -3,8 +3,6 @@ package de.pascaldierich.domain.interactors.storage;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
-
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.base.AbstractInteractor;
@@ -15,7 +13,7 @@ import de.pascaldierich.domain.interactors.base.AbstractInteractor;
 public abstract class Storage extends AbstractInteractor implements StorageInteractor {
 
     // Context for accessing DB
-    public WeakReference<Context> wContext;
+    public Context mContext;
 
     /**
      * Constructor for Storage-Interactors
@@ -26,9 +24,9 @@ public abstract class Storage extends AbstractInteractor implements StorageInter
      * @param context context, WeakReference<Context>: Context to access DB
      */
     public Storage(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
-                   @NonNull WeakReference<Context> context) {
+                   @NonNull Context context) {
         super(threadExecutor, mainThread);
-        wContext = context;
+        mContext = context;
     }
 
     /**
@@ -38,7 +36,7 @@ public abstract class Storage extends AbstractInteractor implements StorageInter
      * @param context, WeakReference<Context>: Context to access DB
      */
     @Override
-    public void setContext(@NonNull WeakReference<Context> context) {
-        wContext = context;
+    public void setContext(@NonNull Context context) {
+        mContext = context;
     }
 }

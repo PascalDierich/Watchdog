@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import java.lang.ref.WeakReference;
-
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.sync.WatchdogSyncAdapter;
 import de.pascaldierich.threading.MainThreadImpl;
@@ -51,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
 
     @Override
-    public WeakReference<Context> getWeakContext() {
-        return new WeakReference<Context>(this);
+    public Context getContext() {
+        return this;
     }
 
     @Override

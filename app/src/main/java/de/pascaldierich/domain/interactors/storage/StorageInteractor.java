@@ -3,7 +3,6 @@ package de.pascaldierich.domain.interactors.storage;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.interactors.base.BaseCallback;
@@ -20,7 +19,7 @@ public interface StorageInteractor extends BaseInteractor {
      *
      * @param context, WeakReference<Context>: Context to access DB
      */
-    void setContext(@NonNull WeakReference<Context> context);
+    void setContext(@NonNull Context context);
 
     /**
      * Storage-Callback for <b>get</b> Methods
