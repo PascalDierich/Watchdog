@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="add New Observables"
+        android:id="@+id/menu_newObservables"/>
+    <item android:title="add New Sites"
+        android:id="@+id/menu_newSites"/>
+    <item android:title="add New Favorites"
+          android:id="@+id/menu_newFavorites"/>
+    <item android:title="add New NewsFeed"
+          android:id="@+id/menu_newNewsFeed"/>
+
+
+</menu>
