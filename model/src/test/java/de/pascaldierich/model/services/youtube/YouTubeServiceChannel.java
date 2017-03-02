@@ -24,7 +24,8 @@ public class YouTubeServiceChannel {
 //    };
 
     private String[] testNames = {
-            "Pascal Dierich"
+            "Pascal Dierich",
+            "SemperVideo"
     };
 
     @Test

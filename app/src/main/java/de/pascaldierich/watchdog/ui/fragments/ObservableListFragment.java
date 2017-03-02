@@ -1,5 +1,6 @@
 package de.pascaldierich.watchdog.ui.fragments;
 
+import android.content.ContentResolver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,8 @@ import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.production.ProObservable;
+import de.pascaldierich.production.ProSite;
+import de.pascaldierich.sync.WatchdogSyncAdapter;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresenter;
@@ -113,7 +116,14 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
                 }
             }
             case R.id.menu_newSites: {
-                
+                try {
+                    ProSite site = new ProSite();
+                    site.addSite(this.getContext(), ThreadExecutor.getInstance(),
+                            MainThreadImpl.getInstance(), "SemperVideo", 10);
+                    break;
+                } catch (ModelException e) {
+                    Log.d(LOG_TAG, "onOptionsItemSelected: " + e.getErrorCode());
+                }
             }
             case R.id.menu_newFavorites: {
                 
@@ -138,10 +148,14 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
             case R.id.menu_removeNewsFeed: {
 
             }
+            case R.id.startSync : {
+                ContentResolver.requestSync(WatchdogSyncAdapter.getSyncAccount(getContext()),
+                        "de.pascaldierich.watchdogs", new Bundle());
+                break;
+            }
 
             default:
                 Toast.makeText(this.getContext(), "option number " + id, Toast.LENGTH_SHORT).show();
-            
         }
 
         return true;
