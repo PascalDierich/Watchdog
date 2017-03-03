@@ -38,7 +38,7 @@ public class Presenter extends  AbstractMainPresenter
 
     // StorageInteractor.SetCallback success method
     @Override
-    public void onSuccess() {
+    public void onSuccess(long id) {
 
     }
 

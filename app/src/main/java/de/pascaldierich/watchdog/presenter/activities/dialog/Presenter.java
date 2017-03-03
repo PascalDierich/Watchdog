@@ -16,6 +16,7 @@ import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
+import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractSetObservablePresenter implements SetObservablePresenter,
         GetIdInteractor.GetIdCallback, StorageInteractor.SetCallback {
@@ -86,6 +87,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         Log.d(LOG_TAG, "onError: errorCode = " + errorCode);
     }
     
+    @DebugLog
     @Override
     public void onSaveClicked(String displayName) {
         if (displayName == null || displayName.isEmpty()) mView.showErrorMessage("verify Name");
@@ -97,7 +99,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                 mView.getContext(),
                 this);
     
-        super.setSites(mSiteArrayList, mView.getContext(), this);
+        
         
         // TODO: 03.03.17 super.setObservable && super.setSites
     }
@@ -144,9 +146,12 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     
     /**
      * Storage-Interactor Callback
+     * @param id, long: unique Id for Observable entry
      */
+    @DebugLog
     @Override
-    public void onSuccess() {
-        
+    public void onSuccess(long id) {
+        super.setObservableId(id);
+        super.setSites(mSiteArrayList, mView.getContext(), this);
     }
 }

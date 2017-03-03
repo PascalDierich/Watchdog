@@ -69,7 +69,7 @@ public class Set extends Storage implements StorageInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onSuccess();
+                    mCallback.onSuccess(0);
                 }
             });
         } catch (final ModelException modelE) {

@@ -319,5 +319,28 @@ public class Converter {
 
         return result;
     }
-
+    
+    
+    
+    /********************************************************************************************
+     * getId methods
+     *
+     ********************************************************************************************/
+    
+    @DebugLog
+    public long getObservableId(Cursor entries) throws ModelException {
+        if (entries == null)
+            throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
+    
+        try {
+            entries.moveToFirst();
+        } catch (SQLException e) {
+            throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
+        }
+    
+        if (entries.getCount() == 0)
+            throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
+        
+        return entries.getInt(WatchdogContract.Observables.COLUMN_USER_ID_ID);
+    }
 }

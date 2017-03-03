@@ -27,6 +27,8 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
      */
     private final int RANGE = 10;
     
+    private long mObservableId;
+    
     /**
      * @see {@link AbstractPresenter}
      */
@@ -83,10 +85,14 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
                                 null));
     
         for (int i = 0; i < items.size(); i++) {
-            wInteractor.get().setItem(items.get(i));
+            wInteractor.get().setItem(items.get(i).setUserId((int) mObservableId));
             wInteractor.get().execute();
         }
         
+    }
+    
+    protected void setObservableId(long observableId) {
+        mObservableId = observableId;
     }
     
 }

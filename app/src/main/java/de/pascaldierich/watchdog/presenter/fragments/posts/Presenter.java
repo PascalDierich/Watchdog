@@ -59,7 +59,7 @@ public class Presenter extends AbstractPostPresenter
 
     // Set Method Callback
     @Override
-    public void onSuccess() {
+    public void onSuccess(long ig) {
         // TODO: 28.02.17 notify user, e.g. show Toast
     }
 

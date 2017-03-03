@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.net.Uri;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 
@@ -183,6 +184,32 @@ public class Model {
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getObservable(entries);
+        } catch (UnsupportedOperationException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
+    }
+    
+    /**
+     * Returns ObservableId for given Uri
+     * <p/>
+     *
+     * @param context, Context: to access DB
+     * @return id, long: unique id
+     * @throws ModelException
+     */
+    @DebugLog
+    public long getObservables(Context context, Uri uri) throws ModelException {
+        // Instantiation
+        CursorLoader mLoader = new CursorLoader(context);
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+    
+        // Setup CursorLoader
+        loaderWeakReference.get().setUri(uri);
+        loaderWeakReference.get().setProjection(new String[] {
+                WatchdogContract.Observables.COLUMN_USER_ID});
+        try {
+            Cursor entries = loaderWeakReference.get().loadInBackground();
+            return mConverter.getObservableId(entries);
         } catch (UnsupportedOperationException e) {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
@@ -449,14 +476,17 @@ public class Model {
      *
      * @param context,     Context: to access ContentResolver
      * @param observables, Observable, POJO to write in 'Observables'
+     * @return id, long: unique ObservableId
      * @throws ModelException
      */
     @DebugLog
-    public void setObservable(Context context, Observable observables) throws ModelException {
+    public long setObservable(Context context, Observable observables) throws ModelException {
         try {
-            context.getContentResolver()
+            Uri uri = context.getContentResolver()
                     .insert(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
                             mConverter.getContentValues(observables));
+    
+            return this.getObservables(context, uri);
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
         } catch (UnsupportedOperationException ue) {

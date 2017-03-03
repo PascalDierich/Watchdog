@@ -37,8 +37,11 @@ public interface StorageInteractor extends BaseInteractor {
      * Storage-Callback for <b>set</b>Methods
      */
     interface SetCallback extends BaseCallback {
-
-        void onSuccess();
+    
+        /**
+         * @param id, long: unique Id for specific entry
+         */
+        void onSuccess(long id);
 
     }
 }
