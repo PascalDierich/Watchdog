@@ -2,9 +2,11 @@ package de.pascaldierich.watchdog.ui.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -15,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Observable;
@@ -37,6 +40,8 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     */
     
     private Presenter mPresenter;
+    
+    private final int TEXT_CHANGE_TIME = 1500;
     
     /* Layout */
     @Nullable
@@ -92,8 +97,9 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     /**
      * show given Observable and related Sites if exists
      * <p/>
+     *
      * @param observable, Observable: existing Observable from model
-     * @param sites, Site[]: related Sites
+     * @param sites,      Site[]: related Sites
      */
     @Override
     public void setData(@Nullable Observable observable, @Nullable Site[] sites) {
@@ -157,29 +163,59 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     @DebugLog
     @OnCheckedChanged(R.id.switch_YouTube)
     void onSwitchChangedYouTube(boolean checked) {
-        mPresenter.checkIdYouTube(checked);
+        mPresenter.onStateChanged(SupportedNetworks.YOUTUBE, checked);
+    }
+    
+    @DebugLog
+    @OnTextChanged(value = R.id.setObservable_textYouTubeName,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onAfterTextChangedYouTube(final Editable newText) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mSwitchYouTube.isChecked())
+                    mPresenter.onInputChanged(SupportedNetworks.YOUTUBE, newText.toString());
+            }
+        }, TEXT_CHANGE_TIME);
     }
     
     /**
-     * sets the YouTube-CheckBox to indicate for the user if an Observable got found
+     * returns the Text set in the EditText for specific Network
      * <p/>
-     * @param checked, boolean: true -> Observable found
-     */
-    @Override
-    @Deprecated
-    public void setCheckBoxYouTube(boolean checked) {
-//        mCheckBoxYouTube.setChecked(checked);
-    }
-    
-    /**
-     * returns the Text in the YouTubeEditText-View
-     * <p/>
+     *
+     * @param network, String: Name of the Network for which the EditText works
      * @return user-input, String: Channel name
      * @throws NullPointerException, if not usable input
      */
     @Override
-    public String getTextYouTube() throws NullPointerException {
-        return mTextYouTube.getText().toString();
+    public String getTextNetwork(String network) throws NullPointerException {
+        switch (network) {
+            case SupportedNetworks.YOUTUBE: {
+                return mTextYouTube.getText().toString();
+            }
+            // [..]
+        }
+        throw new NullPointerException();
     }
+    
+    /**
+     * change font-color of TextField for specific Site
+     * <p/>
+     *
+     * @param site,  String: Site for which TextField the color get changed
+     * @param color, int: colorCode
+     */
+    @Override
+    public void setTextColor(@SupportedNetworks String site, int color) {
+        switch (site) {
+            case SupportedNetworks.YOUTUBE: {
+                mTextYouTube.setTextColor(color);
+                break;
+            }
+            // [..] <- when there will be more supported networks
+        }
+    }
+    
+    
 }
 

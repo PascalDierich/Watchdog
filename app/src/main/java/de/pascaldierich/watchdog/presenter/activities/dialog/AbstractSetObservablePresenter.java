@@ -29,16 +29,19 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
     
     private long mObservableId;
     
+    ArrayList<Site> mSiteArrayList;
+    
     /**
      * @see {@link AbstractPresenter}
      */
-    protected AbstractSetObservablePresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
+    AbstractSetObservablePresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
-        
+    
+        mSiteArrayList = new ArrayList<>();
     }
     
     @DebugLog
-    protected void getPossibleIds(@SupportedNetworks String site, @NonNull String name,
+    void getPossibleIds(@SupportedNetworks String site, @NonNull String name,
                                   GetIdInteractor.GetIdCallback presenter) {
         switch (site) {
             case SupportedNetworks.YOUTUBE: {
@@ -59,7 +62,7 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
     }
     
     @DebugLog
-    protected void setObservable(Observable item, Context context,
+    void setObservable(Observable item, Context context,
                                  StorageInteractor.SetCallback presenter) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
                 super.mExecutor,
@@ -73,7 +76,7 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
     }
     
     @DebugLog
-    protected void setSites(@NonNull ArrayList<Site> items, Context context,
+    void setSites(@NonNull ArrayList<Site> items, Context context,
                             StorageInteractor.SetCallback presenter) {
         WeakReference<de.pascaldierich.domain.interactors.storage.site.Set> wInteractor =
                 new WeakReference<de.pascaldierich.domain.interactors.storage.site.Set>(
@@ -91,7 +94,7 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
         
     }
     
-    protected void setObservableId(long observableId) {
+    void setObservableId(long observableId) {
         mObservableId = observableId;
     }
     

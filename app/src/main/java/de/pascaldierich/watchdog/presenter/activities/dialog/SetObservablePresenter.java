@@ -2,6 +2,7 @@ package de.pascaldierich.watchdog.presenter.activities.dialog;
 
 import android.support.annotation.Nullable;
 
+import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
@@ -10,24 +11,34 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 public interface SetObservablePresenter extends BaseUIPresenter {
     
     /**
-     * Check for id from user-input YouTube Channel name
+     * Gets called when switch state changes.
+     *      checked = true -> check user-input and get Id
+     *      checked = false -> delete (if exists) Site-Object from Collection.
+     * Both states changes the TextColor for UX too.
      * <p/>
-     *
-     * @param active, boolean: true -> activated, false -> deactivated
+     * @param network, String: Name of Network (@SupportedNetworks)
+     * @param checked, boolean: true if checked, false if not
      */
-    void checkIdYouTube(boolean active);
+    void onStateChanged(@SupportedNetworks String network, boolean checked);
     
     /**
      * Saves the current data as Observable-Site Objects in Model
-     * <p>
      * <b>Note:</b>
-     * an ArrayList<Site> is saved and updated
-     * from beginning in Presenter.
+     * an ArrayList<Site> is saved and updated in Presenter.
      * <p/>
      *
      * @param displayName, String: user-input Observable Name
      */
-    void onSaveClicked(String displayName);
+    void onSaveClicked(@Nullable String displayName);
+    
+    /**
+     * Gets called when Network is activated but input got changed.
+     * <p/>
+     *
+     * @param network, String: Name of Network (@SupportedNetworks)
+     * @param newInput, String: new User input to check
+     */
+    void onInputChanged(@SupportedNetworks String network, String newInput);
     
     interface View extends BaseView {
         
@@ -54,22 +65,22 @@ public interface SetObservablePresenter extends BaseUIPresenter {
         void changeProgressVisibility();
         
         /**
-         * returns the Text set in the YouTubeEditText
+         * returns the Text set in the EditText for specific Network
          * <p/>
          *
+         * @param network, String: Name of the Network for which the EditText works
          * @return user-input, String: Channel name
          * @throws NullPointerException, if not usable input
          */
-        String getTextYouTube() throws NullPointerException;
-        
+        String getTextNetwork(@SupportedNetworks String network) throws NullPointerException;
+    
         /**
-         * sets the YouTube-CheckBox
+         * change font-color of TextField for specific Site
          * <p/>
-         *
-         * @param checked, boolean: indicates if checked or not
+         * @param site, String: Site for which TextField the color get changed
+         * @param color, int: colorCode
          */
-        @Deprecated
-        void setCheckBoxYouTube(boolean checked);
+        void setTextColor(@SupportedNetworks String site, int color);
     }
     
     
