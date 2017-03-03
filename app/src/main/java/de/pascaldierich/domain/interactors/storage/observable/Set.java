@@ -3,6 +3,7 @@ package de.pascaldierich.domain.interactors.storage.observable;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
@@ -57,16 +58,21 @@ public class Set extends Storage implements StorageInteractor {
                 mMainThread.post(new Runnable() {
                     @Override
                     public void run() {
+                        Log.w("SetInteractor", "run: going to post onFailure");
                         mCallback.onFailure(-1); // TODO define Interactor ErrorCodes
                     }
                 });
             }
 
-            final long OBSERVABLE_ID = ApiConnector.getApi().get().setObservable(mContext, mItem);
+//            final long OBSERVABLE_ID = ApiConnector.getApi().get().setObservable(mContext, mItem);
+            Log.w("Interactor", "run: going to start");
+            final long OBSERVABLE_ID = ApiConnector.getApiTest().setObservable(mContext, mItem);
+            Log.w("Interactor", "run: id = " + OBSERVABLE_ID);
 
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
+                    Log.w("SetInteractor", "run: going to post onSuccess");
                     mCallback.onSuccess(OBSERVABLE_ID);
                 }
             });
@@ -74,6 +80,7 @@ public class Set extends Storage implements StorageInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
+                    Log.w("SetInteractor", "run: going to post onFailure");
                     mCallback.onFailure(modelE.getErrorCode());
                 }
             });

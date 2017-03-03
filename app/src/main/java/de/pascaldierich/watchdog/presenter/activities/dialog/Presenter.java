@@ -98,10 +98,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                         .setGotThumbnail(false),
                 mView.getContext(),
                 this);
-    
-        
-        
-        // TODO: 03.03.17 super.setObservable && super.setSites
     }
     
     /**
@@ -129,6 +125,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
+        Log.w(LOG_TAG, "onFailure: (!!!!!!!!!)");
         mView.showErrorMessage("Couldn't find any Channels for user-input");
     }
     

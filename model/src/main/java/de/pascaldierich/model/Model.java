@@ -11,6 +11,7 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -43,28 +44,28 @@ import hugo.weaving.DebugLog;
  * @version 1.0
  */
 public class Model {
-
+    
     /********************************************************************************************
      * Instantiation:
      * <p>
      * Singleton with 'initialization-on-demand holder idiom'.
      ********************************************************************************************/
-
+    
     // Converter for app - model models
     private Converter mConverter;
-
+    
     private Model() {
         mConverter = new Converter();
     }
-
+    
     public static Model getInstance() {
         return ModelHolder.INSTANCE;
     }
-
+    
     private static class ModelHolder {
         private static final Model INSTANCE = new Model();
     }
-
+    
     /********************************************************************************************
      * Network Methods:
      *
@@ -82,7 +83,7 @@ public class Model {
     /*
         YouTube
      */
-
+    
     /**
      * Call the YouTube Search Service.
      * <p>
@@ -99,7 +100,7 @@ public class Model {
                                          int observableId,
                                          @NonNull String time,
                                          @IntRange(from = 1, to = 50) int range) throws ModelException {
-
+        
         try {
             YouTubeSearchPage page = GoogleClient.getService(YouTubeService.class)
                     .getVideos(
@@ -112,13 +113,13 @@ public class Model {
                             ConstantsApi.YOUTUBE_SEARCH_ORDER,
                             ConstantsApi.YOUTUBE_SEARCH_TYPE
                     ).execute().body();
-
+            
             return mConverter.getPost(page, observableId);
         } catch (IOException e) {
             throw new ModelException(-1);
         }
     }
-
+    
     /**
      * Get possible YouTube-intern-Id's for given name
      * <p>
@@ -131,7 +132,7 @@ public class Model {
     @DebugLog
     public ArrayList<Site> getIdYouTube(@NonNull String name,
                                         @IntRange(from = 1, to = 50) int range) throws ModelException {
-
+        
         try {
             YouTubeChannelsPage page = GoogleClient.getService(YouTubeService.class)
                     .getChannelId(
@@ -140,14 +141,14 @@ public class Model {
                             name,
                             range
                     ).execute().body();
-
+            
             return mConverter.getSite(page);
         } catch (IOException e) {
             throw new ModelException(-1);
         }
     }
-
-
+    
+    
     /********************************************************************************************
      * Storage Methods:
      *
@@ -159,7 +160,7 @@ public class Model {
     /*
         get Methods (read)
      */
-
+    
     /**
      * Returns all Observables saved in DB
      * <p>
@@ -173,7 +174,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -198,23 +199,26 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @Deprecated
     public long getObservables(Context context, Uri uri) throws ModelException {
+        Log.w("Model.class", "getObservables: uri = " + uri);
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-    
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(uri);
         loaderWeakReference.get().setProjection(new String[] {
                 WatchdogContract.Observables.COLUMN_USER_ID});
         try {
+            Log.w("Model.class", "getObservables: going to call Converter");
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getObservableId(entries);
         } catch (UnsupportedOperationException e) {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Sites saved in DB
      * <p>
@@ -228,7 +232,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -236,7 +240,7 @@ public class Model {
                 WatchdogContract.Sites.COLUMN_SITE,
                 WatchdogContract.Sites.COLUMN_KEY});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getSite(entries);
@@ -244,7 +248,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Sites to specific Observable found by observableId
      * <p>
@@ -259,7 +263,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -271,7 +275,7 @@ public class Model {
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getSite(entries);
@@ -279,7 +283,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Sites to specific name of Network (@interface SupportedNetworks)
      * <p>
@@ -294,7 +298,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -306,7 +310,7 @@ public class Model {
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {site});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getSite(entries);
@@ -314,7 +318,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Posts in 'Favorites'
      * <p>
@@ -328,7 +332,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -341,7 +345,7 @@ public class Model {
                 WatchdogContract.Posts.COLUMN_SITE,
                 WatchdogContract.Posts.Favorites.COLUMN_TIME_SAVED});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getPost(entries);
@@ -349,7 +353,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Posts in 'Favorites' for given observableId
      * <p>
@@ -364,7 +368,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -381,7 +385,7 @@ public class Model {
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getPost(entries);
@@ -389,7 +393,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Posts in 'NewsFeed'
      * <p>
@@ -403,7 +407,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);
         loaderWeakReference.get().setProjection(new String[] {
@@ -416,7 +420,7 @@ public class Model {
                 WatchdogContract.Posts.COLUMN_SITE,
                 WatchdogContract.Posts.NewsFeed.COLUMN_TIME_DOWNLOADED});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getPost(entries);
@@ -424,7 +428,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Returns all Posts in 'NewsFeed' for given observableId
      * <p>
@@ -439,7 +443,7 @@ public class Model {
         // Instantiation
         CursorLoader mLoader = new CursorLoader(context);
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-
+        
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);
         loaderWeakReference.get().setProjection(new String[] {
@@ -456,7 +460,7 @@ public class Model {
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
-
+        
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getPost(entries);
@@ -469,7 +473,7 @@ public class Model {
     /*
         set Methods (write)
      */
-
+    
     /**
      * Write a new Observable in table 'Observables'
      * <p>
@@ -485,15 +489,16 @@ public class Model {
             Uri uri = context.getContentResolver()
                     .insert(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
                             mConverter.getContentValues(observables));
-    
-            return this.getObservables(context, uri);
+            
+            return Long.parseLong(uri.getLastPathSegment());
+//            return this.getObservables(context, uri);
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
         } catch (UnsupportedOperationException ue) {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Write a new Site in table 'Sites'
      * <p>
@@ -514,7 +519,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Write a new Post in table 'Favorites'
      * <p>
@@ -535,7 +540,7 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * Write a new Post in table 'NewsFeed'
      * <p>
@@ -561,7 +566,7 @@ public class Model {
     /*
         remove Methods (delete)
      */
-
+    
     /**
      * delete all Observables
      * <p>
@@ -578,12 +583,12 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
     /**
      * delete specific Observables
      * <p>
      *
-     * @param context, Context: to access ContentResolver
+     * @param context,      Context: to access ContentResolver
      * @param observableId, int: unique Id defined in table 'Observables'
      */
     @DebugLog
@@ -596,5 +601,5 @@ public class Model {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }
-
+    
 }

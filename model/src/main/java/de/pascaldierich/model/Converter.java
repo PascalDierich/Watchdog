@@ -294,7 +294,8 @@ public class Converter {
 
         result.put(WatchdogContract.Sites.COLUMN_SITE, site.getSite());
         result.put(WatchdogContract.Sites.COLUMN_KEY, site.getKey());
-
+        result.put(WatchdogContract.Sites.COLUMN_USER_ID, site.getUserId());
+        
         return result;
     }
 

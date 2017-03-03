@@ -19,4 +19,9 @@ public abstract class ApiConnector {
     public static WeakReference<Model> getApi() {
         return new WeakReference<Model>(Model.getInstance());
     }
+    
+    // Test method
+    public static Model getApiTest() {
+        return Model.getInstance();
+    }
 }
