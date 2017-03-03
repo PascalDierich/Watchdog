@@ -19,7 +19,7 @@ public interface MainPresenter extends BaseUIPresenter {
         void setUiMode(boolean twoPaneMode);
         
         /**
-         * shows the setObservable Fragment
+         * starts the setObservable Fragment
          */
         void startSetObservableActivity();
     }

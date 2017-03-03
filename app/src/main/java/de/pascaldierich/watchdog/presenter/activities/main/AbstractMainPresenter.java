@@ -24,12 +24,12 @@ abstract class AbstractMainPresenter extends AbstractPresenter {
     private final int RANGE = 10;
     
     // Collection of new 'Sites'
-    protected ArrayList<Site> mSites;
+    ArrayList<Site> mSites;
     
     /**
      * @see {@link AbstractPresenter}
      */
-    protected AbstractMainPresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
+    AbstractMainPresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
         
         mSites = new ArrayList<>();

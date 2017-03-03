@@ -51,15 +51,25 @@ public class Presenter extends AbstractPostPresenter
         onError(-1);
     }
     
-    // Get Method Callback
+    /**
+     * onSuccess method of Get-Callbacks.
+     * unchecked Cast to Post
+     * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
+     */
     @Override
+    @SuppressWarnings("unchecked")
     public void onSuccess(@NonNull ArrayList<?> result) {
-        mView.setData((ArrayList<Post>) result);
+        try {
+            super.mPosts = (ArrayList<Post>) result;
+        } catch (ClassCastException e) {
+            onFailure(ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
+        }
+        mView.setData(super.mPosts);
     }
     
     // Set Method Callback
     @Override
-    public void onSuccess(long ig) {
+    public void onSuccess(long id) {
         // TODO: 28.02.17 notify user, e.g. show Toast
     }
     
@@ -76,6 +86,10 @@ public class Presenter extends AbstractPostPresenter
         super.getPosts(mView.getContext(), this, selectedPage);
     }
     
+    /**
+     * saves given Post local on device
+     * @param post, Post: Post to save on device
+     */
     @Override
     public void onSavePost(Post post) {
         super.setFavorites(mView.getContext(), this, post);

@@ -6,10 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
-/**
  * Error Constants for Presenters
  */
 @Retention(RetentionPolicy.SOURCE)

@@ -15,6 +15,9 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.ui.Converter;
 
+/**
+ * Adapter for RecyclerView to present the Observables
+ */
 public class ObservablesContainerAdapter extends RecyclerView.Adapter<ObservablesContainerAdapter.ViewHolder> {
 
     private ArrayList<Observable> mItems;

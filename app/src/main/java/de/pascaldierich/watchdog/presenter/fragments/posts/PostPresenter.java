@@ -8,10 +8,20 @@ import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
 
-public interface PostPresenter extends BaseUIPresenter {
+/**
+ * Interface between PostFragment and related Presenter
+ */
+interface PostPresenter extends BaseUIPresenter {
     
+    /**
+     * @param selectedPage, boolean: true -> NewsFeed, false -> Favorites
+     */
     void onPageChanged(boolean selectedPage);
     
+    /**
+     * saves given Post local on device
+     * @param post, Post: item to save
+     */
     void onSavePost(Post post);
     
     interface View extends BaseView {

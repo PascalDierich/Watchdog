@@ -1,13 +1,18 @@
 <resources>
 
+    <!--
+        app
+    -->
     <string name="app_name" translatable="false">Watchdog</string>
 
     <string name="sync_account_type">watchdog.pascaldierich.de</string>
 
+
     <!--
         intern communication
     -->
-    <string name="observableKey" translatable="false">Observable</string>
+
+    <!-- FragmentMain to PostFragment. Intent with Observable-Data -->
     <string name="observableKey_displayName" translatable="false">displayName</string>
     <string name="observableKey_observableId" translatable="false">observableId</string>
     <string name="observableKey_thumbnail" translatable="false">thumbnail</string>

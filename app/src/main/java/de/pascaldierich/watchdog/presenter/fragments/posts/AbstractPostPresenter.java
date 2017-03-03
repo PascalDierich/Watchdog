@@ -17,17 +17,17 @@ import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
-public abstract class AbstractPostPresenter extends AbstractPresenter {
+abstract class AbstractPostPresenter extends AbstractPresenter {
     
     // Collection of all Posts in selected table ('NewsFeed' or 'Favorites')
-    protected ArrayList<Post> mPosts;
+    ArrayList<Post> mPosts;
     
     /**
      * @see {@link AbstractPresenter}
      */
-    protected AbstractPostPresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
+    AbstractPostPresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
-        mPosts = new ArrayList<>();
+        mPosts = new ArrayList<Post>();
     }
     
     /**
@@ -35,7 +35,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
      * @see {@link Get}
      */
     @DebugLog
-    protected void getPosts(Context context, StorageInteractor.GetCallback presenter,
+    void getPosts(Context context, StorageInteractor.GetCallback presenter,
                             boolean selectedPage) {
         if (selectedPage) {
             WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>
@@ -46,7 +46,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
                             context,
                             presenter));
             
-            wInteractor.get().run();
+            wInteractor.get().execute();
         } else {
             WeakReference<de.pascaldierich.domain.interactors.storage.favorites.Get>
                     wInteractor = new WeakReference<de.pascaldierich.domain.interactors.storage.favorites.Get>(
@@ -56,7 +56,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
                             context,
                             presenter));
             
-            wInteractor.get().run();
+            wInteractor.get().execute();
         }
     }
     
@@ -64,7 +64,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
      * @see {@link Set}
      */
     @DebugLog
-    protected void setFavorites(Context context, StorageInteractor.SetCallback presenter,
+    void setFavorites(Context context, StorageInteractor.SetCallback presenter,
                                 @NonNull Post post) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
                 super.mExecutor,
@@ -74,7 +74,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
                 post
         ));
         
-        wInteractor.get().run();
+        wInteractor.get().execute();
     }
     
     

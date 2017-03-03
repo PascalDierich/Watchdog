@@ -14,15 +14,15 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
-public abstract class AbstractObservableListPresenter extends AbstractPresenter {
+abstract class AbstractObservableListPresenter extends AbstractPresenter {
     
     // Collection of all Observables in 'Observables'
-    protected ArrayList<Observable> mObservables;
+    ArrayList<Observable> mObservables;
     
     /**
      * @see {@link AbstractPresenter}
      */
-    protected AbstractObservableListPresenter(Executor executor, MainThread mainThread, Bundle savedInstance) {
+    AbstractObservableListPresenter(Executor executor, MainThread mainThread, Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
         mObservables = new ArrayList<>();
     }
@@ -31,8 +31,7 @@ public abstract class AbstractObservableListPresenter extends AbstractPresenter 
      * @see {@link Get}
      */
     @DebugLog
-    protected void getObservables(Context context, StorageInteractor.GetCallback presenter) {
-        
+    void getObservables(Context context, StorageInteractor.GetCallback presenter) {
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
                 super.mExecutor,
                 super.mMainThread,

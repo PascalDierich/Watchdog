@@ -1,6 +1,5 @@
 package de.pascaldierich.watchdog.ui.fragments;
 
-import android.content.ContentResolver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,14 +29,19 @@ import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresente
 import de.pascaldierich.watchdog.presenter.fragments.main.Presenter;
 import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
 
+/**
+ * Fragment for MainActivity.
+ * Presents the List of Observables
+ */
 public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
     private static final String LOG_TAG = ObservableListFragment.class.getSimpleName();
-
+    
     private Presenter mPresenter;
 
+    /* Layout */
     @BindView(R.id.observables_container)
     RecyclerView mObservablesContainer;
-
+    
     private ObservablesContainerAdapter mAdapter;
 
     private View mRootView;
@@ -83,7 +87,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
 
     /**
      * show Observables
-     *
+     * <p/>
      * @param observables
      */
     @Override
@@ -93,10 +97,10 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     }
 
 
-    /*
+    /********************************************************************************
         only for production:
             - menu for basic operations
-     */
+     ********************************************************************************/
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -150,8 +154,10 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
 
             }
             case R.id.startSync: {
-                ContentResolver.requestSync(WatchdogSyncAdapter.getSyncAccount(getContext()),
-                        "de.pascaldierich.watchdogs", new Bundle());
+                
+//                ContentResolver.requestSync(WatchdogSyncAdapter.getSyncAccount(getContext()),
+//                        "de.pascaldierich.watchdogs", new Bundle());
+                WatchdogSyncAdapter.syncImmediately(getContext());
                 break;
             }
 

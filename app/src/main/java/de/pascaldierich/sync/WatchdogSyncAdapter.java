@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,8 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 getContext(),
                 RANGE
         ));
-        
+    
+        Log.d("SyncAdapter", "starting sync...");
         wInteractor.get().run();
     }
 
@@ -52,6 +54,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
         static Helper methods
      */
     
+    @DebugLog
     public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
         ContentResolver.requestSync(new SyncRequest.Builder()
                 .syncPeriodic(syncInterval, flexTime)
@@ -61,6 +64,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 .build());
     }
     
+    @DebugLog
     public static void syncImmediately(Context context) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
@@ -70,6 +74,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 bundle);
     }
     
+    @DebugLog
     public static Account getSyncAccount(Context context) {
         AccountManager accountManager =
                 (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
@@ -79,7 +84,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 context.getString(R.string.sync_account_type));
         
         if (accountManager.getPassword(newAccount) == null) {
-            
+            Log.d("SyncAdapter", "getSyncAccount: password is null");
             if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
                 return null;
             }
@@ -89,6 +94,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
         return newAccount;
     }
     
+    @DebugLog
     private static void onAccountCreated(Account newAccount, Context context) {
         WatchdogSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, FLEX_TIME);
         

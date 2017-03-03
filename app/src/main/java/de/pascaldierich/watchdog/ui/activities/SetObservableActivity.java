@@ -26,8 +26,16 @@ import de.pascaldierich.watchdog.presenter.activities.dialog.Presenter;
 import de.pascaldierich.watchdog.presenter.activities.dialog.SetObservablePresenter;
 import hugo.weaving.DebugLog;
 
+/**
+ * Activity to add or change Observables
+ * TODO: will get moved to a Fragment (-> twoPaneMode)
+ */
 public class SetObservableActivity extends AppCompatActivity implements SetObservablePresenter.View {
     private static final String LOG_TAG = SetObservableActivity.class.getSimpleName();
+    
+    /*
+        TODO: 03.03.17 twoPaneMode: change to Fragment with empty Activity
+    */
     
     private Presenter mPresenter;
     
@@ -85,9 +93,8 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     /**
      * show given Observable and related Sites if exists
      * <p/>
-     *
-     * @param observable, Observable: existing Observable from db
-     * @param sites,      Site[]: related Sites
+     * @param observable, Observable: existing Observable from model
+     * @param sites, Site[]: related Sites
      */
     @Override
     public void setData(@Nullable Observable observable, @Nullable Site[] sites) {
@@ -128,10 +135,11 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         Toast.makeText(this, "UNKNOWN ERROR", Toast.LENGTH_SHORT).show();
     }
     
-    @DebugLog
+    /**
+     * onClickListener for FAB
+     */
     @OnClick(R.id.setObservable_fab)
     void fabClicked() {
-        // TODO: 03.03.17 doesn't click
         try {
             mPresenter.onSaveClicked(
                     mTextName.getText().toString());
@@ -154,10 +162,9 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     }
     
     /**
-     * sets the YouTube-CheckBox
+     * sets the YouTube-CheckBox to indicate for the user if an Observable got found
      * <p/>
-     *
-     * @param checked
+     * @param checked, boolean: true -> Observable found
      */
     @Override
     public void setCheckBoxYouTube(boolean checked) {
@@ -165,9 +172,8 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     }
     
     /**
-     * returns the Text set in the YouTubeEditText
+     * returns the Text in the YouTubeEditText-View
      * <p/>
-     *
      * @return user-input, String: Channel name
      * @throws NullPointerException, if not usable input
      */

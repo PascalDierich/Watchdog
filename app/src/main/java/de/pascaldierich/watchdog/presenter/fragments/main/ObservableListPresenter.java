@@ -9,12 +9,13 @@ import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface ObservableListPresenter extends BaseUIPresenter {
+   
     /**
      * called by onClickListener for CardView
-     *
-     * @param observableId, int: unique Observables identifier
+     * <p/>
+     * @param index, int: indicates which Observable got selected
      */
-    void onObservableSelected(int observableId);
+    void onObservableSelected(int index);
     
     interface View extends BaseView {
         

@@ -2,6 +2,7 @@ package de.pascaldierich.domain.interactors.service;
 
 import android.content.Context;
 import android.support.annotation.IntRange;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,9 @@ public class Search {
     private int mRange;
 
     /*
-    1. get all Sites
-    2. for each Site / key call Model
-    3. save all new Sites in NewsFeed
+        1. get all Sites
+        2. for each Site / key call Model
+        3. save all new Sites in NewsFeed
      */
     
     /**
@@ -45,6 +46,7 @@ public class Search {
      * run Interactor
      */
     public void run() {
+        Log.w("Search", "sync interactor starting...");
         try {
             ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
             ArrayList<Post> result = new ArrayList<>();

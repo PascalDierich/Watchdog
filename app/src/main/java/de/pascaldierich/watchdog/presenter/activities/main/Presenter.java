@@ -17,7 +17,6 @@ import hugo.weaving.DebugLog;
 public class Presenter extends AbstractMainPresenter
         implements MainPresenter, StorageInteractor.SetCallback, GetIdInteractor.GetIdCallback {
     
-    // TODO: 02.03.17 override back-stack for setObservableFragment 
     private MainPresenter.View mView;
 
     /*
@@ -96,6 +95,5 @@ public class Presenter extends AbstractMainPresenter
         mView.startSetObservableActivity();
         
         // TODO: 02.03.17 start new Dialog-Fragment (pay attention on twoPaneMode)
-        // TODO: 02.03.17 create new Dialog-Presenter
     }
 }

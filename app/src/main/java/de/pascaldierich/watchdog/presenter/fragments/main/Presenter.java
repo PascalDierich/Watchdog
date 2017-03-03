@@ -55,12 +55,19 @@ public class Presenter extends AbstractObservableListPresenter
     }
     
     /**
-     * @param result
+     * onSuccess method of Get-Callbacks.
+     * unchecked Cast to Observable
+     * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
      */
-    @DebugLog
     @Override
+    @SuppressWarnings("unchecked")
     public void onSuccess(@NonNull ArrayList<?> result) {
-        mView.setData((ArrayList<Observable>) result);
+        try {
+            super.mObservables = (ArrayList<Observable>) result;
+        } catch (ClassCastException e) {
+            onFailure(ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
+        }
+        mView.setData(super.mObservables);
     }
     
     /**
@@ -72,29 +79,20 @@ public class Presenter extends AbstractObservableListPresenter
     }
     
     /**
-     * @param observableId, int: unique Observables identifier
+     * called by onClickListener for CardView
+     * <p/>
+     * @param index, int: indicates which Observable got selected
      */
     @Override
-    public void onObservableSelected(int observableId) {
+    public void onObservableSelected(int index) {
         Bundle bundle = new Bundle();
-        for (int i = 0; i < mObservables.size(); i++) {
-            if (mObservables.get(i).getUserId() == observableId) {
-                bundle.putString(mView.getContext().getString(R.string.observableKey_displayName),
-                        mObservables.get(i).getDisplayName());
-                bundle.putInt(mView.getContext().getString(R.string.observableKey_observableId),
-                        observableId);
-                
-                if (mObservables.get(i).getGotThumbnail()) {
-                    bundle.putByteArray(mView.getContext().getString(R.string.observableKey_thumbnail),
-                            mObservables.get(i).getThumbnail());
-                    bundle.putBoolean(mView.getContext().getString(R.string.observableKey_gotThumbnail),
-                            true);
-                } else {
-                    bundle.putBoolean(mView.getContext().getString(R.string.observableKey_gotThumbnail),
-                            false);
-                }
-                break;
-            }
+    
+        for (int i = 0; i < super.mObservables.size(); i++) {
+            mView.startActivity(new Intent()
+                    .putExtra(mView.getContext().getString(R.string.observableKey_displayName), mObservables.get(i).getDisplayName())
+                    .putExtra(mView.getContext().getString(R.string.observableKey_observableId), mObservables.get(i).getUserId())
+                    .putExtra(mView.getContext().getString(R.string.observableKey_gotThumbnail), mObservables.get(i).getGotThumbnail())
+                    .putExtra(mView.getContext().getString(R.string.observableKey_thumbnail), mObservables.get(i).getThumbnail()));
         }
         
         mView.startActivity(new Intent().putExtra(mView.getContext().getString(R.string.observableKey),
