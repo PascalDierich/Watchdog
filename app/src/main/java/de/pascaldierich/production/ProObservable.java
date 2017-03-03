@@ -42,5 +42,5 @@ public abstract class ProObservable {
         }
         
         return result;
-    } 
+    }
 }

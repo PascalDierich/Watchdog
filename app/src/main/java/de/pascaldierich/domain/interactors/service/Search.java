@@ -14,7 +14,7 @@ import de.pascaldierich.model.domainmodels.Site;
 /**
  * Interactor to search for new Posts.
  * Gets called by WatchdogSyncService.class
- *      -> so no need to worry about background Thread
+ * -> so no need to worry about background Thread
  */
 public class Search {
     private String mTime;
@@ -26,21 +26,21 @@ public class Search {
     2. for each Site / key call Model
     3. save all new Sites in NewsFeed
      */
-
+    
     /**
      * Constructor
      * <p>
      *
-     * @param time, String: time last checked for new Posts
+     * @param time,    String: time last checked for new Posts
      * @param context, WeakReference<Context>: Context to access DB
-     * @param range, int: number of maxResult per Observable per Network
+     * @param range,   int: number of maxResult per Observable per Network
      */
     public Search(String time, Context context, @IntRange(from = 1, to = 50) int range) {
         mTime = time;
         mContext = context;
         mRange = range;
     }
-
+    
     /**
      * run Interactor
      */
@@ -48,7 +48,7 @@ public class Search {
         try {
             ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
             ArrayList<Post> result = new ArrayList<>();
-
+            
             for (int i = 0; i < sites.size(); i++) {
                 switch (sites.get(i).getSite()) {
                     // Check for all SupportedNetworks
@@ -59,7 +59,7 @@ public class Search {
                     }
                 }
             }
-
+            
             // TODO: implement insertAndThrow method in Provider >:(
             for (int a = 0; a < result.size(); a++) {
                 ApiConnector.getApi().get().setNewsFeed(mContext, result.get(a));

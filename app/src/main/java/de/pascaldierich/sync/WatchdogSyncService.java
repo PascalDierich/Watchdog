@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 public class WatchdogSyncService extends Service {
     private static WatchdogSyncAdapter sSyncAdapter = null;
     private static final Object sSyncAdapterLock = new Object();
-
+    
     @Override
     public void onCreate() {
         synchronized (sSyncAdapterLock) {
@@ -21,14 +21,14 @@ public class WatchdogSyncService extends Service {
             }
         }
     }
-
+    
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return sSyncAdapter.getSyncAdapterBinder();
     }
-
-
+    
+    
     public class LocalBinder extends Binder {
         public WatchdogSyncService getService() {
             return WatchdogSyncService.this;

@@ -35,7 +35,8 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
 
     private Presenter mPresenter;
 
-    @BindView(R.id.observables_container) RecyclerView mObservablesContainer;
+    @BindView(R.id.observables_container)
+    RecyclerView mObservablesContainer;
 
     private ObservablesContainerAdapter mAdapter;
 
@@ -105,7 +106,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-    
+
         switch (id) {
             case R.id.menu_newObservables: {
                 try {
@@ -148,7 +149,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
             case R.id.menu_removeNewsFeed: {
 
             }
-            case R.id.startSync : {
+            case R.id.startSync: {
                 ContentResolver.requestSync(WatchdogSyncAdapter.getSyncAccount(getContext()),
                         "de.pascaldierich.watchdogs", new Bundle());
                 break;

@@ -15,7 +15,7 @@ public class ModelException extends Exception {
         super();
         this.errorCode = errorCode;
     }
-
+    
     /**
      * Returns errorCode
      *

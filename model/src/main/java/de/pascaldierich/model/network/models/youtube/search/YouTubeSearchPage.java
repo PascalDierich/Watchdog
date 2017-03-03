@@ -11,7 +11,7 @@ import de.pascaldierich.model.network.models.youtube.YouTubePageInfo;
  * Created by Pascal Dierich on Feb, 2017.
  */
 public class YouTubeSearchPage {
-
+    
     @SerializedName("kind")
     @Expose
     private String kind;
@@ -27,43 +27,43 @@ public class YouTubeSearchPage {
     @SerializedName("items")
     @Expose
     private ArrayList<YouTubeSearchItem> items = null;
-
+    
     public String getKind() {
         return kind;
     }
-
+    
     public void setKind(String kind) {
         this.kind = kind;
     }
-
+    
     public String getEtag() {
         return etag;
     }
-
+    
     public void setEtag(String etag) {
         this.etag = etag;
     }
-
+    
     public String getNextPageToken() {
         return nextPageToken;
     }
-
+    
     public void setNextPageToken(String nextPageToken) {
         this.nextPageToken = nextPageToken;
     }
-
+    
     public YouTubePageInfo getPageInfo() {
         return pageInfo;
     }
-
+    
     public void setPageInfo(YouTubePageInfo pageInfo) {
         this.pageInfo = pageInfo;
     }
-
+    
     public ArrayList<YouTubeSearchItem> getItems() {
         return items;
     }
-
+    
     public void setItems(ArrayList<YouTubeSearchItem> items) {
         this.items = items;
     }

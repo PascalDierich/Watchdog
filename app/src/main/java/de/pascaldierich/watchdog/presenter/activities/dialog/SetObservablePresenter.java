@@ -19,27 +19,27 @@ public interface SetObservablePresenter extends BaseUIPresenter {
     
     /**
      * Saves the current data as Observable-Site Objects in Model
-     *
+     * <p>
      * <b>Note:</b>
-     *      an ArrayList<Site> is saved and updated
-     *      from beginning in Presenter.
+     * an ArrayList<Site> is saved and updated
+     * from beginning in Presenter.
      * <p/>
      *
      * @param displayName, String: user-input Observable Name
      */
     void onSaveClicked(String displayName);
-
+    
     interface View extends BaseView {
-
+        
         /**
          * show given Observable and related Sites if exists
          * <p/>
          *
          * @param observable, Observable: existing Observable from db
-         * @param sites, Site[]: related Sites
+         * @param sites,      Site[]: related Sites
          */
         void setData(@Nullable Observable observable, @Nullable Site[] sites);
-
+        
         /**
          * shows an Error-Message
          * <p/>
@@ -47,12 +47,12 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          * @param errorMessage, String
          */
         void showErrorMessage(String errorMessage);
-
+        
         /**
          * changes the visibility of the progressBar
          */
         void changeProgressVisibility();
-    
+        
         /**
          * returns the Text set in the YouTubeEditText
          * <p/>
@@ -61,7 +61,7 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          * @throws NullPointerException, if not usable input
          */
         String getTextYouTube() throws NullPointerException;
-    
+        
         /**
          * sets the YouTube-CheckBox
          * <p/>
@@ -70,6 +70,6 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          */
         void setCheckBoxYouTube(boolean checked);
     }
-
-
+    
+    
 }

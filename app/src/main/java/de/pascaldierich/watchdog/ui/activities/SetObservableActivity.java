@@ -57,7 +57,7 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_observable);
-    
+        
         ButterKnife.bind(this);
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),

@@ -15,54 +15,54 @@ import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractPostPresenter
         implements PostPresenter, StorageInteractor.GetCallback, StorageInteractor.SetCallback {
-
+    
     private PostPresenter.View mView;
 
     /*
         Instantiation
      */
-
+    
     private Presenter(Executor executor, MainThread mainThread, Bundle savedInstance,
                       PostPresenter.View view) {
         super(executor, mainThread, savedInstance);
-
+        
         mView = view;
     }
-
+    
     public static Presenter onCreate(Executor executor, MainThread mainThread, Bundle savedInstance,
                                      PostPresenter.View view) {
         return new Presenter(executor, mainThread, savedInstance, view);
     }
-
+    
     @DebugLog
     @Override
     public void onStart() {
         super.getPosts(mView.getContext(), this, mView.getSelectedPage());
     }
-
+    
     @Override
     public void onResume() {
-
+        
     }
-
+    
     // Get Method Callback
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
         onError(-1);
     }
-
+    
     // Get Method Callback
     @Override
     public void onSuccess(@NonNull ArrayList<?> result) {
         mView.setData((ArrayList<Post>) result);
     }
-
+    
     // Set Method Callback
     @Override
     public void onSuccess(long ig) {
         // TODO: 28.02.17 notify user, e.g. show Toast
     }
-
+    
     /**
      * @param errorCode
      */
@@ -70,29 +70,29 @@ public class Presenter extends AbstractPostPresenter
     public void onError(@ErrorPresenter int errorCode) {
         mView.showError();
     }
-
+    
     @Override
     public void onPageChanged(boolean selectedPage) {
         super.getPosts(mView.getContext(), this, selectedPage);
     }
-
+    
     @Override
     public void onSavePost(Post post) {
         super.setFavorites(mView.getContext(), this, post);
     }
-
+    
     @Override
     public void onPause() {
-
+        
     }
-
+    
     @Override
     public void onStop() {
-
+        
     }
-
+    
     @Override
     public void onDestroy() {
-
+        
     }
 }

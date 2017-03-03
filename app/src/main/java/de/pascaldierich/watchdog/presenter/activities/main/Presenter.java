@@ -14,7 +14,7 @@ import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import hugo.weaving.DebugLog;
 
-public class Presenter extends  AbstractMainPresenter
+public class Presenter extends AbstractMainPresenter
         implements MainPresenter, StorageInteractor.SetCallback, GetIdInteractor.GetIdCallback {
     
     // TODO: 02.03.17 override back-stack for setObservableFragment 
@@ -23,36 +23,36 @@ public class Presenter extends  AbstractMainPresenter
     /*
         Instantiation
      */
-
+    
     private Presenter(Executor executor, MainThread mainThread, Bundle savedInstance,
                       MainPresenter.View view) {
         super(executor, mainThread, savedInstance);
-
+        
         mView = view;
     }
-
+    
     public static Presenter onCreate(Executor executor, MainThread mainThread, Bundle savedInstance,
-                           MainPresenter.View view) {
+                                     MainPresenter.View view) {
         return new Presenter(executor, mainThread, savedInstance, view);
     }
-
+    
     // StorageInteractor.SetCallback success method
     @Override
     public void onSuccess(long id) {
-
+        
     }
-
+    
     // GetIdInteractor.GetIdCallback success method
     @Override
     public void onSuccess(@NonNull ArrayList<Site> result) {
-
+        
     }
-
+    
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
-
+        
     }
-
+    
     /**
      * onStart is used to get initialData.
      */
@@ -61,40 +61,40 @@ public class Presenter extends  AbstractMainPresenter
     public void onStart() {
         mView.setUiMode(mView.getUiMode());
     }
-
+    
     @Override
     public void onResume() {
-
+        
     }
-
+    
     @Override
     public void onPause() {
-
+        
     }
-
+    
     @Override
     public void onStop() {
-
+        
     }
-
+    
     @Override
     public void onDestroy() {
-
+        
     }
-
+    
     /**
      * @param errorCode
      */
     @Override
     public void onError(@ErrorPresenter int errorCode) {
-
+        
     }
-
-
+    
+    
     @Override
     public void onClickFab() {
         mView.startSetObservableActivity();
-
+        
         // TODO: 02.03.17 start new Dialog-Fragment (pay attention on twoPaneMode)
         // TODO: 02.03.17 create new Dialog-Presenter
     }

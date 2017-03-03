@@ -19,7 +19,7 @@ import de.pascaldierich.model.domainmodels.Observable;
 public class Set extends Storage implements StorageInteractor {
     private StorageInteractor.SetCallback mCallback;
     private Observable mItem;
-
+    
     /**
      * Constructor for Storage-Interactors
      * <p>
@@ -33,11 +33,11 @@ public class Set extends Storage implements StorageInteractor {
                @NonNull StorageInteractor.SetCallback callback,
                @Nullable Observable item) {
         super(threadExecutor, mainThread, context);
-
+        
         mCallback = callback;
         mItem = item;
     }
-
+    
     /**
      * Set a new Observable
      * <p>
@@ -47,7 +47,7 @@ public class Set extends Storage implements StorageInteractor {
     public void setItem(@NonNull Observable item) {
         mItem = item;
     }
-
+    
     /**
      * run Interactor
      */
@@ -63,9 +63,9 @@ public class Set extends Storage implements StorageInteractor {
                     }
                 });
             }
-
+            
             final long OBSERVABLE_ID = ApiConnector.getApi().get().setObservable(mContext, mItem);
-
+            
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {

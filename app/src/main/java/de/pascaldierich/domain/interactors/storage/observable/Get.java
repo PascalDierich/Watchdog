@@ -19,7 +19,7 @@ import hugo.weaving.DebugLog;
  */
 public class Get extends Storage implements StorageInteractor {
     private StorageInteractor.GetCallback mCallback;
-
+    
     /**
      * Constructor
      * <p>
@@ -33,10 +33,10 @@ public class Get extends Storage implements StorageInteractor {
                @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback) {
         super(threadExecutor, mainThread, context);
-
+        
         mCallback = callback;
     }
-
+    
     /**
      * run Interactor
      */
@@ -46,7 +46,7 @@ public class Get extends Storage implements StorageInteractor {
         try {
             final ArrayList<Observable> result =
                     ApiConnector.getApi().get().getObservables(mContext);
-
+            
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {

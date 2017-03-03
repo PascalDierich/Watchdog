@@ -16,25 +16,25 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
     private GetIdInteractor.GetIdCallback mCallback;
     private String mName;
     private int mRange;
-
+    
     public YouTube(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                    @NonNull GetIdInteractor.GetIdCallback callback, @IntRange(from = 1, to = 50) int range) {
         super(threadExecutor, mainThread);
-
+        
         mCallback = callback;
         mRange = range;
     }
-
+    
     public YouTube(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                    @NonNull GetIdInteractor.GetIdCallback callback, String name,
                    @IntRange(from = 1, to = 50) int range) {
         super(threadExecutor, mainThread);
-
+        
         mCallback = callback;
         mName = name;
         mRange = range;
     }
-
+    
     /**
      * Set a new Name
      * <p>
@@ -45,7 +45,7 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
     public void setName(@NonNull String name) {
         mName = name;
     }
-
+    
     /**
      * Set a new Range
      * <p>
@@ -56,7 +56,7 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
     public void setRange(@IntRange(from = 1, to = 50) int range) {
         mRange = range;
     }
-
+    
     /**
      * run Interactor
      */
@@ -65,7 +65,7 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
         try {
             final ArrayList<Site> result
                     = ApiConnector.getApi().get().getIdYouTube(mName, mRange);
-
+            
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {

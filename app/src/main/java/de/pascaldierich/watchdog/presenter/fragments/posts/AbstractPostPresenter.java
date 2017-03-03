@@ -18,10 +18,10 @@ import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
 public abstract class AbstractPostPresenter extends AbstractPresenter {
-
+    
     // Collection of all Posts in selected table ('NewsFeed' or 'Favorites')
     protected ArrayList<Post> mPosts;
-
+    
     /**
      * @see {@link AbstractPresenter}
      */
@@ -29,7 +29,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
         super(executor, mainThread, savedInstance);
         mPosts = new ArrayList<>();
     }
-
+    
     /**
      * @param selectedPage, boolean: true -> NewsFeed; false -> Favorites
      * @see {@link Get}
@@ -45,7 +45,7 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
                             super.mMainThread,
                             context,
                             presenter));
-
+            
             wInteractor.get().run();
         } else {
             WeakReference<de.pascaldierich.domain.interactors.storage.favorites.Get>
@@ -55,11 +55,11 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
                             super.mMainThread,
                             context,
                             presenter));
-
+            
             wInteractor.get().run();
         }
     }
-
+    
     /**
      * @see {@link Set}
      */
@@ -73,13 +73,13 @@ public abstract class AbstractPostPresenter extends AbstractPresenter {
                 presenter,
                 post
         ));
-
+        
         wInteractor.get().run();
     }
-
-
+    
+    
     protected void deleteFavorite() {
         // TODO: 28.02.17 implement delete-methods
     }
-
+    
 }

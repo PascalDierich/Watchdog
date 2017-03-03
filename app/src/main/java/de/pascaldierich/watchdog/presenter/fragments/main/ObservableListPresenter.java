@@ -15,17 +15,17 @@ public interface ObservableListPresenter extends BaseUIPresenter {
      * @param observableId, int: unique Observables identifier
      */
     void onObservableSelected(int observableId);
-
+    
     interface View extends BaseView {
-
+        
         /**
          * show Observables
          */
         void setData(ArrayList<Observable> observables);
-
+        
         // TODO: change method signature and behaviour for twoPaneMode
         void startActivity(Intent intent);
-
+        
     }
-
+    
 }

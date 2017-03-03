@@ -16,44 +16,44 @@ import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractObservableListPresenter
         implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback {
-
+    
     private ObservableListPresenter.View mView;
 
     /*
         Instantiation
      */
-
+    
     private Presenter(Executor executor, MainThread mainThread, Bundle savedInstance,
                       ObservableListPresenter.View view) {
         super(executor, mainThread, savedInstance);
-
+        
         mView = view;
     }
-
+    
     public static Presenter onCreate(Executor executor, MainThread mainThread, Bundle savedInstance,
-                                    ObservableListPresenter.View view) {
+                                     ObservableListPresenter.View view) {
         return new Presenter(executor, mainThread, savedInstance, view);
     }
-
+    
     @DebugLog
     @Override
     public void onStart() {
         // read out intern Storage to get all Observables
         super.getObservables(mView.getContext(), this);
     }
-
+    
     @Override
     public void onResume() {
-
+        
     }
-
+    
     @DebugLog
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
         // TODO: 27.02.17 define Error-Codes
         onError(-1);
     }
-
+    
     /**
      * @param result
      */
@@ -62,7 +62,7 @@ public class Presenter extends AbstractObservableListPresenter
     public void onSuccess(@NonNull ArrayList<?> result) {
         mView.setData((ArrayList<Observable>) result);
     }
-
+    
     /**
      * @param errorCode
      */
@@ -70,9 +70,8 @@ public class Presenter extends AbstractObservableListPresenter
     public void onError(@ErrorPresenter int errorCode) {
         mView.showError();
     }
-
+    
     /**
-     *
      * @param observableId, int: unique Observables identifier
      */
     @Override
@@ -84,7 +83,7 @@ public class Presenter extends AbstractObservableListPresenter
                         mObservables.get(i).getDisplayName());
                 bundle.putInt(mView.getContext().getString(R.string.observableKey_observableId),
                         observableId);
-
+                
                 if (mObservables.get(i).getGotThumbnail()) {
                     bundle.putByteArray(mView.getContext().getString(R.string.observableKey_thumbnail),
                             mObservables.get(i).getThumbnail());
@@ -97,23 +96,23 @@ public class Presenter extends AbstractObservableListPresenter
                 break;
             }
         }
-
+        
         mView.startActivity(new Intent().putExtra(mView.getContext().getString(R.string.observableKey),
                 bundle));
     }
-
+    
     @Override
     public void onPause() {
-
+        
     }
-
+    
     @Override
     public void onStop() {
-
+        
     }
-
+    
     @Override
     public void onDestroy() {
-
+        
     }
 }

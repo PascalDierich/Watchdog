@@ -22,7 +22,7 @@ import hugo.weaving.DebugLog;
 public class Get extends Storage implements StorageInteractor {
     private StorageInteractor.GetCallback mCallback;
     private int mObservableId = -1;
-
+    
     /**
      * Use this constructor if you don't know the observableId yet
      * or want to query for all Post's in 'NewsFeed'
@@ -30,17 +30,17 @@ public class Get extends Storage implements StorageInteractor {
      *
      * @param threadExecutor
      * @param mainThread
-     * @param context, WeakReference<Context>: Context to access DB
-     * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
+     * @param context,       WeakReference<Context>: Context to access DB
+     * @param callback,      StorageInteractor.GetCallback: usually represented by 'this'
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback) {
         super(threadExecutor, mainThread, context);
-
+        
         mCallback = callback;
     }
-
+    
     /**
      * Use this constructor if you already know the <b>observableId</b>
      * and want to query for this specific Observable
@@ -48,19 +48,19 @@ public class Get extends Storage implements StorageInteractor {
      *
      * @param threadExecutor
      * @param mainThread
-     * @param context, WeakReference<Context>: Context to access DB
-     * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
-     * @param observableId, int: unique Observable Id defined by model
+     * @param context,       WeakReference<Context>: Context to access DB
+     * @param callback,      StorageInteractor.GetCallback: usually represented by 'this'
+     * @param observableId,  int: unique Observable Id defined by model
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                @NonNull Context context,
                @NonNull StorageInteractor.GetCallback callback, int observableId) {
         super(threadExecutor, mainThread, context);
-
+        
         mCallback = callback;
         mObservableId = observableId;
     }
-
+    
     /**
      * Set a new ObservableId.
      * <p>
@@ -70,7 +70,7 @@ public class Get extends Storage implements StorageInteractor {
     public void setObservableId(int observableId) {
         mObservableId = observableId;
     }
-
+    
     /**
      * run Interactor
      */
@@ -84,7 +84,7 @@ public class Get extends Storage implements StorageInteractor {
                 result = Model.get().getNewsFeed(mContext);
             else
                 result = Model.get().getNewsFeed(mContext, mObservableId);
-
+            
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {

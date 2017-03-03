@@ -17,24 +17,24 @@ import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
 abstract class AbstractMainPresenter extends AbstractPresenter {
-
+    
     /**
      * max number of Result for Id-Request
      */
     private final int RANGE = 10;
-
+    
     // Collection of new 'Sites'
     protected ArrayList<Site> mSites;
-
+    
     /**
      * @see {@link AbstractPresenter}
      */
     protected AbstractMainPresenter(Executor executor, MainThread mainThread, @Nullable Bundle savedInstance) {
         super(executor, mainThread, savedInstance);
-
+        
         mSites = new ArrayList<>();
     }
-
+    
     @DebugLog
     protected void getPossibleIds(@SupportedNetworks String site, @NonNull String name,
                                   GetIdInteractor.GetIdCallback presenter) {
@@ -47,7 +47,7 @@ abstract class AbstractMainPresenter extends AbstractPresenter {
                         name,
                         RANGE
                 ));
-
+                
                 wInteractor.get().run();
             }
             default: {

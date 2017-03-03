@@ -14,38 +14,38 @@ public final class Site {
     private int userId;
     private String site;
     private String key;
-
+    
     public boolean getGotDownloaded() {
         return gotDownloaded;
     }
-
+    
     public Site setGotDownloaded(boolean gotDownloaded) {
         this.gotDownloaded = gotDownloaded;
         return this;
     }
-
+    
     public int getUserId() {
         return userId;
     }
-
+    
     public Site setUserId(int userId) {
         this.userId = userId;
         return this;
     }
-
+    
     public String getSite() {
         return site;
     }
-
+    
     public Site setSite(String site) {
         this.site = site;
         return this;
     }
-
+    
     public String getKey() {
         return key;
     }
-
+    
     public Site setKey(String key) {
         this.key = key;
         return this;

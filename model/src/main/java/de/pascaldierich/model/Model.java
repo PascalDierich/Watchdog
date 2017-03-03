@@ -179,7 +179,7 @@ public class Model {
         // Instantiation
         Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
-    
+        
         Log.w("Model.class", "going to SetUp Loader");
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES);

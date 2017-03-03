@@ -25,8 +25,8 @@ public @interface SupportedNetworks {
     /*
      * intern names of supported Networks
      */
-
+    
     public static final String YOUTUBE = "youtube";
     public static final String GOOGLE_PLUS = "plus";
-
+    
 }

@@ -83,7 +83,7 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
                                 context,
                                 presenter,
                                 null));
-    
+        
         for (int i = 0; i < items.size(); i++) {
             wInteractor.get().setItem(items.get(i).setUserId((int) mObservableId));
             wInteractor.get().execute();

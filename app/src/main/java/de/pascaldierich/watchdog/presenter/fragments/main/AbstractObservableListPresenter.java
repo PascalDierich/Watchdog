@@ -15,10 +15,10 @@ import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
 public abstract class AbstractObservableListPresenter extends AbstractPresenter {
-
+    
     // Collection of all Observables in 'Observables'
     protected ArrayList<Observable> mObservables;
-
+    
     /**
      * @see {@link AbstractPresenter}
      */
@@ -26,20 +26,20 @@ public abstract class AbstractObservableListPresenter extends AbstractPresenter 
         super(executor, mainThread, savedInstance);
         mObservables = new ArrayList<>();
     }
-
+    
     /**
      * @see {@link Get}
      */
     @DebugLog
     protected void getObservables(Context context, StorageInteractor.GetCallback presenter) {
-
+        
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
                 super.mExecutor,
                 super.mMainThread,
                 context,
                 presenter
         ));
-
+        
         wInteractor.get().execute();
     }
 }

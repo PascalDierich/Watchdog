@@ -34,7 +34,6 @@ public class SyncServiceTest {
                 ((WatchdogSyncService.LocalBinder) binder).getService();
 
 
-
     }
 
 }

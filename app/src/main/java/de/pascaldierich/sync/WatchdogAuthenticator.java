@@ -8,17 +8,17 @@ import android.content.Context;
 import android.os.Bundle;
 
 public class WatchdogAuthenticator extends AbstractAccountAuthenticator {
-
+    
     public WatchdogAuthenticator(Context context) {
         super(context);
     }
-
+    
     @Override
     public Bundle editProperties(
             AccountAuthenticatorResponse r, String s) {
         throw new UnsupportedOperationException();
     }
-
+    
     @Override
     public Bundle addAccount(
             AccountAuthenticatorResponse r,
@@ -28,7 +28,7 @@ public class WatchdogAuthenticator extends AbstractAccountAuthenticator {
             Bundle bundle) throws NetworkErrorException {
         return null;
     }
-
+    
     @Override
     public Bundle confirmCredentials(
             AccountAuthenticatorResponse r,
@@ -36,7 +36,7 @@ public class WatchdogAuthenticator extends AbstractAccountAuthenticator {
             Bundle bundle) throws NetworkErrorException {
         return null;
     }
-
+    
     @Override
     public Bundle getAuthToken(
             AccountAuthenticatorResponse r,
@@ -45,12 +45,12 @@ public class WatchdogAuthenticator extends AbstractAccountAuthenticator {
             Bundle bundle) throws NetworkErrorException {
         throw new UnsupportedOperationException();
     }
-
+    
     @Override
     public String getAuthTokenLabel(String s) {
         throw new UnsupportedOperationException();
     }
-
+    
     @Override
     public Bundle updateCredentials(
             AccountAuthenticatorResponse r,
@@ -58,7 +58,7 @@ public class WatchdogAuthenticator extends AbstractAccountAuthenticator {
             String s, Bundle bundle) throws NetworkErrorException {
         throw new UnsupportedOperationException();
     }
-
+    
     @Override
     public Bundle hasFeatures(
             AccountAuthenticatorResponse r,

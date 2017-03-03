@@ -6,7 +6,7 @@ import android.content.ContentValues;
  * Created by Pascal Dierich on Feb, 2017.
  */
 public class Utilitys {
-
+    
     static ContentValues[] createSitesValues() {
         ContentValues[] values = new ContentValues[5];
         String[] sites = {
@@ -16,7 +16,7 @@ public class Utilitys {
                 "YouTube",
                 "YouTube"
         };
-
+        
         String[] keys = {
                 "/fjrkwnv",
                 "/vmwvwev",
@@ -24,7 +24,7 @@ public class Utilitys {
                 "/ovijv",
                 "/vklmrevlrmev"
         };
-
+        
         int a;
         for (int i = 0; i < 5; i++) {
             values[i] = new ContentValues();
@@ -35,7 +35,7 @@ public class Utilitys {
         }
         return values;
     }
-
+    
     static ContentValues[] createObservablesValues() {
         ContentValues[] values = new ContentValues[5];
         String[] names = {
@@ -45,7 +45,7 @@ public class Utilitys {
                 "Mark Zuckerberg",
                 "Jesus Christ"
         };
-
+        
         for (int i = 0; i < 5; i++) {
             values[i] = new ContentValues();
             values[i].put("displayName", names[i]);
@@ -53,5 +53,5 @@ public class Utilitys {
         }
         return values;
     }
-
+    
 }

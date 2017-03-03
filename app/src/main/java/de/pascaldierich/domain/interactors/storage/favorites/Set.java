@@ -18,7 +18,7 @@ import de.pascaldierich.model.domainmodels.Post;
 public class Set extends Storage implements StorageInteractor {
     private StorageInteractor.SetCallback mCallback;
     private Post mItem;
-
+    
     /**
      * Constructor
      * <p>
@@ -34,11 +34,11 @@ public class Set extends Storage implements StorageInteractor {
                @NonNull StorageInteractor.SetCallback callback,
                @Nullable Post item) {
         super(executor, mainThread, context);
-
+        
         mCallback = callback;
         mItem = item;
     }
-
+    
     /**
      * Set a new Post
      * <p>
@@ -48,7 +48,7 @@ public class Set extends Storage implements StorageInteractor {
     public void setItem(@NonNull Post item) {
         mItem = item;
     }
-
+    
     /**
      * run Interactor
      */
@@ -63,9 +63,9 @@ public class Set extends Storage implements StorageInteractor {
                     }
                 });
             }
-
+            
             ApiConnector.getApi().get().setFavorite(mContext, mItem);
-
+            
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {

@@ -28,12 +28,12 @@ import hugo.weaving.DebugLog;
 public class Converter {
     // This boolean value indicates if there are SQL-specific values (_ID and timestamp)
     private boolean gotDownloaded;
-
+    
     /********************************************************************************************
      * getPost methods
      *
      ********************************************************************************************/
-
+    
     /**
      * Converts downloaded YouTubeSearch result to Post Collection
      * <p>
@@ -48,18 +48,18 @@ public class Converter {
     public ArrayList<Post> getPost(@Nullable YouTubeSearchPage page, int userId) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = false;
-
+        
         // Because Model.class only gets called after ConnectionTest,
         // this indicates that the channelId is invalid.
         if (page == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
-
+        
         // Because the JSON String got converted to POJO correctly (because not null),
         // this indicates that there were no found entries.
         //      --> No new Posts
         if (page.getItems().isEmpty())
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
-
+        
         try {
             for (int i = 0; i < page.getItems().size(); i++) {
                 result.add(new Post()
@@ -77,7 +77,7 @@ public class Converter {
             throw new ModelException(ModelErrorsCodes.Converter.RUNTIME_ERROR);
         }
     }
-
+    
     /**
      * Converts Cursor result to Post Collection
      * <p>
@@ -91,19 +91,19 @@ public class Converter {
     public ArrayList<Post> getPost(@Nullable Cursor entries) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = true;
-
+        
         if (entries == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
-
+        
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
-
+        
         if (entries.getCount() == 0)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
-
+        
         do {
             result.add(new Post()
                     .setGotDownloaded(gotDownloaded)
@@ -117,16 +117,16 @@ public class Converter {
                     .setTimestamp(entries.getString(WatchdogContract.Posts.COLUMN_TIMESTAMP_ID))
             );
         } while (entries.moveToNext());
-
+        
         return result;
     }
     
-
+    
     /********************************************************************************************
      * getSite methods
      *
      ********************************************************************************************/
-
+    
     /**
      * Converts downloaded YouTubeChannel result to Site Collection
      * <p>
@@ -140,18 +140,18 @@ public class Converter {
     public ArrayList<Site> getSite(@Nullable YouTubeChannelsPage page) throws ModelException {
         ArrayList<Site> result = new ArrayList<>();
         gotDownloaded = false;
-
+        
         // Because Model.class only gets called after ConnectionTest,
         // this indicates that the channelId is invalid.
         if (page == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
-
+        
         // Because the JSON String got converted to POJO correctly (because not null),
         // this indicates that there were no found entries.
         //      --> No new Posts
         if (page.getItems().isEmpty())
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
-
+        
         try {
             for (int i = 0; i < page.getItems().size(); i++) {
                 result.add(new Site()
@@ -165,7 +165,7 @@ public class Converter {
             throw new ModelException(ModelErrorsCodes.Converter.RUNTIME_ERROR);
         }
     }
-
+    
     /**
      * Converts Cursor result to Site Collection
      * <p>
@@ -179,19 +179,19 @@ public class Converter {
     public ArrayList<Site> getSite(@Nullable Cursor entries) throws ModelException {
         ArrayList<Site> result = new ArrayList<>();
         gotDownloaded = true;
-
+        
         if (entries == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
-
+        
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
-
+        
         if (entries.getCount() == 0)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
-
+        
         do {
             result.add(new Site()
                     .setGotDownloaded(gotDownloaded)
@@ -200,16 +200,16 @@ public class Converter {
                     .setKey(entries.getString(WatchdogContract.Sites.COLUMN_KEY_ID))
             );
         } while (entries.moveToNext());
-
+        
         return result;
     }
-
-
+    
+    
     /********************************************************************************************
      * getObservable methods
      *
      ********************************************************************************************/
-
+    
     /**
      * Converts Cursor result to Observable Collection
      * <p>
@@ -224,21 +224,21 @@ public class Converter {
         Log.w("Converter.class", "received entries, going to check");
         if (entries == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
-
+        
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
-
+        
         if (entries.getCount() == 0)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
-
+        
         do {
             Observable item = new Observable();
             item.setUserId(entries.getInt(WatchdogContract.Observables.COLUMN_USER_ID_ID))
                     .setDisplayName(entries.getString(WatchdogContract.Observables.COLUMN_NAME_ID));
-
+            
             try {
                 item.setThumbnail(entries.getBlob(WatchdogContract.Observables.COLUMN_THUMBNAIL_ID));
                 item.setGotThumbnail(true);
@@ -247,12 +247,12 @@ public class Converter {
             }
             result.add(item);
         } while (entries.moveToNext());
-    
+        
         Log.w("Converter.class", "going to return converted Collection");
         return result;
     }
-
-
+    
+    
     /********************************************************************************************
      * getContentValues methods
      *
@@ -262,7 +262,7 @@ public class Converter {
      *
      * The keys are named by the equivalent table-rows!
      ********************************************************************************************/
-
+    
     /**
      * Converts observable model to ContentValues.
      * <p>
@@ -273,16 +273,16 @@ public class Converter {
     @DebugLog
     public ContentValues getContentValues(@NonNull Observable observable) {
         ContentValues result = new ContentValues();
-
+        
         // Thumbnail is optional
         if (observable.getGotThumbnail())
             result.put(WatchdogContract.Observables.COLUMN_THUMBNAIL, observable.getThumbnail());
-
+        
         result.put(WatchdogContract.Observables.COLUMN_NAME, observable.getDisplayName());
-
+        
         return result;
     }
-
+    
     /**
      * Converts site model to ContentValues.
      * <p>
@@ -293,14 +293,14 @@ public class Converter {
     @DebugLog
     public ContentValues getContentValues(@NonNull Site site) {
         ContentValues result = new ContentValues();
-
+        
         result.put(WatchdogContract.Sites.COLUMN_SITE, site.getSite());
         result.put(WatchdogContract.Sites.COLUMN_KEY, site.getKey());
         result.put(WatchdogContract.Sites.COLUMN_USER_ID, site.getUserId());
         
         return result;
     }
-
+    
     /**
      * Converts post model to ContentValues.
      * This method is independent from the different Post-tables.
@@ -312,17 +312,16 @@ public class Converter {
     @DebugLog
     public ContentValues getContentValues(@NonNull Post post) {
         ContentValues result = new ContentValues();
-
+        
         result.put(WatchdogContract.Posts.COLUMN_USER_ID, post.getUserId());
         result.put(WatchdogContract.Posts.COLUMN_THUMBNAIL_URL, post.getThumbnailUrl());
         result.put(WatchdogContract.Posts.COLUMN_DESCRIPTION, post.getDescription());
         result.put(WatchdogContract.Posts.COLUMN_TITLE, post.getTitle());
         result.put(WatchdogContract.Posts.COLUMN_POST_ID, post.getPostId());
         result.put(WatchdogContract.Posts.COLUMN_SITE, post.getSite());
-
+        
         return result;
     }
-    
     
     
     /********************************************************************************************
@@ -334,13 +333,13 @@ public class Converter {
     public long getObservableId(Cursor entries) throws ModelException {
         if (entries == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
-    
+        
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
-    
+        
         if (entries.getCount() == 0)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         

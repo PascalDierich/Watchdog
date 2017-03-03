@@ -23,26 +23,26 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     private static final String LOG_TAG = Presenter.class.getSimpleName();
     
     private ArrayList<Site> mSiteArrayList;
-
+    
     private SetObservablePresenter.View mView;
 
     /*
         Instantiation
      */
-
+    
     private Presenter(Executor executor, MainThread mainThread, Bundle savedInstance,
                       SetObservablePresenter.View view) {
         super(executor, mainThread, savedInstance);
-
+        
         mView = view;
         mSiteArrayList = new ArrayList<>();
     }
-
+    
     public static Presenter onCreate(Executor executor, MainThread mainThread, Bundle savedInstance,
                                      SetObservablePresenter.View view) {
         return new Presenter(executor, mainThread, savedInstance, view);
     }
-
+    
     /**
      * onStart is used to get initialData.
      */
@@ -50,34 +50,34 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     public void onStart() {
         mView.setData(null, null); // TODO: 02.03.17 get Data 
     }
-
+    
     @Nullable
     private Observable checkTransmittedData() {
         // TODO: 02.03.17 get Data
         // TODO: save tranmitted Sites in mSitesArrayList
         return null;
     }
-
+    
     @Override
     public void onResume() {
-
+        
     }
-
+    
     @Override
     public void onPause() {
-
+        
     }
-
+    
     @Override
     public void onStop() {
-
+        
     }
-
+    
     @Override
     public void onDestroy() {
-
+        
     }
-
+    
     /**
      * @param errorCode
      */
@@ -135,7 +135,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     @Override
     public void onSuccess(@NonNull ArrayList<Site> result) {
         mSiteArrayList.add(result.get(0));
-    
+        
         Log.i(LOG_TAG, "onSuccess: result.get(0) -> " + result.get(0).getKey());
         
         mView.setCheckBoxYouTube(true);
@@ -143,6 +143,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     
     /**
      * Storage-Interactor Callback
+     *
      * @param id, long: unique Id for Observable entry
      */
     @DebugLog

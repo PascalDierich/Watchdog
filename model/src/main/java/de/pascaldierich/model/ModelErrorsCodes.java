@@ -28,7 +28,7 @@ import static de.pascaldierich.model.ModelErrorsCodes.UNKNOWN_FATAL_ERROR;
 })
 public @interface ModelErrorsCodes {
     int UNKNOWN_FATAL_ERROR = 10;
-
+    
     /**
      * TODO: get normal http-Code from Retrofit as ErrorCode
      */
@@ -39,7 +39,7 @@ public @interface ModelErrorsCodes {
     @interface Network {
         int RUNTIME_ERROR = 100;
     }
-
+    
     /**
      *
      */
@@ -54,7 +54,7 @@ public @interface ModelErrorsCodes {
         int PARAMETER_NULL = 201;
         int PARAMETER_EMPTY = 202;
     }
-
+    
     /**
      *
      */
@@ -71,5 +71,5 @@ public @interface ModelErrorsCodes {
         int INSERT_FAILED = 302;
         int REMOVE_FAILED = 303;
     }
-
+    
 }

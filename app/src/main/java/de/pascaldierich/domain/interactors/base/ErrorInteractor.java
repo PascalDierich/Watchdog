@@ -11,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 @IntDef({})
 public @interface ErrorInteractor {
-
+    
 }

@@ -41,7 +41,7 @@ public @interface ConstantsApi {
      * Google+ Api String Constants
      */
     public static final String PLUS_COLLECTION = "public";
-
+    
     /**
      * YouTube Api String Constants
      */
@@ -50,12 +50,12 @@ public @interface ConstantsApi {
     public static final String YOUTUBE_SEARCH_ORDER = "date";
     public static final String YOUTUBE_SEARCH_TYPE = "video";
     public static final String YOUTUBE_CHANNEL_PART = "id";
-
+    
     /**
      * Base URL's
      */
     public static final String GOOGLE_BASE_URL = "https://www.googleapis.com";
-
+    
     /**
      * Api Keys
      */

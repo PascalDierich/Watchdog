@@ -19,35 +19,35 @@ import hugo.weaving.DebugLog;
 
 public class ProSite implements GetIdInteractor.GetIdCallback {
     private static final String LOG_TAG = ProSite.class.getSimpleName();
-
+    
     private Context mContext;
-
+    
     @DebugLog
     public void addSite(Context context, @NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                         String name, @IntRange(from = 1, to = 50) int range)
             throws ModelException {
-
+        
         mContext = context;
         Log.i(LOG_TAG, "addSite: going to request Site");
-
+        
         createSite(threadExecutor, mainThread, name, 10);
     }
-
+    
     public void removeSites(Context context) throws ModelException {
 //        ApiConnector.getApi().get().removeObservable(context);
     }
-
+    
     @DebugLog
     private void createSite(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                             String name, @IntRange(from = 1, to = 50) int range) {
-
+        
         WeakReference<YouTube> interactor = new WeakReference<YouTube>(new YouTube(
                 threadExecutor, mainThread, this, name, range
         ));
-
+        
         interactor.get().execute();
     }
-
+    
     /**
      * @param result
      */
@@ -65,9 +65,9 @@ public class ProSite implements GetIdInteractor.GetIdCallback {
 //            }
 //        }
     }
-
+    
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
-
+        
     }
 }

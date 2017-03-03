@@ -27,8 +27,8 @@ public class Get extends Storage implements StorageInteractor {
      *
      * @param threadExecutor
      * @param mainThread
-     * @param context, WeakReference<Context>: Context to access DB
-     * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
+     * @param context,       WeakReference<Context>: Context to access DB
+     * @param callback,      StorageInteractor.GetCallback: usually represented by 'this'
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                @NonNull Context context,
@@ -45,9 +45,9 @@ public class Get extends Storage implements StorageInteractor {
      *
      * @param threadExecutor
      * @param mainThread
-     * @param context, WeakReference<Context>: Context to access DB
-     * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
-     * @param observableId, int: unique Observable Id defined by model
+     * @param context,       WeakReference<Context>: Context to access DB
+     * @param callback,      StorageInteractor.GetCallback: usually represented by 'this'
+     * @param observableId,  int: unique Observable Id defined by model
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                @NonNull Context context,
