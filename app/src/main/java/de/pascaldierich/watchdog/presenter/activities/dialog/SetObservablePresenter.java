@@ -68,6 +68,7 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          *
          * @param checked, boolean: indicates if checked or not
          */
+        @Deprecated
         void setCheckBoxYouTube(boolean checked);
     }
     

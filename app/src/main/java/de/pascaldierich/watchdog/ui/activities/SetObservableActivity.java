@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -56,9 +55,9 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     @Nullable
     @BindView(R.id.switch_YouTube)
     Switch mSwitchYouTube;
-    @Nullable
-    @BindView(R.id.checkBox_YouTube)
-    CheckBox mCheckBoxYouTube;
+//    @Nullable
+//    @BindView(R.id.checkBox_YouTube)
+//    CheckBox mCheckBoxYouTube;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,8 +166,9 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
      * @param checked, boolean: true -> Observable found
      */
     @Override
+    @Deprecated
     public void setCheckBoxYouTube(boolean checked) {
-        mCheckBoxYouTube.setChecked(checked);
+//        mCheckBoxYouTube.setChecked(checked);
     }
     
     /**

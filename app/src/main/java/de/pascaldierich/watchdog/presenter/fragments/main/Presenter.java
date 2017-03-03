@@ -57,6 +57,7 @@ public class Presenter extends AbstractObservableListPresenter
     /**
      * onSuccess method of Get-Callbacks.
      * unchecked Cast to Observable
+     *
      * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
      */
     @Override
@@ -81,22 +82,16 @@ public class Presenter extends AbstractObservableListPresenter
     /**
      * called by onClickListener for CardView
      * <p/>
+     *
      * @param index, int: indicates which Observable got selected
      */
     @Override
     public void onObservableSelected(int index) {
-        Bundle bundle = new Bundle();
-    
-        for (int i = 0; i < super.mObservables.size(); i++) {
-            mView.startActivity(new Intent()
-                    .putExtra(mView.getContext().getString(R.string.observableKey_displayName), mObservables.get(i).getDisplayName())
-                    .putExtra(mView.getContext().getString(R.string.observableKey_observableId), mObservables.get(i).getUserId())
-                    .putExtra(mView.getContext().getString(R.string.observableKey_gotThumbnail), mObservables.get(i).getGotThumbnail())
-                    .putExtra(mView.getContext().getString(R.string.observableKey_thumbnail), mObservables.get(i).getThumbnail()));
-        }
-        
-        mView.startActivity(new Intent().putExtra(mView.getContext().getString(R.string.observableKey),
-                bundle));
+        mView.startActivity(new Intent()
+                .putExtra(mView.getContext().getString(R.string.observableKey_displayName), mObservables.get(index).getDisplayName())
+                .putExtra(mView.getContext().getString(R.string.observableKey_observableId), mObservables.get(index).getUserId())
+                .putExtra(mView.getContext().getString(R.string.observableKey_gotThumbnail), mObservables.get(index).getGotThumbnail())
+                .putExtra(mView.getContext().getString(R.string.observableKey_thumbnail), mObservables.get(index).getThumbnail()));
     }
     
     @Override

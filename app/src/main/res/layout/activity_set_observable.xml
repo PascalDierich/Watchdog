@@ -32,34 +32,37 @@
                 android:inputType="textPersonName"
                 android:maxLength="@integer/setObservableAcitivity_editText_maxLength"
                 android:maxLines="1"
-                android:paddingBottom="8dp"/>
+                android:layout_marginBottom="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-
-                <Switch
-                    android:id="@+id/switch_YouTube"
+                <ImageView
+                    android:id="@+id/icon_YouTube"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    />
+                    android:layout_margin="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/contentDescription_iconYouTube"
+                    android:src="@drawable/icon_youtube_small"
+                    android:visibility="visible"/>
 
                 <EditText
                     android:id="@+id/setObservable_textYouTubeName"
                     android:hint="@string/setObservableActivity_editTest_youtubeName_hint"
                     android:maxLines="1"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"/>
 
-                <CheckBox
-                    android:id="@+id/checkBox_YouTube"
+                <Switch
+                    android:id="@+id/switch_YouTube"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:button="@android:drawable/checkbox_on_background"
-                    android:text="found"
-                    android:visibility="visible"/>
+                    />
 
             </LinearLayout>
 
@@ -87,9 +90,11 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_margin="16dp"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="5dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        />
+        app:srcCompat="@android:drawable/ic_menu_save"/>
 
 </android.support.constraint.ConstraintLayout>
