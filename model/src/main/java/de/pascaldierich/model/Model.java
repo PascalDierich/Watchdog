@@ -9,7 +9,9 @@ import android.content.CursorLoader;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.os.Looper;
 import android.support.annotation.IntRange;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -155,6 +157,8 @@ public class Model {
      * Model consists of 3 kind of storage methods.
      * <b>get</b>, <b>set</b> and <b>remove</b>.
      * On all methods you have to append the domain-model name (@package model.domainmodels).
+     *
+     * <b>Note:</b> all <b>get</b> storage-methods have to get called from Main-Thread!
      ********************************************************************************************/
 
     /*
@@ -170,11 +174,10 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Observable> getObservables(Context context) throws ModelException {
-        Log.w("Model.class", "going to init Loader");
         // Instantiation
-//        CursorLoader mLoader = new CursorLoader(context);
-        Log.w("Model.class", "going to init WeakReference");
+        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
     
         Log.w("Model.class", "going to SetUp Loader");
@@ -204,11 +207,12 @@ public class Model {
      */
     @DebugLog
     @Deprecated
+    @MainThread
     public long getObservables(Context context, Uri uri) throws ModelException {
         Log.w("Model.class", "getObservables: uri = " + uri);
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(uri);
@@ -232,10 +236,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Site> getSites(Context context) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
@@ -263,10 +268,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Site> getSites(Context context, int observableId) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
@@ -298,10 +304,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Site> getSites(Context context, @SupportedNetworks String site) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Sites.CONTENT_URI_SITES);
@@ -332,10 +339,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Post> getFavorites(Context context) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES);
@@ -368,10 +376,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Post> getFavorites(Context context, int observableId) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES);
@@ -407,10 +416,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Post> getNewsFeed(Context context) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);
@@ -443,10 +453,11 @@ public class Model {
      * @throws ModelException
      */
     @DebugLog
+    @MainThread
     public ArrayList<Post> getNewsFeed(Context context, int observableId) throws ModelException {
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
+        Looper.prepare();
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);

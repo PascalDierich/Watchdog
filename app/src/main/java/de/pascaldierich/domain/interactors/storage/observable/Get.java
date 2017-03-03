@@ -11,7 +11,7 @@ import de.pascaldierich.domain.interactors.storage.Storage;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
-import de.pascaldierich.model.domainmodels.Site;
+import de.pascaldierich.model.domainmodels.Observable;
 import hugo.weaving.DebugLog;
 
 /**
@@ -26,8 +26,8 @@ public class Get extends Storage implements StorageInteractor {
      *
      * @param threadExecutor
      * @param mainThread
-     * @param context, WeakReference<Context>: Context to access DB
-     * @param callback, StorageInteractor.GetCallback: usually represented by 'this'
+     * @param context,       WeakReference<Context>: Context to access DB
+     * @param callback,      StorageInteractor.GetCallback: usually represented by 'this'
      */
     public Get(@NonNull Executor threadExecutor, @NonNull MainThread mainThread,
                @NonNull Context context,
@@ -44,10 +44,9 @@ public class Get extends Storage implements StorageInteractor {
     @Override
     public void run() {
         try {
-            final ArrayList<Site> result =
-                    ApiConnector.getApi().get().getSites(mContext);
-//                    ApiConnector.getApiTest().getObservables(mContext);
-            
+            final ArrayList<Observable> result =
+                    ApiConnector.getApi().get().getObservables(mContext);
+
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
