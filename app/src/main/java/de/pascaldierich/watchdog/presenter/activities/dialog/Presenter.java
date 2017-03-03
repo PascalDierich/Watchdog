@@ -1,14 +1,20 @@
-package de.pascaldierich.watchdog.presenter.fragments.dialog;
+package de.pascaldierich.watchdog.presenter.activities.dialog;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.model.domainmodels.Observable;
+import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 
 public class Presenter extends AbstractSetObservablePresenter implements SetObservablePresenter {
+    private static final String LOG_TAG = Presenter.class.getSimpleName();
 
     private SetObservablePresenter.View mView;
 
@@ -29,21 +35,11 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     }
 
     /**
-     * called by FAB.onClickListener
-     * finishes the Fragment and saves the new Observable
-     */
-    @Override
-    public void onSavePressed() {
-        mView.changeProgressVisibility();
-        // TODO: 02.03.17 define
-    }
-
-    /**
      * onStart is used to get initialData.
      */
     @Override
     public void onStart() {
-        mView.setData(null, null);
+        mView.setData(null, null); // TODO: 02.03.17 get Data 
     }
 
     @Nullable
@@ -77,6 +73,11 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
      */
     @Override
     public void onError(@ErrorPresenter int errorCode) {
-
+        Log.d(LOG_TAG, "onError: errorCode = " + errorCode);
+    }
+    
+    @Override
+    public void onSaveClicked(String displayName, @Nullable Bitmap thumbnail, ArrayList<Site> sites) {
+        
     }
 }

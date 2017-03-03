@@ -7,12 +7,16 @@
     <!--
         intern communication
     -->
-
     <string name="observableKey" translatable="false">Observable</string>
     <string name="observableKey_displayName" translatable="false">displayName</string>
     <string name="observableKey_observableId" translatable="false">observableId</string>
     <string name="observableKey_thumbnail" translatable="false">thumbnail</string>
     <string name="observableKey_gotThumbnail" translatable="false">gotThumbnail</string>
 
+    <!--
+        SetObservableActivity
+    -->
+    <string name="setObservableActivity_editText_displayName_hint">Name</string>
+    <string name="setObservableActivity_editTest_youtubeName_hint">YouTube Channel Name</string>
 
 </resources>

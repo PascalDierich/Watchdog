@@ -1,66 +1,63 @@
-package de.pascaldierich.watchdog.ui.fragments;
+package de.pascaldierich.watchdog.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
-import de.pascaldierich.watchdog.presenter.fragments.dialog.Presenter;
-import de.pascaldierich.watchdog.presenter.fragments.dialog.SetObservablePresenter;
+import de.pascaldierich.watchdog.presenter.activities.dialog.Presenter;
+import de.pascaldierich.watchdog.presenter.activities.dialog.SetObservablePresenter;
+import hugo.weaving.DebugLog;
 
-public class SetObservableFragment extends Fragment implements SetObservablePresenter.View {
-    private static final String LOG_TAG = SetObservableFragment.class.getSimpleName();
-    
+public class SetObservableActivity extends AppCompatActivity implements SetObservablePresenter.View {
+    private static final String LOG_TAG = SetObservableActivity.class.getSimpleName();
+
     private Presenter mPresenter;
-    
-    private View mRootView;
-    
+
     // Layout
-    @Nullable @BindView(R.id.setObservable_progressBar)
+    @Nullable
+    @BindView(R.id.setObservable_progressBar)
     ProgressBar mProgressBar;
-    @Nullable @BindView(R.id.setObservable_textName)
+    @Nullable
+    @BindView(R.id.setObservable_textName)
     EditText mTextName;
-    @Nullable @BindView(R.id.setObservable_textYouTubeName)
+    @Nullable
+    @BindView(R.id.setObservable_textYouTubeName)
     EditText mTextYouTube;
-    @Nullable @BindView(R.id.setObservable_fab)
+    @Nullable
+    @BindView(R.id.setObservable_fab)
     FloatingActionButton mFab;
-    
+
     @Override
-    public void onCreate(Bundle savedInstance) {
-        super.onCreate(savedInstance);
-        setHasOptionsMenu(false);
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_set_observable);
 
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                savedInstance, this);
+                savedInstanceState, this);
     }
-    
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
-        mRootView = inflater.inflate(R.layout.fragment_observable_list, container, false);
-        ButterKnife.bind(this, mRootView);
-        
-        return mRootView;
-    }
-    
+
     @Override
     public void onStart() {
         super.onStart();
         mPresenter.onStart();
     }
-    
+
     /**
      * changes the visibility of the progressBar
      */
@@ -72,13 +69,13 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
             mProgressBar.setVisibility(View.VISIBLE);
         }
     }
-    
+
     /**
      * show given Observable and related Sites if exists
      * <p/>
      *
      * @param observable, Observable: existing Observable from db
-     * @param sites, Site[]: related Sites
+     * @param sites,      Site[]: related Sites
      */
     @Override
     public void setData(@Nullable Observable observable, @Nullable Site[] sites) {
@@ -103,14 +100,55 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
             }
         }
     }
-    
+
     @Override
     public void showErrorMessage(String errorMessage) {
-        
+
     }
-    
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
     @Override
     public void showError() {
-        
+
     }
+
+    @DebugLog
+    @OnClick(R.id.setObservable_fab)
+    void fabClicked() {
+        // TODO: 03.03.17 doesn't click
+        try {
+            mPresenter.onSaveClicked(
+                    mTextName.getText().toString(),
+                    null, // TODO: 03.03.17 get Bitmap
+                    getSites()
+            );
+        } catch (NullPointerException npe) {
+            mPresenter.onError(1); // TODO: 03.03.17 define Error-Codes (see getSites below)
+        }
+    }
+    
+    private ArrayList<Site> getSites() throws NullPointerException {
+        ArrayList<Site> result = new ArrayList<>();
+    
+        // read out EditText for each Network
+        
+        /* YouTube */
+        if (mTextYouTube.getText() != null && !mTextYouTube.getText().toString().isEmpty()) {
+            result.add(new Site()
+                    .setSite(SupportedNetworks.YOUTUBE)
+                    .setKey(mTextYouTube.getText().toString()));
+        } else {
+            throw new NullPointerException(SupportedNetworks.YOUTUBE);
+        }
+        
+        // [...]
+        
+        return result;
+    }
+
 }
+

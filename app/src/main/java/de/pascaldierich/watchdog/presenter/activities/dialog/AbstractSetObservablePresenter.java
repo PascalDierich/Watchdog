@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.presenter.fragments.dialog;
+package de.pascaldierich.watchdog.presenter.activities.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

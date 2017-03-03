@@ -3,12 +3,9 @@
           package="de.pascaldierich.watchdog">
 
     <!-- Permissions required by the sync adapter -->
-    <uses-permission
-        android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
     <application
         android:allowBackup="true"
@@ -16,7 +13,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -25,9 +21,7 @@
             </intent-filter>
         </activity>
 
-        <!--
-            Sync-Service
-        -->
+        <!--             Sync-Service -->
         <service
             android:name="de.pascaldierich.sync.WatchdogSyncService"
             android:exported="false"
@@ -35,25 +29,27 @@
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter"
-                       android:resource="@xml/syncadapter" />
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter"/>
         </service>
 
-        <!--
-            Authenticator-Service
-        -->
+        <!--             Authenticator-Service -->
         <service
             android:name="de.pascaldierich.sync.AuthenticatorService"
             android:exported="false">
-
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
+                <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
+                android:resource="@xml/authenticator"/>
         </service>
 
+        <activity android:name=".ui.activities.SetObservableActivity">
+        </activity>
     </application>
 
 </manifest>

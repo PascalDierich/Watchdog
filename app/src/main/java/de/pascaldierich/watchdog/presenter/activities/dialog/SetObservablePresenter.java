@@ -1,6 +1,9 @@
-package de.pascaldierich.watchdog.presenter.fragments.dialog;
+package de.pascaldierich.watchdog.presenter.activities.dialog;
 
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+
+import java.util.ArrayList;
 
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
@@ -8,12 +11,8 @@ import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface SetObservablePresenter extends BaseUIPresenter {
-
-    /**
-     * called by FAB.onClickListener
-     * finishes the Fragment and saves the new Observable
-     */
-    void onSavePressed();
+    
+    void onSaveClicked(String displayName, @Nullable Bitmap thumbnail, ArrayList<Site> sites);
 
     interface View extends BaseView {
 
