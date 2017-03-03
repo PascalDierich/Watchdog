@@ -21,7 +21,9 @@ public abstract class ApiConnector {
     }
     
     // Test method
+    @Deprecated
     public static Model getApiTest() {
         return Model.getInstance();
     }
+    
 }

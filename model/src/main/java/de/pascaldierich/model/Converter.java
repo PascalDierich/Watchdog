@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -220,7 +221,7 @@ public class Converter {
     @DebugLog
     public ArrayList<Observable> getObservable(@Nullable Cursor entries) throws ModelException {
         ArrayList<Observable> result = new ArrayList<>();
-
+        Log.w("Converter.class", "received entries, going to check");
         if (entries == null)
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_NULL);
 
@@ -246,7 +247,8 @@ public class Converter {
             }
             result.add(item);
         } while (entries.moveToNext());
-
+    
+        Log.w("Converter.class", "going to return converted Collection");
         return result;
     }
 

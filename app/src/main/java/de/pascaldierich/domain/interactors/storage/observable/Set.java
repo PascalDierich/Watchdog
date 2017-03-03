@@ -64,10 +64,7 @@ public class Set extends Storage implements StorageInteractor {
                 });
             }
 
-//            final long OBSERVABLE_ID = ApiConnector.getApi().get().setObservable(mContext, mItem);
-            Log.w("Interactor", "run: going to start");
-            final long OBSERVABLE_ID = ApiConnector.getApiTest().setObservable(mContext, mItem);
-            Log.w("Interactor", "run: id = " + OBSERVABLE_ID);
+            final long OBSERVABLE_ID = ApiConnector.getApi().get().setObservable(mContext, mItem);
 
             mMainThread.post(new Runnable() {
                 @Override

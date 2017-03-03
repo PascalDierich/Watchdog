@@ -11,7 +11,7 @@ import de.pascaldierich.domain.interactors.storage.Storage;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
-import de.pascaldierich.model.domainmodels.Observable;
+import de.pascaldierich.model.domainmodels.Site;
 import hugo.weaving.DebugLog;
 
 /**
@@ -44,9 +44,10 @@ public class Get extends Storage implements StorageInteractor {
     @Override
     public void run() {
         try {
-            final ArrayList<Observable> result =
-                    ApiConnector.getApi().get().getObservables(mContext);
-
+            final ArrayList<Site> result =
+                    ApiConnector.getApi().get().getSites(mContext);
+//                    ApiConnector.getApiTest().getObservables(mContext);
+            
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {

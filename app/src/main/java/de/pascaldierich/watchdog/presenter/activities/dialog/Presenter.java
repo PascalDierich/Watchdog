@@ -148,6 +148,8 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     @DebugLog
     @Override
     public void onSuccess(long id) {
+        if (id < 0) return;
+        
         super.setObservableId(id);
         super.setSites(mSiteArrayList, mView.getContext(), this);
     }

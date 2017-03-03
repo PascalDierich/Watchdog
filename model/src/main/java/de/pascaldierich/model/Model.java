@@ -171,10 +171,13 @@ public class Model {
      */
     @DebugLog
     public ArrayList<Observable> getObservables(Context context) throws ModelException {
+        Log.w("Model.class", "going to init Loader");
         // Instantiation
-        CursorLoader mLoader = new CursorLoader(context);
-        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(mLoader);
-        
+//        CursorLoader mLoader = new CursorLoader(context);
+        Log.w("Model.class", "going to init WeakReference");
+        WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
+    
+        Log.w("Model.class", "going to SetUp Loader");
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES);
         loaderWeakReference.get().setProjection(new String[] {
@@ -183,6 +186,7 @@ public class Model {
                 WatchdogContract.Observables.COLUMN_THUMBNAIL});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Observables.COLUMN_USER_ID);
         try {
+            Log.w("Model.class", "going to load data and call Converter.class");
             Cursor entries = loaderWeakReference.get().loadInBackground();
             return mConverter.getObservable(entries);
         } catch (UnsupportedOperationException e) {
