@@ -36,10 +36,10 @@ public abstract class AbstractObservableListPresenter extends AbstractPresenter 
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
                 super.mExecutor,
                 super.mMainThread,
-                context, // TODO: 02.03.17 remove WeakReference by context
+                context,
                 presenter
         ));
 
-        wInteractor.get().run();
+        wInteractor.get().execute();
     }
 }

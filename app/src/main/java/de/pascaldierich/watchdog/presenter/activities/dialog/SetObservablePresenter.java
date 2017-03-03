@@ -1,9 +1,6 @@
 package de.pascaldierich.watchdog.presenter.activities.dialog;
 
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
-
-import java.util.ArrayList;
 
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
@@ -12,7 +9,25 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface SetObservablePresenter extends BaseUIPresenter {
     
-    void onSaveClicked(String displayName, @Nullable Bitmap thumbnail, ArrayList<Site> sites);
+    /**
+     * Check for id from user-input YouTube Channel name
+     * <p/>
+     *
+     * @param active, boolean: true -> activated, false -> deactivated
+     */
+    void checkIdYouTube(boolean active);
+    
+    /**
+     * Saves the current data as Observable-Site Objects in Model
+     *
+     * <b>Note:</b>
+     *      an ArrayList<Site> is saved and updated
+     *      from beginning in Presenter.
+     * <p/>
+     *
+     * @param displayName, String: user-input Observable Name
+     */
+    void onSaveClicked(String displayName);
 
     interface View extends BaseView {
 
@@ -37,6 +52,23 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          * changes the visibility of the progressBar
          */
         void changeProgressVisibility();
+    
+        /**
+         * returns the Text set in the YouTubeEditText
+         * <p/>
+         *
+         * @return user-input, String: Channel name
+         * @throws NullPointerException, if not usable input
+         */
+        String getTextYouTube() throws NullPointerException;
+    
+        /**
+         * sets the YouTube-CheckBox
+         * <p/>
+         *
+         * @param checked, boolean: indicates if checked or not
+         */
+        void setCheckBoxYouTube(boolean checked);
     }
 
 
