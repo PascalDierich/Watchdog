@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
@@ -24,6 +25,8 @@ public class PostsFragment extends Fragment implements Presenter.View {
     
     private Presenter mPresenter;
     private View mRootView;
+    
+    private Observable mObservable;
     
     // boolean to work with Paging. true -> NewsFeed, false -> Favorites
     private boolean mSelectedPage = true;
@@ -40,6 +43,9 @@ public class PostsFragment extends Fragment implements Presenter.View {
     
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstance, this);
+        
+        mPresenter.setObservable(mObservable);
+        mObservable = null;
     
         mAdapter = new PostsContainerAdapter(null);
     }
@@ -59,6 +65,11 @@ public class PostsFragment extends Fragment implements Presenter.View {
     public void onStart() {
         super.onStart();
         mPresenter.onStart();
+    }
+    
+    public PostsFragment setObservable(Observable observable) {
+        mObservable = observable;
+        return this;
     }
     
     @Override

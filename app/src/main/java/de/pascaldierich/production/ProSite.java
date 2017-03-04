@@ -17,7 +17,7 @@ import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Site;
 import hugo.weaving.DebugLog;
 
-public class ProSite implements GetIdInteractor.GetIdCallback {
+public final class ProSite implements GetIdInteractor.GetIdCallback {
     private static final String LOG_TAG = ProSite.class.getSimpleName();
     
     private Context mContext;

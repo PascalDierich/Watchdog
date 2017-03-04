@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
@@ -23,6 +24,8 @@ interface PostPresenter extends BaseUIPresenter {
      * @param post, Post: item to save
      */
     void onSavePost(Post post);
+    
+    void setObservable(Observable observable);
     
     interface View extends BaseView {
         

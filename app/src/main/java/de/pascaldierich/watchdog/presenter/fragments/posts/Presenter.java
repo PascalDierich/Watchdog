@@ -2,6 +2,7 @@ package de.pascaldierich.watchdog.presenter.fragments.posts;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.model.ModelErrorsCodes;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import hugo.weaving.DebugLog;
@@ -17,6 +19,8 @@ public class Presenter extends AbstractPostPresenter
         implements PostPresenter, StorageInteractor.GetCallback, StorageInteractor.SetCallback {
     
     private PostPresenter.View mView;
+    
+    private Observable mObservable;
 
     /*
         Instantiation
@@ -37,7 +41,10 @@ public class Presenter extends AbstractPostPresenter
     @DebugLog
     @Override
     public void onStart() {
-        super.getPosts(mView.getContext(), this, mView.getSelectedPage());
+        if (mObservable == null) {
+            return;
+        }
+        super.getPosts(mView.getContext(), this, mView.getSelectedPage(), mObservable.getUserId());
     }
     
     @Override
@@ -46,9 +53,10 @@ public class Presenter extends AbstractPostPresenter
     }
     
     // Get Method Callback
+    @DebugLog
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
-        onError(-1);
+        onError(errorCode);
     }
     
     /**
@@ -56,11 +64,15 @@ public class Presenter extends AbstractPostPresenter
      * unchecked Cast to Post
      * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
      */
+    @DebugLog
     @Override
     @SuppressWarnings("unchecked")
     public void onSuccess(@NonNull ArrayList<?> result) {
         try {
             super.mPosts = (ArrayList<Post>) result;
+            Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getUserId());
+            Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getDescription());
+            Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getTitle());
         } catch (ClassCastException e) {
             onFailure(ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
         }
@@ -83,7 +95,10 @@ public class Presenter extends AbstractPostPresenter
     
     @Override
     public void onPageChanged(boolean selectedPage) {
-        super.getPosts(mView.getContext(), this, selectedPage);
+        if (mObservable == null) {
+            return;
+        }
+        super.getPosts(mView.getContext(), this, selectedPage, mObservable.getUserId());
     }
     
     /**
@@ -108,5 +123,10 @@ public class Presenter extends AbstractPostPresenter
     @Override
     public void onDestroy() {
         
+    }
+    
+    @Override
+    public void setObservable(Observable observable) {
+        mObservable = observable;
     }
 }

@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Observable;
+import de.pascaldierich.production.ProNewFeed;
 import de.pascaldierich.production.ProObservable;
 import de.pascaldierich.production.ProSite;
 import de.pascaldierich.sync.WatchdogSyncAdapter;
@@ -166,7 +167,14 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
                 
             }
             case R.id.menu_newNewsFeed: {
-                
+                try {
+                    ProNewFeed test = new ProNewFeed();
+                    test.addNewNewsFeedPosts(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
+                            getContext(), 25); // <--
+                    break;
+                } catch (ModelException e) {
+                    Log.d(LOG_TAG, "onOptionsItemSelected: " + e.getErrorCode());
+                }
             }
             case R.id.menu_removeObservables: {
                 try {

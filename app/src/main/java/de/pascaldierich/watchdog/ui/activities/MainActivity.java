@@ -113,5 +113,33 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void onObservableSelected(@NonNull Observable item) {
         Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
         Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
+    
+    
+        /*
+        start Activity or Fragment (twoPaneMode)
+         */
+    
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.postList_container, new PostsFragment().setObservable(item), POST_LIST_FRAGMENT_TAG)
+                .commit();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     }
 }

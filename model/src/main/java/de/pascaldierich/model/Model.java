@@ -1,9 +1,5 @@
 package de.pascaldierich.model;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
@@ -34,10 +30,10 @@ import hugo.weaving.DebugLog;
  * Api for 'app'.
  * Model is the only instantiated class inside 'app'
  * and works as Boundary between them.
- * <p>
+ * <p/>
  * Model always assumes the transmitted data is NonNull and got tested.
  * <b>Every Layer is responsible for transmitting data correctly.</b>
- * <p>
+ * <p/>
  * Model converts data for 'app' in <b>3</b> possible POJO's defined in package domainmodels.
  * Observable -> represents an Observable ¯\_(ツ)_/¯
  * Post -> represents one Post, Tweet, Video (depends on Network)
@@ -281,7 +277,7 @@ public class Model {
                 WatchdogContract.Sites.COLUMN_SITE,
                 WatchdogContract.Sites.COLUMN_KEY});
         // set selection to column 'userId'
-        loaderWeakReference.get().setSelection("WHERE userId =?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("userId = ?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
@@ -317,7 +313,7 @@ public class Model {
                 WatchdogContract.Sites.COLUMN_SITE,
                 WatchdogContract.Sites.COLUMN_KEY});
         // set selection to column 'site'
-        loaderWeakReference.get().setSelection("WHERE site =?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("site = ?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {site});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
@@ -394,7 +390,7 @@ public class Model {
                 WatchdogContract.Posts.COLUMN_SITE,
                 WatchdogContract.Posts.Favorites.COLUMN_TIME_SAVED});
         // set selection to column 'userId'
-        loaderWeakReference.get().setSelection("WHERE userId =?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("userId = ?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
@@ -471,7 +467,7 @@ public class Model {
                 WatchdogContract.Posts.COLUMN_SITE,
                 WatchdogContract.Posts.NewsFeed.COLUMN_TIME_DOWNLOADED});
         // set selection to column 'userId'
-        loaderWeakReference.get().setSelection("WHERE userId =?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("userId = ?"); // TODO: 22.02.17 don't know if works
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
@@ -611,7 +607,7 @@ public class Model {
         try {
             context.getContentResolver()
                     .delete(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
-                            "WHERE userId =?", new String[] {Integer.toString(observableId)});
+                            "userId = ?", new String[] {Integer.toString(observableId)}); // TODO: 04.03.17 don't know if works 
         } catch (UnsupportedOperationException ue) {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }

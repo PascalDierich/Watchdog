@@ -36,7 +36,7 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
      */
     @DebugLog
     void getPosts(Context context, StorageInteractor.GetCallback presenter,
-                            boolean selectedPage) {
+                            boolean selectedPage, int id) {
         if (selectedPage) {
             WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>
                     wInteractor = new WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>(
@@ -44,7 +44,8 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
                             super.mExecutor,
                             super.mMainThread,
                             context,
-                            presenter));
+                            presenter,
+                            id));
             
             wInteractor.get().execute();
         } else {
@@ -54,7 +55,8 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
                             super.mExecutor,
                             super.mMainThread,
                             context,
-                            presenter));
+                            presenter,
+                            id));
             
             wInteractor.get().execute();
         }
