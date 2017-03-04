@@ -1,14 +1,15 @@
-package de.pascaldierich.watchdog.ui.activities;
+package de.pascaldierich.watchdog.ui.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -29,18 +30,12 @@ import de.pascaldierich.watchdog.presenter.fragments.dialog.Presenter;
 import de.pascaldierich.watchdog.presenter.fragments.dialog.SetObservablePresenter;
 import hugo.weaving.DebugLog;
 
-/**
- * Activity to add or change Observables
- * TODO: will get moved to a Fragment (-> twoPaneMode)
- */
-public class SetObservableActivity extends AppCompatActivity implements SetObservablePresenter.View {
-    private static final String LOG_TAG = SetObservableActivity.class.getSimpleName();
-    
-    /*
-        TODO: 03.03.17 twoPaneMode: change to Fragment with empty Activity
-    */
+
+public class SetObservableFragment extends Fragment implements SetObservablePresenter.View {
     
     private Presenter mPresenter;
+    
+    private View mRootView;
     
     /* Layout */
     @Nullable
@@ -61,15 +56,20 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     Switch mSwitchYouTube;
     
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_observable);
-        
-        ButterKnife.bind(this);
-        
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+        setHasOptionsMenu(false);
+    
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                savedInstanceState, this);
+                savedInstance, this);
+    }
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
+        mRootView = inflater.inflate(R.layout.fragment_posts, container, false);
+        ButterKnife.bind(this, mRootView);
+        
+        return mRootView;
     }
     
     @Override
@@ -123,17 +123,17 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     
     @Override
     public void showErrorMessage(String errorMessage) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
     
     @Override
     public Context getContext() {
-        return this;
+        return getActivity();
     }
     
     @Override
     public void showError() {
-        Toast.makeText(this, "UNKNOWN ERROR", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "UNKNOWN ERROR", Toast.LENGTH_SHORT).show();
     }
     
     /**
@@ -167,7 +167,7 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onAfterTextChangedYouTube(final Editable newText) {
         if (newText.length() == 20) {
-            Toast.makeText(this, "Your reach the limit", Toast.LENGTH_SHORT).show(); // TODO: 03.03.17 strings.xml 
+            Toast.makeText(getContext(), "Your reach the limit", Toast.LENGTH_SHORT).show(); // TODO: 03.03.17 strings.xml
         }
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -220,7 +220,8 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
      */
     @Override
     public void startMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+        // TODO: 04.03.17 check method usability
+//        startActivity(new Intent(this, MainActivity.class));
     }
+    
 }
-

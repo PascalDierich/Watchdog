@@ -17,6 +17,7 @@ import de.pascaldierich.watchdog.presenter.activities.main.MainPresenter;
 import de.pascaldierich.watchdog.presenter.activities.main.Presenter;
 import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
 import de.pascaldierich.watchdog.ui.fragments.PostsFragment;
+import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
     private Presenter mPresenter;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     // Fragment Tags for FragmentManager
     private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
     private static final String POST_LIST_FRAGMENT_TAG = "PL_FragmentTag";
+    private static final String SET_OBSERVABLE_FRAGMENT_TAG = "SO_FragmentTag";
     
     // Layout
     @BindView(R.id.fab_newObservable)
@@ -91,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     public void startSetObservableActivity(boolean twoPaneMode) {
         if (twoPaneMode) {
-            // TODO: 04.03.17 create Fragment >:|
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.setObservable_dialog, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
-//                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.postList_container, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
+                    .commit();
         } else  {
+            // TODO: 04.03.17 create new empty Activity with SetObservableFragment
             startActivity(new Intent(this, SetObservableActivity.class));
         }
     }
