@@ -3,23 +3,30 @@ package de.pascaldierich.watchdog.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.sync.WatchdogSyncAdapter;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.activities.main.MainPresenter;
 import de.pascaldierich.watchdog.presenter.activities.main.Presenter;
+import de.pascaldierich.watchdog.ui.callbacks.MainActivityCallback;
 import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
 import de.pascaldierich.watchdog.ui.fragments.PostsFragment;
 import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
-public class MainActivity extends AppCompatActivity implements MainPresenter.View {
+public class MainActivity extends AppCompatActivity implements MainPresenter.View,
+        MainActivityCallback {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    
     private Presenter mPresenter;
     
     // Fragment Tags for FragmentManager
@@ -35,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+        
         ButterKnife.bind(this);
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.postList_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG) // TODO: 28.02.17 create PostListFragment.class
+                    .replace(R.id.postList_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG)
                     .commit();
         }
         
@@ -96,9 +103,15 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.postList_container, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
                     .commit();
-        } else  {
+        } else {
             // TODO: 04.03.17 create new empty Activity with SetObservableFragment
             startActivity(new Intent(this, SetObservableActivity.class));
         }
+    }
+    
+    @Override
+    public void onObservableSelected(@NonNull Observable item) {
+        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
+        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
     }
 }

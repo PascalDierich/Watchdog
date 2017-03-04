@@ -1,5 +1,6 @@
 package de.pascaldierich.watchdog.ui.adapter;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.ui.Converter;
+import de.pascaldierich.watchdog.ui.callbacks.ObservableListCallback;
 
 /**
  * Adapter for RecyclerView to present the Observables
@@ -21,9 +23,11 @@ import de.pascaldierich.watchdog.ui.Converter;
 public class ObservablesContainerAdapter extends RecyclerView.Adapter<ObservablesContainerAdapter.ViewHolder> {
 
     private ArrayList<Observable> mItems;
-
-    public ObservablesContainerAdapter(ArrayList<Observable> items) {
+    private ObservableListCallback mCallback;
+    
+    public ObservablesContainerAdapter(ArrayList<Observable> items, ObservableListCallback callback) {
         mItems = items;
+        mCallback = callback;
     }
 
     public void setItems(ArrayList<Observable> items) {
@@ -44,7 +48,7 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Observable item = mItems.get(position);
         holder.vDisplayName.setText(item.getDisplayName());
 
@@ -56,8 +60,14 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
                 // do nothing, last statement in void
             }
         }
-
-//        holder.itemView.setTag(item);
+        
+        holder.vContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Callback to MainActivity
+                mCallback.onCardViewClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -69,12 +79,13 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.observable_container)
+        CardView vContainer;
         @BindView(R.id.profilPic)
         ImageView vProfilPic;
         @BindView(R.id.displayName)
         TextView vDisplayName;
-
-
+                
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

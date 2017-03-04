@@ -1,7 +1,5 @@
 package de.pascaldierich.watchdog.presenter.fragments.main;
 
-import android.content.Intent;
-
 import java.util.ArrayList;
 
 import de.pascaldierich.model.domainmodels.Observable;
@@ -23,9 +21,12 @@ public interface ObservableListPresenter extends BaseUIPresenter {
          * show Observables
          */
         void setData(ArrayList<Observable> observables);
-        
-        // TODO: change method signature and behaviour for twoPaneMode
-        void startActivity(Intent intent);
+    
+        /**
+         * TODO: write DOC
+         * @param observable
+         */
+        void sendObservableToMain(Observable observable);
         
     }
     

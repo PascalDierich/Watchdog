@@ -1,5 +1,6 @@
 package de.pascaldierich.watchdog.ui.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,15 +29,20 @@ import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresenter;
 import de.pascaldierich.watchdog.presenter.fragments.main.Presenter;
 import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
+import de.pascaldierich.watchdog.ui.callbacks.MainActivityCallback;
+import de.pascaldierich.watchdog.ui.callbacks.ObservableListCallback;
 
 /**
  * Fragment for MainActivity.
  * Presents the List of Observables
  */
-public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
+public class ObservableListFragment extends Fragment implements ObservableListPresenter.View,
+        ObservableListCallback {
     private static final String LOG_TAG = ObservableListFragment.class.getSimpleName();
     
     private Presenter mPresenter;
+    
+    private MainActivityCallback mCallback;
 
     /* Layout */
     @BindView(R.id.observables_container)
@@ -59,7 +65,18 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
 
-        mAdapter = new ObservablesContainerAdapter(null);
+        mAdapter = new ObservablesContainerAdapter(null, this);
+    }
+    
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallback = (MainActivityCallback) activity;
+        } catch (ClassCastException cce) {
+            Log.w(LOG_TAG, "onAttach: ClassCastException. " + activity.toString() + " must" +
+                    "implement Callback");
+        }
     }
 
 
@@ -94,12 +111,28 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     public void setData(ArrayList<Observable> observables) {
         mAdapter.setItems(observables);
     }
-
-
+    
+    /**
+     * ObservableListCallback
+     * <p/>
+     * @param position, int:
+     */
+    @Override
+    public void onCardViewClick(int position) {
+        mPresenter.onObservableSelected(position);
+    }
+    
+    @Override
+    public void sendObservableToMain(Observable observable) {
+        mCallback.onObservableSelected(observable);
+    }
+    
+    
     /********************************************************************************
         only for production:
             - menu for basic operations
      ********************************************************************************/
+    
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);

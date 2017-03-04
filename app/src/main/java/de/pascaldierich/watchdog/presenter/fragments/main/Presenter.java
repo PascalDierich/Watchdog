@@ -1,6 +1,5 @@
 package de.pascaldierich.watchdog.presenter.fragments.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -10,7 +9,6 @@ import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
-import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import hugo.weaving.DebugLog;
 
@@ -87,11 +85,11 @@ public class Presenter extends AbstractObservableListPresenter
      */
     @Override
     public void onObservableSelected(int index) {
-        mView.startActivity(new Intent()
-                .putExtra(mView.getContext().getString(R.string.observableKey_displayName), mObservables.get(index).getDisplayName())
-                .putExtra(mView.getContext().getString(R.string.observableKey_observableId), mObservables.get(index).getUserId())
-                .putExtra(mView.getContext().getString(R.string.observableKey_gotThumbnail), mObservables.get(index).getGotThumbnail())
-                .putExtra(mView.getContext().getString(R.string.observableKey_thumbnail), mObservables.get(index).getThumbnail()));
+        if (index < 0) return;
+        if (mObservables.get(index) == null) return;
+        mView.sendObservableToMain(
+                mObservables.get(index)
+        );
     }
     
     @Override

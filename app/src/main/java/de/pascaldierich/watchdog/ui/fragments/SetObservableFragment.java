@@ -66,7 +66,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
-        mRootView = inflater.inflate(R.layout.fragment_posts, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_set_observable, container, false);
         ButterKnife.bind(this, mRootView);
         
         return mRootView;
