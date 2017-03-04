@@ -18,6 +18,8 @@ public class Presenter extends AbstractMainPresenter
         implements MainPresenter, StorageInteractor.SetCallback, GetIdInteractor.GetIdCallback {
     
     private MainPresenter.View mView;
+    
+    private boolean mTwoPaneMode;
 
     /*
         Instantiation
@@ -58,7 +60,8 @@ public class Presenter extends AbstractMainPresenter
     @DebugLog
     @Override
     public void onStart() {
-        mView.setUiMode(mView.getUiMode());
+        mTwoPaneMode = mView.getUiMode();
+        mView.setUiMode(mTwoPaneMode);
     }
     
     @Override
@@ -92,7 +95,7 @@ public class Presenter extends AbstractMainPresenter
     
     @Override
     public void onClickFab() {
-        mView.startSetObservableActivity();
+        mView.startSetObservableActivity(mTwoPaneMode);
         
         // TODO: 02.03.17 start new Dialog-Fragment (pay attention on twoPaneMode)
     }

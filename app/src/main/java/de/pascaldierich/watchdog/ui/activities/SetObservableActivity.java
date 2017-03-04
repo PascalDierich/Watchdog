@@ -1,6 +1,7 @@
 package de.pascaldierich.watchdog.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -41,8 +42,6 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     
     private Presenter mPresenter;
     
-    private final int TEXT_CHANGE_TIME = 1500;
-    
     /* Layout */
     @Nullable
     @BindView(R.id.setObservable_progressBar)
@@ -60,9 +59,6 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     @Nullable
     @BindView(R.id.switch_YouTube)
     Switch mSwitchYouTube;
-//    @Nullable
-//    @BindView(R.id.checkBox_YouTube)
-//    CheckBox mCheckBoxYouTube;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,13 +166,16 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     @OnTextChanged(value = R.id.setObservable_textYouTubeName,
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onAfterTextChangedYouTube(final Editable newText) {
+        if (newText.length() == 20) {
+            Toast.makeText(this, "Your reach the limit", Toast.LENGTH_SHORT).show(); // TODO: 03.03.17 strings.xml 
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (mSwitchYouTube.isChecked())
                     mPresenter.onInputChanged(SupportedNetworks.YOUTUBE, newText.toString());
             }
-        }, TEXT_CHANGE_TIME);
+        }, 1000);
     }
     
     /**
@@ -216,6 +215,12 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         }
     }
     
-    
+    /**
+     * starts the MainActivity
+     */
+    @Override
+    public void startMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }
 

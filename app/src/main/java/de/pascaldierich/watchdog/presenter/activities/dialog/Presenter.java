@@ -47,13 +47,13 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
      */
     @Override
     public void onStart() {
-        mView.setData(null, null); // TODO: 02.03.17 get Data 
+        mView.setData(null, null); // TODO: 02.03.17 get Data -> when new implementation as Fragment probably saved in Bundle (savedInstance)
     }
     
     @Nullable
     private Observable checkTransmittedData() {
         // TODO: 02.03.17 get Data
-        // TODO: save tranmitted Sites in mSitesArrayList
+        // TODO: save Sites in mSitesArrayList
         return null;
     }
     
@@ -89,7 +89,14 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     @DebugLog
     @Override
     public void onSaveClicked(String displayName) {
-        if (displayName == null || displayName.isEmpty()) mView.showErrorMessage("verify Name");
+        if (displayName == null || displayName.isEmpty()) {
+            mView.showErrorMessage("verify Name");
+            return;
+        }
+        if (super.mSiteArrayList.isEmpty()) {
+            mView.showErrorMessage("no Network to observable got set");
+            return;
+        }
         
         super.setObservable(
                 new Observable()
@@ -97,6 +104,8 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                         .setGotThumbnail(false),
                 mView.getContext(),
                 this);
+    
+        mView.changeProgressVisibility();
     }
     
     @Override
@@ -134,6 +143,9 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         
         super.setObservableId(id);
         super.setSites(mSiteArrayList, mView.getContext(), this);
+        
+        // This is the end.
+        mView.startMainActivity();
     }
     
     /**

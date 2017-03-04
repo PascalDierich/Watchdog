@@ -16,6 +16,7 @@ import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.activities.main.MainPresenter;
 import de.pascaldierich.watchdog.presenter.activities.main.Presenter;
 import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
+import de.pascaldierich.watchdog.ui.fragments.PostsFragment;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
     private Presenter mPresenter;
@@ -32,10 +33,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+    
         ButterKnife.bind(this);
-        
-        mFab = (FloatingActionButton) findViewById(R.id.fab_newObservable);
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
@@ -52,10 +51,9 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
-            // TODO: 02.03.17 implement full twoPaneMode
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.postList_container, null, POST_LIST_FRAGMENT_TAG) // TODO: 28.02.17 create PostListFragment.class
-//                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.postList_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG) // TODO: 28.02.17 create PostListFragment.class
+                    .commit();
         }
         
         getSupportFragmentManager().beginTransaction()
@@ -91,10 +89,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
     
     @Override
-    public void startSetObservableActivity() {
-        startActivity(new Intent(this, SetObservableActivity.class));
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.setObservable_dialog, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
-//                .commit();
+    public void startSetObservableActivity(boolean twoPaneMode) {
+        if (twoPaneMode) {
+            // TODO: 04.03.17 create Fragment >:|
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.setObservable_dialog, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
+//                    .commit();
+        } else  {
+            startActivity(new Intent(this, SetObservableActivity.class));
+        }
     }
 }

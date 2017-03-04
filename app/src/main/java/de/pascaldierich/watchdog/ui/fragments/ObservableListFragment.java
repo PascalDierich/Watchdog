@@ -93,7 +93,6 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     @Override
     public void setData(ArrayList<Observable> observables) {
         mAdapter.setItems(observables);
-        mAdapter.notifyDataSetChanged();
     }
 
 

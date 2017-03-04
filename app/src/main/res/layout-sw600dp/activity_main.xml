@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="56dp"
-        android:layout_width="56dp"
-
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:layout_editor_absoluteY="815dp"
-        tools:layout_editor_absoluteX="528dp"
-        android:id="@+id/floatingActionButton"/>
-
     <FrameLayout
         android:id="@+id/observableList_container"
         android:layout_width="0dp"
@@ -40,5 +31,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="16dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_height="56dp"
+        android:layout_width="56dp"
+        android:id="@+id/fab_newObservable"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@android:drawable/ic_input_add"/>
 
 </android.support.constraint.ConstraintLayout>

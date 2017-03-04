@@ -77,10 +77,16 @@ public interface SetObservablePresenter extends BaseUIPresenter {
         /**
          * change font-color of TextField for specific Site
          * <p/>
+         *
          * @param site, String: Site for which TextField the color get changed
          * @param color, int: colorCode
          */
         void setTextColor(@SupportedNetworks String site, int color);
+    
+        /**
+         * starts the MainActivity
+         */
+        void startMainActivity();
     }
     
     

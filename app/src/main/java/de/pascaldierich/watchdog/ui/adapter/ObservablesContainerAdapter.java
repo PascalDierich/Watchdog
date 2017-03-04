@@ -28,6 +28,12 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
 
     public void setItems(ArrayList<Observable> items) {
         mItems = items;
+        notifyDataSetChanged();
+    }
+    
+    public void addItems(ArrayList<Observable> items) {
+        mItems.addAll(items);
+        notifyDataSetChanged();
     }
 
     @Override
