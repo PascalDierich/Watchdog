@@ -1,15 +1,14 @@
 package de.pascaldierich.model.domainmodels;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * POJO for representing observable-entries in 'Observables' table
  *
  * @see {local.DOC_Watchdog.md}
  */
-public final class Observable {
+public final class Observable implements Parcelable {
     private boolean gotThumbnail;
     private int userId;
     private String displayName;
@@ -50,4 +49,40 @@ public final class Observable {
         this.thumbnail = thumbnail;
         return this;
     }
+    
+    /*
+        Parcelable
+            -> created with http://www.parcelabler.com/
+     */
+    
+    protected Observable(Parcel in) {
+        gotThumbnail = in.readByte() != 0x00;
+        userId = in.readInt();
+        displayName = in.readString();
+    }
+    
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (gotThumbnail ? 0x01 : 0x00));
+        dest.writeInt(userId);
+        dest.writeString(displayName);
+    }
+    
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Observable> CREATOR = new Parcelable.Creator<Observable>() {
+        @Override
+        public Observable createFromParcel(Parcel in) {
+            return new Observable(in);
+        }
+        
+        @Override
+        public Observable[] newArray(int size) {
+            return new Observable[size];
+        }
+    };
 }

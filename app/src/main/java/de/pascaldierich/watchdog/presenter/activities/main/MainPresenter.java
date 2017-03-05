@@ -36,7 +36,7 @@ public interface MainPresenter extends BaseUIPresenter {
     
         /**
          * starts the setObservable Activity
-         *      -> twoPaneMode = true
+         *      -> twoPaneMode = false
          * <p/>
          * @param observable, Observable: Observable to change
          */
@@ -44,7 +44,7 @@ public interface MainPresenter extends BaseUIPresenter {
     
         /**
          * starts the setObservable Fragment
-         *      -> twoPaneMode = false
+         *      -> twoPaneMode = true
          * <p/>
          * @param observable, Observable: Observable to change
          */
@@ -52,7 +52,7 @@ public interface MainPresenter extends BaseUIPresenter {
     
         /**
          * starts the Posts Activity
-         *      -> twoPaneMode = true
+         *      -> twoPaneMode = false
          * <p/>
          * @param observable, Observable: selected Observable-Item
          */
@@ -60,7 +60,7 @@ public interface MainPresenter extends BaseUIPresenter {
     
         /**
          * updates the Posts Fragment
-         *      -> twoPaneMode = false
+         *      -> twoPaneMode = true
          * <p/>
          * @param observable, Observable: selected Observable-Item
          */

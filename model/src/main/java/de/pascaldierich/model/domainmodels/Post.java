@@ -1,5 +1,8 @@
 package de.pascaldierich.model.domainmodels;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import de.pascaldierich.model.SupportedNetworks;
 
 /**
@@ -10,7 +13,7 @@ import de.pascaldierich.model.SupportedNetworks;
  * @see {local.DOC_Watchdog.md}
  * @see {local.WatchdogContract.class}
  */
-public final class Post {
+public final class Post implements Parcelable {
     private boolean gotDownloaded;
     private int _ID; // _ID is only set if gotDownloaded = true.
     private int userId; // TODO: 27.02.17 rename one Id to observable Id
@@ -102,4 +105,52 @@ public final class Post {
         this.timestamp = timestamp;
         return this;
     }
+    
+    /*
+        Parcelable
+            -> created with http://www.parcelabler.com/
+     */
+    
+    protected Post(Parcel in) {
+        gotDownloaded = in.readByte() != 0x00;
+        _ID = in.readInt();
+        userId = in.readInt();
+        thumbnailUrl = in.readString();
+        description = in.readString();
+        title = in.readString();
+        postId = in.readString();
+        site = in.readString();
+        timestamp = in.readString();
+    }
+    
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (gotDownloaded ? 0x01 : 0x00));
+        dest.writeInt(_ID);
+        dest.writeInt(userId);
+        dest.writeString(thumbnailUrl);
+        dest.writeString(description);
+        dest.writeString(title);
+        dest.writeString(postId);
+        dest.writeString(site);
+        dest.writeString(timestamp);
+    }
+    
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Post> CREATOR = new Parcelable.Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+        
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 }

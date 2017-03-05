@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,33 +106,104 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     
     /**
      * starts the setObservable Activity
-     * -> twoPaneMode = true
+     * -> twoPaneMode = false
      * <p/>
+     *      puts Extra in Intent (key = R.string.parcelable_observable)
+     *      when observable != null
      *
      * @param observable
      */
     @Override
     public void startSetObservableActivity(@Nullable Observable observable) {
-        startActivity(
-                new Intent(this, SetObservableActivity.class)
-                    
-        );
-    }
-    
-    @Override
-    public void startSetObservableActivity(boolean twoPaneMode) {
-        if (twoPaneMode) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.postList_container, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
-                    .commit();
-        } else {
-            // TODO: 04.03.17 create new empty Activity with SetObservableFragment
+        if (observable == null) {
             startActivity(new Intent(this, SetObservableActivity.class));
+        } else {
+            startActivity(new Intent(this, SetObservableActivity.class)
+                    .putExtra(getString(R.string.parcelable_observable), observable));
         }
     }
     
-//    @Override
-//    public void onObservableSelected(@NonNull Observable item) {
+    /**
+     * starts the setObservable Fragment
+     * -> twoPaneMode = true
+     * <p/>
+     *      puts Bundle in Arguments (key = R.string.parcelable_observable)
+     *      when observable != null
+     *
+     * @param observable
+     */
+    @Override
+    public void startSetObservableFragment(@Nullable Observable observable) {
+        if (observable == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            Bundle args = new Bundle();
+            args.putParcelable(getString(R.string.parcelable_observable), observable);
+            
+            SetObservableFragment fragment = new SetObservableFragment();
+            fragment.setArguments(args);
+            
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                    .commit();
+        }
+    }
+    
+    /**
+     * starts the Posts Activity
+     * -> twoPaneMode = false
+     * <p/>
+     *      puts Observable as Extra in Intent (key = R.string.parcelable_observable)
+     *
+     * @param observable
+     */
+    @Override
+    public void startPostsActivity(@NonNull Observable observable) {
+//        startActivity(new Intent(this, PostsActivity.class) // TODO: 05.03.17 create PostsActivity
+//                .putExtra(getString(R.string.parcelable_observable), observable));
+    }
+    
+    /**
+     * updates the Posts Fragment
+     * -> twoPaneMode = true
+     * <p/>
+     *      puts Observable as Bundle in Arguments (key = R.string.parcelable_observable)
+     *
+     * @param observable
+     */
+    @Override
+    public void updatePostsFragment(@NonNull Observable observable) {
+        Bundle args = new Bundle();
+        args.putParcelable(getString(R.string.parcelable_observable), observable);
+    
+        PostsFragment fragment = new PostsFragment();
+        fragment.setArguments(args);
+    
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment, POST_LIST_FRAGMENT_TAG)
+                .commit();
+    }
+    
+    /**
+     * explicit intent to start
+     * <p/>
+     *
+     * @param intent
+     */
+    @Override
+    public void startExplicitIntent(@NonNull Intent intent) {
+        // TODO: 05.03.17 look up
+    }
+    
+    
+    /*
+        production
+     */
+    
+    @Override
+    public void onObservableSelected(@NonNull Observable item) {
 //        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
 //        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
 //
@@ -147,5 +217,5 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 //                    .commit();
 //        }
 //
-//    }
+    }
 }

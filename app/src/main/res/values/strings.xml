@@ -12,6 +12,9 @@
         intern communication
     -->
 
+    <!-- -->
+    <string name="parcelable_observable">parcelable Observable</string>
+
     <!-- FragmentMain to PostFragment. Intent with Observable-Data -->
     <string name="observableKey_displayName" translatable="false">displayName</string>
     <string name="observableKey_observableId" translatable="false">observableId</string>
