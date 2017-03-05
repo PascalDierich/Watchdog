@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     
     private Presenter mPresenter;
     
+    private boolean mTwoPaneMode;
+    
     // Fragment Tags for FragmentManager
     private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
     private static final String POST_LIST_FRAGMENT_TAG = "PL_FragmentTag";
@@ -118,28 +120,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         /*
         start Activity or Fragment (twoPaneMode)
          */
-    
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.postList_container, new PostsFragment().setObservable(item), POST_LIST_FRAGMENT_TAG)
-                .commit();
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        if (mPresenter.getTwoPaneMode()) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.postList_container, new PostsFragment().setObservable(item), POST_LIST_FRAGMENT_TAG)
+                    .commit();
+        }
     
     }
 }

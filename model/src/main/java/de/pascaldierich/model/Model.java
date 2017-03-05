@@ -451,10 +451,12 @@ public class Model {
     @DebugLog
     @MainThread
     public ArrayList<Post> getNewsFeed(Context context, int observableId) throws ModelException {
+        Log.w("Model.class", "getNewsFeed starts...");
         // Instantiation
         Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
-        
+    
+        Log.w("Model.class", "going to setup Loader");
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);
         loaderWeakReference.get().setProjection(new String[] {
@@ -474,8 +476,10 @@ public class Model {
         
         try {
             Cursor entries = loaderWeakReference.get().loadInBackground();
+            Log.w("Model.class", "Cursor received, going to call Converter");
             return mConverter.getPost(entries);
         } catch (UnsupportedOperationException e) {
+            Log.w("Model.class", "UnknownUri Exception");
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }
     }

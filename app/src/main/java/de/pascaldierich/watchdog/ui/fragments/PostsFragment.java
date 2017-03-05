@@ -30,6 +30,7 @@ public class PostsFragment extends Fragment implements Presenter.View {
     
     // boolean to work with Paging. true -> NewsFeed, false -> Favorites
     private boolean mSelectedPage = true;
+    
     /* Layout */
     @BindView(R.id.posts_container)
     RecyclerView mPostsContainer;
@@ -67,6 +68,11 @@ public class PostsFragment extends Fragment implements Presenter.View {
         mPresenter.onStart();
     }
     
+    /**
+     *
+     * @param observable
+     * @return this, PostFragment
+     */
     public PostsFragment setObservable(Observable observable) {
         mObservable = observable;
         return this;
@@ -97,6 +103,6 @@ public class PostsFragment extends Fragment implements Presenter.View {
      */
     @Override
     public boolean getSelectedPage() {
-        return false;
+        return mSelectedPage;
     }
 }

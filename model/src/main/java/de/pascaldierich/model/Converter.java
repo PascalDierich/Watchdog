@@ -1,9 +1,5 @@
 package de.pascaldierich.model;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;

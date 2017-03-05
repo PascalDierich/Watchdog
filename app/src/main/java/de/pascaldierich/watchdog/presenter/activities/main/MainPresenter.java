@@ -7,6 +7,8 @@ public interface MainPresenter extends BaseUIPresenter {
     
     void onClickFab();
     
+    boolean getTwoPaneMode();
+    
     interface View extends BaseView {
         
         /**

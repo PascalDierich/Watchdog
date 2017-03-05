@@ -67,6 +67,7 @@ public class Presenter extends AbstractObservableListPresenter
             onFailure(ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
         }
         mView.setData(super.mObservables);
+        mView.sendObservableToMain(super.mObservables.get(0));
     }
     
     /**

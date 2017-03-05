@@ -42,7 +42,7 @@ public class Presenter extends AbstractPostPresenter
     @Override
     public void onStart() {
         if (mObservable == null) {
-            return;
+            return; // TODO: 04.03.17 show first Observable in Collection
         }
         super.getPosts(mView.getContext(), this, mView.getSelectedPage(), mObservable.getUserId());
     }
@@ -52,7 +52,6 @@ public class Presenter extends AbstractPostPresenter
         
     }
     
-    // Get Method Callback
     @DebugLog
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
@@ -70,6 +69,8 @@ public class Presenter extends AbstractPostPresenter
     public void onSuccess(@NonNull ArrayList<?> result) {
         try {
             super.mPosts = (ArrayList<Post>) result;
+            
+            /* production tests */
             Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getUserId());
             Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getDescription());
             Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getTitle());

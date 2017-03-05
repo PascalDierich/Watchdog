@@ -99,4 +99,9 @@ public class Presenter extends AbstractMainPresenter
         
         // TODO: 02.03.17 start new Dialog-Fragment (pay attention on twoPaneMode)
     }
+    
+    @Override
+    public boolean getTwoPaneMode() {
+        return mView.getUiMode();
+    }
 }

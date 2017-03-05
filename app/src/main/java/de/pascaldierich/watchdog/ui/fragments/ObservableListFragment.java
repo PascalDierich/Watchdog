@@ -170,7 +170,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
                 try {
                     ProNewFeed test = new ProNewFeed();
                     test.addNewNewsFeedPosts(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                            getContext(), 25); // <--
+                            getContext(), 1); // <-- TODO: magic number
                     break;
                 } catch (ModelException e) {
                     Log.d(LOG_TAG, "onOptionsItemSelected: " + e.getErrorCode());

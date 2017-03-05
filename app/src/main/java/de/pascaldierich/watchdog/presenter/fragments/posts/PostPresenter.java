@@ -25,6 +25,7 @@ interface PostPresenter extends BaseUIPresenter {
      */
     void onSavePost(Post post);
     
+    
     void setObservable(Observable observable);
     
     interface View extends BaseView {
