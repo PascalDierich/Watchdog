@@ -92,7 +92,9 @@ public class Presenter extends AbstractMainPresenter
         
     }
     
-    
+    /**
+     * TODO: fragment_container -> SetObservableFragment || PostsFragment
+     */
     @Override
     public void onClickFab() {
         mView.startSetObservableActivity(mTwoPaneMode);

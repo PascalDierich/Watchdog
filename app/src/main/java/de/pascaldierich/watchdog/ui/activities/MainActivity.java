@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,11 +26,8 @@ import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View,
         MainActivityCallback {
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     
     private Presenter mPresenter;
-    
-    private boolean mTwoPaneMode;
     
     // Fragment Tags for FragmentManager
     private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
@@ -39,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     // Layout
     @BindView(R.id.fab_newObservable)
     FloatingActionButton mFab;
+    
+    /*
+        initial Methods
+     */
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
         
-        WatchdogSyncAdapter.initializeSyncAdapter(this);
+        WatchdogSyncAdapter.initializeSyncAdapter(this); // <---------- remove
     }
     
     @Override
@@ -63,10 +65,9 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.postList_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG)
+                    .replace(R.id.fragment_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG)
                     .commit();
         }
-        
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.observableList_container, new ObservableListFragment(), OBSERVABLE_LIST_FRAGMENT_TAG)
                 .commit();
@@ -92,11 +93,31 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
     
     /**
-     * this onClick method opens a dialog to create a new Observable.
+     *
      */
     @OnClick(R.id.fab_newObservable)
     void onClick() {
         mPresenter.onClickFab();
+    }
+    
+    
+    /*
+        Methods to start/update fragments/activities
+     */
+    
+    /**
+     * starts the setObservable Activity
+     * -> twoPaneMode = true
+     * <p/>
+     *
+     * @param observable
+     */
+    @Override
+    public void startSetObservableActivity(@Nullable Observable observable) {
+        startActivity(
+                new Intent(this, SetObservableActivity.class)
+                    
+        );
     }
     
     @Override
@@ -111,20 +132,20 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         }
     }
     
-    @Override
-    public void onObservableSelected(@NonNull Observable item) {
-        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
-        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
-    
-    
-        /*
-        start Activity or Fragment (twoPaneMode)
-         */
-        if (mPresenter.getTwoPaneMode()) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.postList_container, new PostsFragment().setObservable(item), POST_LIST_FRAGMENT_TAG)
-                    .commit();
-        }
-    
-    }
+//    @Override
+//    public void onObservableSelected(@NonNull Observable item) {
+//        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
+//        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
+//
+//
+//        /*
+//        start Activity or Fragment (twoPaneMode)
+//         */
+//        if (mPresenter.getTwoPaneMode()) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.postList_container, new PostsFragment().setObservable(item), POST_LIST_FRAGMENT_TAG)
+//                    .commit();
+//        }
+//
+//    }
 }
