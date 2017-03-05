@@ -13,6 +13,14 @@
         <item name="android:layout_margin">16dp</item>
     </style>
 
+    <!-- FAB style -->
+    <style name="FAB" parent="AppTheme">
+        <item name="android:elevation">5dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_weight">56dp</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
 
 
 
