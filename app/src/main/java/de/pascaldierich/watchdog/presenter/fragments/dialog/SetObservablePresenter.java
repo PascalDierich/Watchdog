@@ -1,6 +1,10 @@
 package de.pascaldierich.watchdog.presenter.fragments.dialog;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import java.util.ArrayList;
 
 import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Observable;
@@ -11,7 +15,7 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 public interface SetObservablePresenter extends BaseUIPresenter {
     
     /**
-     * Gets called when switch state changes.
+     * Gets called when network-switch for state changes.
      *      checked = true -> check user-input and get Id
      *      checked = false -> delete (if exists) Site-Object from Collection.
      * Both states changes the TextColor for UX too.
@@ -20,16 +24,6 @@ public interface SetObservablePresenter extends BaseUIPresenter {
      * @param checked, boolean: true if checked, false if not
      */
     void onStateChanged(@SupportedNetworks String network, boolean checked);
-    
-    /**
-     * Saves the current data as Observable-Site Objects in Model
-     * <b>Note:</b>
-     * an ArrayList<Site> is saved and updated in Presenter.
-     * <p/>
-     *
-     * @param displayName, String: user-input Observable Name
-     */
-    void onSaveClicked(@Nullable String displayName);
     
     /**
      * Gets called when Network is activated but input got changed.
@@ -43,13 +37,20 @@ public interface SetObservablePresenter extends BaseUIPresenter {
     interface View extends BaseView {
         
         /**
-         * show given Observable and related Sites if exists
+         * show given Observable if exists
          * <p/>
          *
          * @param observable, Observable: existing Observable from db
-         * @param sites,      Site[]: related Sites
          */
-        void setData(@Nullable Observable observable, @Nullable Site[] sites);
+        void setObservable(@NonNull Observable observable);
+    
+        /**
+         * show loaded Sites if Observable set
+         * <p/>
+         *
+         * @param sites: ArrayList<Sites>: related Sites for set Observable
+         */
+        void setSites(@NonNull ArrayList<Site> sites);
         
         /**
          * shows an Error-Message
@@ -75,6 +76,15 @@ public interface SetObservablePresenter extends BaseUIPresenter {
         String getTextNetwork(@SupportedNetworks String network) throws NullPointerException;
     
         /**
+         * return the Text from Name-Field
+         * <p/>
+         *
+         * @return user-input, String: Name of Observable
+         * @throws NullPointerException, if not usable input
+         */
+        String getTextDisplayName() throws NullPointerException;
+    
+        /**
          * change font-color of TextField for specific Site
          * <p/>
          *
@@ -84,10 +94,14 @@ public interface SetObservablePresenter extends BaseUIPresenter {
         void setTextColor(@SupportedNetworks String site, int color);
     
         /**
-         * starts the MainActivity
+         * returns the args the fragment got created with.
+         * Args contains (if != null) an Observable which should get edited.
+         *      <b>Note:</b> key := R.string.parcelable_observable
+         * <p/>
+         *
+         * @return args, Bundle: if Bundle != null it contains an Observable-Object
          */
-        void startMainActivity();
+        @Nullable
+        Bundle getArgumentsBundle();
     }
-    
-    
 }

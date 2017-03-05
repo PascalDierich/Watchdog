@@ -7,7 +7,8 @@ import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 public interface SetObservablePresenter extends BaseUIPresenter {
     
     /**
-     *
+     * gets data from Fragment and saves to storage.
+     * if success, starts MainActivity.class
      */
     void onSaveClicked();
     
@@ -20,7 +21,7 @@ public interface SetObservablePresenter extends BaseUIPresenter {
         void startMainActivity();
     
         /**
-         *
+         * Replaces the container-placeholder with SetObservableFragment.class
          * @param fragment
          */
         void setFragment(SetObservableFragment fragment);

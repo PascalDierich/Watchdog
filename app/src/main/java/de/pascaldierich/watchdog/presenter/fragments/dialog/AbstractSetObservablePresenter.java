@@ -14,6 +14,7 @@ import de.pascaldierich.domain.interactors.network.GetIdInteractor;
 import de.pascaldierich.domain.interactors.network.YouTube;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.interactors.storage.observable.Set;
+import de.pascaldierich.domain.interactors.storage.site.Get;
 import de.pascaldierich.model.SupportedNetworks;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
@@ -62,6 +63,27 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
     }
     
     @DebugLog
+    void getSitesInteractor(int observableId, Context context,
+                            StorageInteractor.GetCallback presenter) {
+        WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
+                super.mExecutor,
+                super.mMainThread,
+                context,
+                presenter,
+                observableId
+        ));
+        
+        wInteractor.get().execute();
+    }
+    
+    
+    
+    
+    
+    
+    
+    @DebugLog
+    @Deprecated
     void setObservable(Observable item, Context context,
                                  StorageInteractor.SetCallback presenter) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
@@ -76,6 +98,7 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
     }
     
     @DebugLog
+    @Deprecated
     void setSites(@NonNull ArrayList<Site> items, Context context,
                             StorageInteractor.SetCallback presenter) {
         WeakReference<de.pascaldierich.domain.interactors.storage.site.Set> wInteractor =
@@ -94,6 +117,7 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
         
     }
     
+    @Deprecated
     void setObservableId(long observableId) {
         mObservableId = observableId;
     }

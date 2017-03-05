@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         Methods to start/update fragments/activities
      */
     
+    // TODO: if Observable got set for setObservable, delete old one... (because setObservable creates always a new one)
+    
     /**
      * starts the setObservable Activity
      * -> twoPaneMode = false

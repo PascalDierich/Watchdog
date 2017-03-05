@@ -18,13 +18,16 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
-import hugo.weaving.DebugLog;
+import de.pascaldierich.watchdog.ui.activities.SetObservableActivity;
 
 public class Presenter extends AbstractSetObservablePresenter implements SetObservablePresenter,
-        GetIdInteractor.GetIdCallback, StorageInteractor.SetCallback {
+        GetIdInteractor.GetIdCallback, SetObservableActivity.SetObservableCallback,
+        StorageInteractor.GetCallback {
     private static final String LOG_TAG = Presenter.class.getSimpleName();
     
     private SetObservablePresenter.View mView;
+    
+    private Observable mObservable;
 
     /*
         Instantiation
@@ -42,19 +45,31 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         return new Presenter(executor, mainThread, savedInstance, view);
     }
     
+    
+    
+    /*
+        Initial Methods
+     */
+    
     /**
      * onStart is used to get initialData.
      */
     @Override
     public void onStart() {
-        mView.setData(null, null); // TODO: 02.03.17 get Data -> when new implementation as Fragment probably saved in Bundle (savedInstance)
-    }
+        try {
+            // pretty shitty
+            Observable item = mView.getArgumentsBundle()
+                    .getParcelable(mView.getContext().getString(R.string.parcelable_observable));
     
-    @Nullable
-    private Observable checkTransmittedData() {
-        // TODO: 02.03.17 get Data
-        // TODO: save Sites in mSitesArrayList
-        return null;
+            if (item == null) throw new NullPointerException();
+           
+            mView.setObservable(item);
+    
+            super.getSitesInteractor(item.getUserId(), mView.getContext(), this);
+            // TODO: 05.03.17 call Get Interactor to get related Sites
+        } catch (NullPointerException npe) {
+            Log.d("SetObservablePresenter", "No transmitted Observable...");
+        }
     }
     
     @Override
@@ -86,27 +101,11 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         Log.d(LOG_TAG, "onError: errorCode = " + errorCode);
     }
     
-    @DebugLog
-    @Override
-    public void onSaveClicked(String displayName) {
-        if (displayName == null || displayName.isEmpty()) {
-            mView.showErrorMessage("verify Name");
-            return;
-        }
-        if (super.mSiteArrayList.isEmpty()) {
-            mView.showErrorMessage("no Network to observable got set");
-            return;
-        }
-        
-        super.setObservable(
-                new Observable()
-                        .setDisplayName(displayName)
-                        .setGotThumbnail(false),
-                mView.getContext(),
-                this);
     
-        mView.changeProgressVisibility();
-    }
+    
+    /*
+        GetIdInteractor.GetId Callbacks
+     */
     
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
@@ -120,33 +119,41 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
      * @param result
      */
     @Override
-    public void onSuccess(@NonNull ArrayList<Site> result) {
+    public void onSuccessId(@NonNull ArrayList<Site> result) {
         mSiteArrayList.add(result.get(0));
     
         mView.setTextColor(SupportedNetworks.YOUTUBE,
                 ResourcesCompat.getColor(mView.getContext().getResources(), R.color.colorTextVerified, mView.getContext().getTheme()));
         
         Log.i(LOG_TAG, "onSuccess: result.get(0) -> " + result.get(0).getKey());
-        
-        // TODO: 03.03.17 change color of Text to indicate success
     }
     
-    /**
-     * Storage-Interactor Callback
-     * <p/>
-     * @param id, long: unique Id for Observable entry
+    
+    
+    /*
+        StorageInteractor.Get Callbacks for Sites
      */
-    @DebugLog
+    
+    /**
+     * @param result
+     */
     @Override
-    public void onSuccess(long id) {
-        if (id < 0) return;
-        
-        super.setObservableId(id);
-        super.setSites(mSiteArrayList, mView.getContext(), this);
-        
-        // This is the end.
-        mView.startMainActivity();
+    @SuppressWarnings("unchecked")
+    public void onSuccess(@NonNull ArrayList<?> result) {
+        try {
+            super.mSiteArrayList = (ArrayList<Site>) result;
+            mView.setSites(super.mSiteArrayList);
+        } catch (ClassCastException e) {
+            mView.showErrorMessage("" + ModelErrorsCodes.UNKNOWN_FATAL_ERROR); // TODO: 05.03.17 ERROR-ROUTINE (!)
+        }
     }
+    
+    
+    
+    
+    /*
+        View Methods
+     */
     
     /**
      * Gets called when switch state changes.
@@ -167,12 +174,12 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                 
                 if (checked) {
                     try {
-                        String userInput = mView.getTextNetwork(SupportedNetworks.YOUTUBE); // TODO: 03.03.17 change Method to give Site as Parameter
+                        String userInput = mView.getTextNetwork(SupportedNetworks.YOUTUBE);
                         if (userInput == null) throw new NullPointerException();
                         
                         super.getPossibleIds(SupportedNetworks.YOUTUBE, userInput, this);
                     } catch (NullPointerException npe) {
-                        mView.showErrorMessage("please verify your input");// TODO: 03.03.17 strings.xml
+                        mView.showErrorMessage("please verify your input");
                     }
                 } else {
                     for (int i = 0; i < super.mSiteArrayList.size(); i++) {
@@ -211,5 +218,59 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
             }
             // [..] <- someday...
         }
+    }
+    
+    
+    
+    /*
+        SetObservable Callback from SetObservableActivity || MainActivity for related Presenter
+     */
+    
+    @Override
+    public boolean inputVerified() {
+        getObservableCallback(); // <-- bit weird order -__(*.*)__-
+        return checkObservable() && checkSites();
+    }
+    
+    @Override
+    public Observable getObservableCallback() {
+        if (mObservable == null) {
+            try {
+                mObservable = new Observable()
+                        .setDisplayName(mView.getTextDisplayName())
+                        .setGotThumbnail(false);
+                // TODO: 05.03.17 set Thumbnail
+        
+                return mObservable;
+            } catch (NullPointerException npe) {
+                return null;
+            }
+        }
+        return mObservable;
+    }
+    
+    @Override
+    public ArrayList<Site> getSitesCallback() {
+        return super.mSiteArrayList;
+    }
+    
+    
+    
+    /*
+        private Methods
+     */
+    
+    private boolean checkObservable() {
+        if (mObservable != null) {
+            if (!mObservable.getDisplayName().isEmpty() && !mObservable.getDisplayName().equals("")) {
+                return true;
+            }
+        }
+        mView.showErrorMessage("DisplayName can not be empty");
+        return false;
+    }
+    
+    private boolean checkSites() {
+        return !super.mSiteArrayList.isEmpty();
     }
 }

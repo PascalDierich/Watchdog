@@ -32,6 +32,6 @@ public interface GetIdInteractor extends BaseInteractor {
         /**
          * @param result, ArrayList<Site>: Collection of Sites
          */
-        void onSuccess(@NonNull ArrayList<Site> result);
+        void onSuccessId(@NonNull ArrayList<Site> result);
     }
 }

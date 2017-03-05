@@ -3,8 +3,8 @@ package de.pascaldierich.watchdog.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -15,10 +15,11 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
 import de.pascaldierich.model.SupportedNetworks;
@@ -33,6 +34,10 @@ import hugo.weaving.DebugLog;
 
 public class SetObservableFragment extends Fragment implements SetObservablePresenter.View {
     
+    /*
+        Instantiation
+     */
+    
     private Presenter mPresenter;
     
     private View mRootView;
@@ -44,10 +49,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     @Nullable
     @BindView(R.id.setObservable_textName)
     EditText mTextName;
-    @Nullable
-    @BindView(R.id.setObservable_fab)
-    FloatingActionButton mFab;
-    // YouTube
+        // YouTube
     @Nullable
     @BindView(R.id.setObservable_textYouTubeName)
     EditText mTextYouTube;
@@ -72,11 +74,47 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
         return mRootView;
     }
     
+    
+    
+    /*
+        Initial Methods
+     */
+    
     @Override
     public void onStart() {
         super.onStart();
         mPresenter.onStart();
     }
+    
+    /**
+     * returns the args the fragment got created with.
+     * Args contains (if != null) an Observable which should get edited.
+     *      <b>Note:</b> key := R.string.parcelable_observable
+     * <p/>
+     *
+     * @return args, Bundle: if Bundle != null it contains an Observable-Object
+     */
+    @Nullable
+    @Override
+    public Bundle getArgumentsBundle() {
+        return this.getArguments();
+    }
+    
+    @Override
+    public Context getContext() {
+        return getActivity();
+    }
+    
+    @Override
+    public void showError() {
+        Toast.makeText(getContext(), "UNKNOWN ERROR", Toast.LENGTH_SHORT).show();
+    }
+    
+    
+    
+    /*
+        View Methods for Presenter
+     */
     
     /**
      * changes the visibility of the progressBar
@@ -91,32 +129,34 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     }
     
     /**
-     * show given Observable and related Sites if exists
+     * show given Observable if exists
      * <p/>
      *
      * @param observable, Observable: existing Observable from model
-     * @param sites,      Site[]: related Sites
      */
     @Override
-    public void setData(@Nullable Observable observable, @Nullable Site[] sites) {
-        if (observable == null) return;
+    public void setObservable(@NonNull Observable observable) {
         
         mTextName.setText(observable.getDisplayName());
         if (observable.getGotThumbnail()) {
             // TODO: 02.03.17 show Thumbnail
         }
-        
-        if (sites == null || sites.length == 0) return;
-
-        /* in later versions there are going to be more than one network */
-        for (int i = 0; i < sites.length; i++) {
-            switch (sites[i].getSite()) {
+    }
+    
+    /**
+     * show loaded Sites if Observable set
+     * <p/>
+     *
+     * @param sites : ArrayList<Sites>: related Sites for set Observable
+     */
+    @Override
+    public void setSites(@NonNull ArrayList<Site> sites) {
+        for (int i = 0; i < sites.size(); i++) {
+            switch (sites.get(i).getSite()) {
                 case SupportedNetworks.YOUTUBE: {
-                    mTextYouTube.setText(sites[i].getKey());
-                    // TODO: 02.03.17 and show specific logo
-                    break;
+                    mTextYouTube.setText("got a User for this"); // TODO: 05.03.17 really?
                 }
-                
+                // [...] <-- ...
             }
         }
     }
@@ -124,58 +164,6 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     @Override
     public void showErrorMessage(String errorMessage) {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-    }
-    
-    @Override
-    public Context getContext() {
-        return getActivity();
-    }
-    
-    @Override
-    public void showError() {
-        Toast.makeText(getContext(), "UNKNOWN ERROR", Toast.LENGTH_SHORT).show();
-    }
-    
-    /**
-     * onClickListener for FAB
-     */
-    @OnClick(R.id.setObservable_fab)
-    void fabClicked() {
-        try {
-            mPresenter.onSaveClicked(
-                    mTextName.getText().toString());
-        } catch (NullPointerException npe) {
-            mPresenter.onError(1); // TODO: 03.03.17 define Error-Codes (see getSites below)
-        }
-    }
-    
-    /**
-     * gets called by state-change for switch YouTube
-     * calls Presenter to check for id
-     * <p/>
-     *
-     * @param checked, boolean
-     */
-    @DebugLog
-    @OnCheckedChanged(R.id.switch_YouTube)
-    void onSwitchChangedYouTube(boolean checked) {
-        mPresenter.onStateChanged(SupportedNetworks.YOUTUBE, checked);
-    }
-    
-    @DebugLog
-    @OnTextChanged(value = R.id.setObservable_textYouTubeName,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void onAfterTextChangedYouTube(final Editable newText) {
-        if (newText.length() == 20) {
-            Toast.makeText(getContext(), "Your reach the limit", Toast.LENGTH_SHORT).show(); // TODO: 03.03.17 strings.xml
-        }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mSwitchYouTube.isChecked())
-                    mPresenter.onInputChanged(SupportedNetworks.YOUTUBE, newText.toString());
-            }
-        }, 1000);
     }
     
     /**
@@ -216,12 +204,49 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     }
     
     /**
-     * starts the MainActivity
+     * return the Text from Name-Field
+     * <p/>
+     *
+     * @return user-input, String: Name of Observable
+     * @throws NullPointerException, if not usable input
      */
     @Override
-    public void startMainActivity() {
-        // TODO: 04.03.17 check method usability
-//        startActivity(new Intent(this, MainActivity.class));
+    public String getTextDisplayName() throws NullPointerException {
+        return mTextName.getText().toString();
     }
     
+    
+    
+    /*
+        View-Listener
+     */
+    
+    /**
+     * gets called by state-change for switch YouTube
+     * calls Presenter to check for id
+     * <p/>
+     *
+     * @param checked, boolean
+     */
+    @DebugLog
+    @OnCheckedChanged(R.id.switch_YouTube)
+    void onSwitchChangedYouTube(boolean checked) {
+        mPresenter.onStateChanged(SupportedNetworks.YOUTUBE, checked);
+    }
+    
+    @DebugLog
+    @OnTextChanged(value = R.id.setObservable_textYouTubeName,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onAfterTextChangedYouTube(final Editable newText) {
+        if (newText.length() == 20) {
+            Toast.makeText(getContext(), "Your reach the limit", Toast.LENGTH_SHORT).show(); // TODO: 03.03.17 strings.xml
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mSwitchYouTube.isChecked())
+                    mPresenter.onInputChanged(SupportedNetworks.YOUTUBE, newText.toString());
+            }
+        }, 1000);
+    }
 }

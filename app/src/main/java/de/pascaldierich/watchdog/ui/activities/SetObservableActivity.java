@@ -43,6 +43,12 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_observable);
+        
+        /*
+        TODO: get Intent Extra (if exists) and give it Presenter.
+        TODO: Presenter give it back as parameter in setFragment
+        TODO: in setFragment() set Observable-Object as Bundle extra
+         */
     
         ButterKnife.bind(this);
     
@@ -109,11 +115,13 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     /**
      * This Interface gets implemented in SetObservableFragment.
      */
-    public interface ObservableCallback {
+    public interface SetObservableCallback {
         
-        Observable getObservable();
+        boolean inputVerified();
         
-        ArrayList<Site> getSites();
+        Observable getObservableCallback();
+        
+        ArrayList<Site> getSitesCallback();
         
     }
 }

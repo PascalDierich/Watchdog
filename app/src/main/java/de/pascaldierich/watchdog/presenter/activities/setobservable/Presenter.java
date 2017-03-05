@@ -89,23 +89,22 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
      */
     @Override
     public void onSaveClicked() {
-        SetObservableActivity.ObservableCallback get;
+        SetObservableActivity.SetObservableCallback callback;
         try {
-            get = (SetObservableActivity.ObservableCallback) mFragment;
+            callback = (SetObservableActivity.SetObservableCallback) mFragment;
         } catch (ClassCastException e) {
             Log.e("SetObservablePresenter", mFragment.getClass().getSimpleName() + " must implement "
                     + " SetObservableActivity.Callback interface");
             mView.showError();
             return;
         }
-        
     
-        // TODO: 05.03.17 check data
-        get.getObservable();
-        get.getSites();
-    
-        super.setObservable(get.getObservable(), mView.getContext(), this);
-        super.setSites(get.getSites(), mView.getContext(), this);
+        /* if false, Fragment will show error */
+        if (callback.inputVerified()) {
+            super.setObservable(callback.getObservableCallback(), mView.getContext(), this);
+            super.setSites(callback.getSitesCallback(), mView.getContext(), this);
+        }
+        /* that's why we don't have to do anything... just wait for next onClick */
     }
     
     

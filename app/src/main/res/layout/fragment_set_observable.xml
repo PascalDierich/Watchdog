@@ -87,17 +87,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- TODO: define FAB-style-->
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/setObservable_fab"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_margin="16dp"
-        app:backgroundTint="@color/colorAccent"
-        app:elevation="5dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save"/>
-
 </android.support.constraint.ConstraintLayout>
