@@ -14,6 +14,10 @@ public final class Observable implements Parcelable {
     private String displayName;
     private byte[] thumbnail;
     
+    public Observable() {
+        
+    }
+    
     public boolean getGotThumbnail() {
         return gotThumbnail;
     }
@@ -55,7 +59,7 @@ public final class Observable implements Parcelable {
             -> created with http://www.parcelabler.com/
      */
     
-    protected Observable(Parcel in) {
+    public Observable(Parcel in) {
         gotThumbnail = in.readByte() != 0x00;
         userId = in.readInt();
         displayName = in.readString();

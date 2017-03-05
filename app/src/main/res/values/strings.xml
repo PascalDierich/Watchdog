@@ -12,7 +12,7 @@
         intern communication
     -->
 
-    <!-- -->
+    <!-- Key for each transmitted Observable -->
     <string name="parcelable_observable">parcelable Observable</string>
 
     <!-- FragmentMain to PostFragment. Intent with Observable-Data -->

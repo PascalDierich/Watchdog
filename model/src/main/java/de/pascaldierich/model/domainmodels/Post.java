@@ -25,6 +25,10 @@ public final class Post implements Parcelable {
     private String site;
     private String timestamp; // timestamp is only set if gotDownloaded = true.
     
+    public Post() {
+        
+    }
+    
     public boolean getGotDownloaded() {
         return gotDownloaded;
     }
@@ -111,7 +115,7 @@ public final class Post implements Parcelable {
             -> created with http://www.parcelabler.com/
      */
     
-    protected Post(Parcel in) {
+    public Post(Parcel in) {
         gotDownloaded = in.readByte() != 0x00;
         _ID = in.readInt();
         userId = in.readInt();
