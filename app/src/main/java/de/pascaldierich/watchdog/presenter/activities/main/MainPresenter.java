@@ -12,8 +12,6 @@ public interface MainPresenter extends BaseUIPresenter {
     
     void onClickFab();
     
-    boolean getTwoPaneMode();
-    
     interface View extends BaseView {
         
         /*
@@ -76,24 +74,3 @@ public interface MainPresenter extends BaseUIPresenter {
     }
     
 }
-
-/**
- * Presenter implements 3 Callback-classes:
- *
- *      - ObservableListFragment.Callback
- *          -> onObservableSelected(Observable observable)
- *              --> onePaneMode = start PostActivity
- *              --> twoPaneMode = update PostFragment
- *          -> onObservableSetting(Observable observable)
- *              --> onePaneMode = start SetObservableActivity
- *              --> twoPaneMode = replace SetObservableFragment with PostFragment
- *
- *      - PostFragment.Callback
- *          -> onPostSelected(Post post)
- *              --> onePaneMode = start explicit Intent
- *              --> twoPaneMode =  ``    ``      ``
- *
- *      - SetObservableFragment.Callback
- *          -> TODO: Problem: Save button is in Activity. -> maybe in save in static holder?
- *
- */

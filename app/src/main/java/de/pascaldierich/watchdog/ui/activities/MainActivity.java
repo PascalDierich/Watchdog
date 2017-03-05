@@ -26,6 +26,10 @@ import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 public class MainActivity extends AppCompatActivity implements MainPresenter.View,
         MainActivityCallback {
     
+    /*
+        Instantiation
+     */
+    
     private Presenter mPresenter;
     
     // Fragment Tags for FragmentManager
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     // Layout
     @BindView(R.id.fab_newObservable)
     FloatingActionButton mFab;
+    
+    
     
     /*
         initial Methods
@@ -91,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         return findViewById(R.id.postList_container) != null;
     }
     
+    
+    
+    /*
+        View Methods for Presenter
+     */
+    
     /**
      *
      */
@@ -98,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     void onClick() {
         mPresenter.onClickFab();
     }
+    
     
     
     /*
@@ -196,6 +209,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void startExplicitIntent(@NonNull Intent intent) {
         // TODO: 05.03.17 look up
     }
+    
+    
+    
+    
+    
     
     
     /*

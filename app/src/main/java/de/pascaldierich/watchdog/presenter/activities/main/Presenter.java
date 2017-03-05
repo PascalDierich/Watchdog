@@ -1,21 +1,14 @@
 package de.pascaldierich.watchdog.presenter.activities.main;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
-import de.pascaldierich.domain.interactors.network.GetIdInteractor;
-import de.pascaldierich.domain.interactors.storage.StorageInteractor;
-import de.pascaldierich.model.ModelErrorsCodes;
-import de.pascaldierich.model.domainmodels.Site;
+import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
-import hugo.weaving.DebugLog;
 
-public class Presenter extends AbstractMainPresenter
-        implements MainPresenter, StorageInteractor.SetCallback, GetIdInteractor.GetIdCallback {
+public class Presenter extends AbstractPresenter
+        implements MainPresenter {
     
     private MainPresenter.View mView;
     
@@ -37,27 +30,15 @@ public class Presenter extends AbstractMainPresenter
         return new Presenter(executor, mainThread, savedInstance, view);
     }
     
-    // StorageInteractor.SetCallback success method
-    @Override
-    public void onSuccess(long id) {
-        
-    }
     
-    // GetIdInteractor.GetIdCallback success method
-    @Override
-    public void onSuccess(@NonNull ArrayList<Site> result) {
-        
-    }
     
-    @Override
-    public void onFailure(@ModelErrorsCodes int errorCode) {
-        
-    }
+    /*
+        Initial Methods
+     */
     
     /**
      * onStart is used to get initialData.
      */
-    @DebugLog
     @Override
     public void onStart() {
         mTwoPaneMode = mView.getUiMode();
@@ -84,26 +65,51 @@ public class Presenter extends AbstractMainPresenter
         
     }
     
-    /**
-     * @param errorCode
-     */
     @Override
     public void onError(@ErrorPresenter int errorCode) {
         
     }
     
-    /**
-     * TODO: fragment_container -> SetObservableFragment || PostsFragment
+    
+    
+    /*
+        View Methods
      */
-    @Override
-    public void onClickFab() {
-        mView.startSetObservableActivity(mTwoPaneMode);
-        
-        // TODO: 02.03.17 start new Dialog-Fragment (pay attention on twoPaneMode)
-    }
     
     @Override
-    public boolean getTwoPaneMode() {
-        return mView.getUiMode();
+    public void onClickFab() {
+        if (mTwoPaneMode) { // start Fragment
+            mView.startSetObservableFragment(null);
+        } else { // start Activity
+            mView.startSetObservableActivity(null);
+        }
     }
+    
+    
+    
+    /*
+        Fragment Callbacks
+     */
+    
+    /**
+     * Presenter implements 3 Callback-classes:
+     *
+     *      - ObservableListFragment.Callback
+     *          -> onObservableSelected(Observable observable)
+     *              --> onePaneMode = start PostActivity
+     *              --> twoPaneMode = update PostFragment
+     *          -> onObservableSetting(Observable observable)
+     *              --> onePaneMode = start SetObservableActivity
+     *              --> twoPaneMode = replace SetObservableFragment with PostFragment
+     *
+     *      - PostFragment.Callback
+     *          -> onPostSelected(Post post)
+     *              --> onePaneMode = start explicit Intent
+     *              --> twoPaneMode =  ``    ``      ``
+     *
+     *      - SetObservableFragment.Callback
+     *          -> TODO: Problem: Save button is in Activity. -> maybe in save in static holder?
+     *
+     */
+    
 }

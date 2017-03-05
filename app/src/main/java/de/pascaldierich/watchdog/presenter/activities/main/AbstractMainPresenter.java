@@ -16,6 +16,7 @@ import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
 import hugo.weaving.DebugLog;
 
+@Deprecated
 abstract class AbstractMainPresenter extends AbstractPresenter {
     
     /**
