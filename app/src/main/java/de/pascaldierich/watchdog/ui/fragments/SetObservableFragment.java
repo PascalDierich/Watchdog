@@ -27,8 +27,8 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
-import de.pascaldierich.watchdog.presenter.fragments.dialog.Presenter;
-import de.pascaldierich.watchdog.presenter.fragments.dialog.SetObservablePresenter;
+import de.pascaldierich.watchdog.presenter.fragments.setobservable.Presenter;
+import de.pascaldierich.watchdog.presenter.fragments.setobservable.SetObservablePresenter;
 import de.pascaldierich.watchdog.ui.activities.SetObservableActivity;
 import hugo.weaving.DebugLog;
 

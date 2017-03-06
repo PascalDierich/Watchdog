@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_observable_big"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:src="@drawable/thumbnail_observable_default"
+                android:id="@+id/layoutObservable_thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/layoutObservable_displayName"
+                android:text="Pascal Dierich"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <!--
+            TODO: This ImageView gets replaced by RecyclerView with ImageViews to
+                  add new Icons automatically.
+                  All saved SupportedNetworks set for this Observable are going to
+                  get showed in this row.
+
+                  As long as there's only one network, Fuck it...
+        -->
+
+        <ImageView
+            android:id="@+id/layoutObservable_iconPreview_youtube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/icon_youtube_small"/>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>
