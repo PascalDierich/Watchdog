@@ -101,7 +101,7 @@ public class Presenter extends AbstractMainPresenter
             try {
                 callback = (SetObservableActivity.SetObservableCallback) mFragment;
             } catch (ClassCastException e) {
-                Log.e("SetObservablePresenter", mFragment.getClass().getSimpleName() + " must implement "
+                Log.e("main.Presenter", mFragment.getClass().getSimpleName() + " must implement "
                         + " SetObservableActivity.Callback interface");
                 mView.showError();
                 return;

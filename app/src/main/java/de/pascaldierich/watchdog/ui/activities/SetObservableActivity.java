@@ -3,6 +3,7 @@ package de.pascaldierich.watchdog.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 
@@ -126,11 +127,27 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
      * This Interface gets implemented in SetObservableFragment.
      */
     public interface SetObservableCallback {
-        
+    
+        /**
+         * Checks if user-input is correct
+         * <p/>
+         * @return boolean, true -> input workable
+         */
         boolean inputVerified();
-        
+    
+        /**
+         * returns the Observable set by User
+         * <p/>
+         * @return Observable, null
+         */
+        @Nullable
         Observable getObservableCallback();
-        
+    
+        /**
+         * return the Site-Collection
+         * <p/>
+         * @return Site-Collection
+         */
         ArrayList<Site> getSitesCallback();
         
     }

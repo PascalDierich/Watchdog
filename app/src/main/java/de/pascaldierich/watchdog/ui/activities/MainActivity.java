@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
      * false -> twoPaneMode inactive ( < sw600dp )
      */
     public boolean getUiMode() {
-        return findViewById(R.id.postList_container) != null;
+        return findViewById(R.id.fragment_container) != null;
     }
     
     

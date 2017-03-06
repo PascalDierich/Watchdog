@@ -52,7 +52,7 @@ public final class ProSite implements GetIdInteractor.GetIdCallback {
      * @param result
      */
     @Override
-    public void onSuccess(@NonNull ArrayList<Site> result) {
+    public void onSuccessId(@NonNull ArrayList<Site> result) {
         Log.d(LOG_TAG, "onSuccess: size = " + result.size());
         Log.d(LOG_TAG, "onSuccess: key = " + result.get(0).getKey());
         Log.d(LOG_TAG, "onSuccess: site = " + result.get(0).getSite());

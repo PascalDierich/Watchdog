@@ -34,6 +34,32 @@ public interface SetObservablePresenter extends BaseUIPresenter {
      */
     void onInputChanged(@SupportedNetworks String network, String newInput);
     
+    /*
+        Methods for SetObservableActivity.SetObservableCallback
+     */
+    
+    /**
+     * Checks if user-input is correct
+     * <p/>
+     * @return boolean, true -> input workable
+     */
+    boolean inputVerified();
+    
+    /**
+     * returns the Observable set by User
+     * <p/>
+     * @return Observable, null
+     */
+    Observable getObservableCallback();
+    
+    /**
+     * return the Site-Collection
+     * <p/>
+     * @return Site-Collection
+     */
+    ArrayList<Site> getSitesCallback();
+    
+    
     interface View extends BaseView {
         
         /**

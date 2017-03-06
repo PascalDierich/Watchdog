@@ -69,7 +69,7 @@ public class YouTube extends AbstractInteractor implements GetIdInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onSuccess(result);
+                    mCallback.onSuccessId(result);
                 }
             });
         } catch (final ModelException modelEx) {

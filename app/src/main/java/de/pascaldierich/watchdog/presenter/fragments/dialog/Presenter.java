@@ -18,11 +18,9 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
-import de.pascaldierich.watchdog.ui.activities.SetObservableActivity;
 
 public class Presenter extends AbstractSetObservablePresenter implements SetObservablePresenter,
-        GetIdInteractor.GetIdCallback, SetObservableActivity.SetObservableCallback,
-        StorageInteractor.GetCallback {
+        GetIdInteractor.GetIdCallback, StorageInteractor.GetCallback {
     private static final String LOG_TAG = Presenter.class.getSimpleName();
     
     private SetObservablePresenter.View mView;
@@ -67,7 +65,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     
             super.getSitesInteractor(item.getUserId(), mView.getContext(), this);
         } catch (NullPointerException npe) {
-            Log.d("SetObservablePresenter", "No transmitted Observable...");
+            Log.d("dialog.Presenter", "No transmitted Observable...");
         }
     }
     
@@ -222,7 +220,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     
     
     /*
-        SetObservable Callback from SetObservableActivity || MainActivity for related Presenter
+        SetObservable Callback from SetObservableActivity
      */
     
     @Override

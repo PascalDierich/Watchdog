@@ -29,10 +29,12 @@ import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.fragments.dialog.Presenter;
 import de.pascaldierich.watchdog.presenter.fragments.dialog.SetObservablePresenter;
+import de.pascaldierich.watchdog.ui.activities.SetObservableActivity;
 import hugo.weaving.DebugLog;
 
 
-public class SetObservableFragment extends Fragment implements SetObservablePresenter.View {
+public class SetObservableFragment extends Fragment implements SetObservablePresenter.View,
+        SetObservableActivity.SetObservableCallback {
     
     /*
         Instantiation
@@ -248,5 +250,41 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
                     mPresenter.onInputChanged(SupportedNetworks.YOUTUBE, newText.toString());
             }
         }, 1000);
+    }
+    
+    
+    
+    /*
+        SetObservable Callback from SetObservableActivity.class
+     */
+    
+    /**
+     * Checks if user-input is correct
+     * <p/>
+     * @return boolean, true -> input workable
+     */
+    @Override
+    public boolean inputVerified() {
+        return mPresenter.inputVerified();
+    }
+    
+    /**
+     * returns the Observable set by User
+     * <p/>
+     * @return Observable, null
+     */
+    @Override
+    public Observable getObservableCallback() {
+        return mPresenter.getObservableCallback();
+    }
+    
+    /**
+     * return the Site-Collection
+     * <p/>
+     * @return Site-Collection
+     */
+    @Override
+    public ArrayList<Site> getSitesCallback() {
+        return mPresenter.getSitesCallback();
     }
 }
