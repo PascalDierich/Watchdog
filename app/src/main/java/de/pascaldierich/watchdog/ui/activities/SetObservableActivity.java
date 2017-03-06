@@ -21,8 +21,7 @@ import de.pascaldierich.watchdog.presenter.activities.setobservable.SetObservabl
 import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
 /**
- * Activity to add or change Observables
- * TODO: will get moved to a Fragment (-> twoPaneMode)
+ * Activity-Container to hold SetObservableFragment in onePaneMode
  */
 public class SetObservableActivity extends AppCompatActivity implements SetObservablePresenter.View {
     
@@ -44,14 +43,8 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_observable);
         
-        /*
-        TODO: get Intent Extra (if exists) and give it Presenter.
-        TODO: Presenter give it back as parameter in setFragment
-        TODO: in setFragment() set Observable-Object as Bundle extra
-         */
-    
         ButterKnife.bind(this);
-    
+        
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
     }
@@ -83,6 +76,23 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         View Methods for Presenter
      */
     
+    /**
+     * returns this.getIntent to get Observable-Parameter
+     * <p/>
+     *
+     * @return intent, getIntent();
+     */
+    @Override
+    public Intent getIntentExtra() {
+        return this.getIntent();
+    }
+    
+    /**
+     * Replaces the container-placeholder with SetObservableFragment.class
+     * <p/>
+     *
+     * @param fragment
+     */
     @Override
     public void setFragment(SetObservableFragment fragment) {
         getSupportFragmentManager().beginTransaction()

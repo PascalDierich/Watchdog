@@ -61,6 +61,7 @@ public abstract class AbstractSetObservablePresenter extends AbstractPresenter {
         
     }
     
+    @Deprecated
     void setObservableId(long observableId) {
         mObservableId = observableId;
     }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
+import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
 public interface MainPresenter extends BaseUIPresenter {
     
@@ -44,9 +45,10 @@ public interface MainPresenter extends BaseUIPresenter {
          * starts the setObservable Fragment
          *      -> twoPaneMode = true
          * <p/>
+         * @param fragment, SetObservableFragment: Fragment to set inside fragment_container
          * @param observable, Observable: Observable to change
          */
-        void startSetObservableFragment(@Nullable Observable observable);
+        void startSetObservableFragment(@NonNull SetObservableFragment fragment, @Nullable Observable observable);
     
         /**
          * starts the Posts Activity
@@ -65,11 +67,11 @@ public interface MainPresenter extends BaseUIPresenter {
         void updatePostsFragment(@NonNull Observable observable);
     
         /**
-         * explicit intent to start
+         * implicit intent to start
          * <p/>
          * @param intent, Intent
          */
-        void startExplicitIntent(@NonNull Intent intent);
+        void startImplicitIntent(@NonNull Intent intent);
         
     }
     

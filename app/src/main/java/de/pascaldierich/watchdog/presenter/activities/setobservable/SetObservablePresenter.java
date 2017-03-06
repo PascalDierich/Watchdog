@@ -1,5 +1,7 @@
 package de.pascaldierich.watchdog.presenter.activities.setobservable;
 
+import android.content.Intent;
+
 import de.pascaldierich.watchdog.presenter.base.BaseUIPresenter;
 import de.pascaldierich.watchdog.presenter.base.BaseView;
 import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
@@ -22,8 +24,16 @@ public interface SetObservablePresenter extends BaseUIPresenter {
     
         /**
          * Replaces the container-placeholder with SetObservableFragment.class
+         * <p/>
          * @param fragment
          */
         void setFragment(SetObservableFragment fragment);
+    
+        /**
+         * returns this.getIntent to get Observable-Parameter
+         * <p/>
+         * @return intent, getIntent();
+         */
+        Intent getIntentExtra();
     }
 }

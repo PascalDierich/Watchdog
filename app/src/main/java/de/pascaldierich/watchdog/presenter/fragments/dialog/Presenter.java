@@ -66,7 +66,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
             mView.setObservable(item);
     
             super.getSitesInteractor(item.getUserId(), mView.getContext(), this);
-            // TODO: 05.03.17 call Get Interactor to get related Sites
         } catch (NullPointerException npe) {
             Log.d("SetObservablePresenter", "No transmitted Observable...");
         }

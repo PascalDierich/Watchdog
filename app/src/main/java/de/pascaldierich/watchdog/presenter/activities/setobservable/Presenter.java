@@ -7,6 +7,7 @@ import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.model.ModelErrorsCodes;
+import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.activities.AbstractSetObservablePresenter;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import de.pascaldierich.watchdog.ui.activities.SetObservableActivity;
@@ -47,6 +48,14 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
      */
     @Override
     public void onStart() {
+        try {
+            Bundle args = new Bundle();
+            args.putParcelable(mView.getContext().getString(R.string.parcelable_observable), mView.getIntentExtra()
+                    .getParcelableExtra(mView.getContext().getString(R.string.parcelable_observable)));
+            mFragment.setArguments(args);
+        } catch (NullPointerException npe) {
+            
+        }
         mView.setFragment(mFragment);
     }
     

@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         Methods to start/update fragments/activities
      */
     
-    // TODO: if Observable got set for setObservable, delete old one... (because setObservable creates always a new one)
+    // TODO: implement same behaviour as SetObservableActivity (and related Presenter) for twoPaneMode = true
     
     /**
      * starts the setObservable Activity
@@ -148,16 +148,15 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
      * @param observable
      */
     @Override
-    public void startSetObservableFragment(@Nullable Observable observable) {
+    public void startSetObservableFragment(@NonNull SetObservableFragment fragment, @Nullable Observable observable) {
         if (observable == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new SetObservableFragment(), SET_OBSERVABLE_FRAGMENT_TAG)
+                    .replace(R.id.fragment_container, fragment, SET_OBSERVABLE_FRAGMENT_TAG)
                     .commit();
         } else {
             Bundle args = new Bundle();
             args.putParcelable(getString(R.string.parcelable_observable), observable);
             
-            SetObservableFragment fragment = new SetObservableFragment();
             fragment.setArguments(args);
             
             getSupportFragmentManager().beginTransaction()
@@ -202,14 +201,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
     
     /**
-     * explicit intent to start
+     * implicit intent to start
      * <p/>
      *
      * @param intent
      */
     @Override
-    public void startExplicitIntent(@NonNull Intent intent) {
-        // TODO: 05.03.17 look up
+    public void startImplicitIntent(@NonNull Intent intent) {
+        startActivity(intent);
     }
     
     
