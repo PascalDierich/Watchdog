@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_post_youtube"
+    android:id="@+id/layout_post"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="16dp">
 
     <ImageView
-        android:id="@+id/layoutPost_youtube_thumbnail"
+        android:id="@+id/layoutPost_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -21,14 +21,14 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:id="@+id/layoutPost_youtube_networkIcon"
+            android:id="@+id/layoutPost_networkIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_youtube_small"
             android:layout_marginEnd="8dp"/>
 
         <TextView
-            android:id="@+id/layoutPost_youtube_title"
+            android:id="@+id/layoutPost_title"
             android:text="Hello, here is the title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/layoutPost_youtube_description"
+        android:id="@+id/layoutPost_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="And will be the description"

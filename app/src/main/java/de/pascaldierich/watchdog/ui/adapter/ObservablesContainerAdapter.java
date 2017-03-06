@@ -1,5 +1,6 @@
 package de.pascaldierich.watchdog.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,15 +22,17 @@ import de.pascaldierich.watchdog.ui.callbacks.ObservableListCallback;
  * Adapter for RecyclerView to present the Observables
  */
 public class ObservablesContainerAdapter extends RecyclerView.Adapter<ObservablesContainerAdapter.ViewHolder> {
-
+    
+    private Context mContext;
     private ArrayList<Observable> mItems;
     private ObservableListCallback mCallback;
     
-    public ObservablesContainerAdapter(ArrayList<Observable> items, ObservableListCallback callback) {
+    public ObservablesContainerAdapter(Context context, ArrayList<Observable> items, ObservableListCallback callback) {
+        mContext = context;
         mItems = items;
         mCallback = callback;
     }
-
+    
     public void setItems(ArrayList<Observable> items) {
         mItems = items;
         notifyDataSetChanged();
@@ -39,29 +42,32 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
         mItems.addAll(items);
         notifyDataSetChanged();
     }
-
+    
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.container_observable, parent, false);
+                .inflate(R.layout.layout_observable_big, parent, false);
         return new ViewHolder(view);
     }
-
+    
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Observable item = mItems.get(position);
+        
+        
         holder.vDisplayName.setText(item.getDisplayName());
-
-        if (item.getGotThumbnail()) { // if there is a profil pic
+        holder.vIconYouTube.setImageDrawable(mContext.getDrawable(R.drawable.icon_youtube_small));
+        
+        if (item.getGotThumbnail()) {
             try {
-                holder.vProfilPic.setImageBitmap( // TODO: 28.02.17 use Picasso
+                holder.vThumbnail.setImageBitmap( // TODO: 28.02.17 use Picasso
                         Converter.getBitmap(item.getThumbnail()));
             } catch (NullPointerException npe) { // just in case there is no boolean set
-                // do nothing, last statement in void
+                
             }
         }
         
-        holder.vContainer.setOnClickListener(new View.OnClickListener() {
+        holder.vLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Callback to MainActivity
@@ -69,7 +75,7 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
             }
         });
     }
-
+    
     @Override
     public int getItemCount() {
         if (mItems == null)
@@ -77,15 +83,17 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
         else
             return mItems.size();
     }
-
+    
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.observable_container)
-        CardView vContainer;
-        @BindView(R.id.profilPic)
-        ImageView vProfilPic;
-        @BindView(R.id.displayName)
+        @BindView(R.id.layout_observable_big)
+        CardView vLayout;
+        @BindView(R.id.layoutObservable_thumbnail)
+        ImageView vThumbnail;
+        @BindView(R.id.layoutObservable_displayName)
         TextView vDisplayName;
-                
+        @BindView(R.id.layoutObservable_iconPreview_youtube)
+        ImageView vIconYouTube;
+        
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
