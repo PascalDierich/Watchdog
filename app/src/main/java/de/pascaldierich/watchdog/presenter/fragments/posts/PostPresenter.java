@@ -37,6 +37,8 @@ interface PostPresenter extends BaseUIPresenter {
         
         // TODO: change method signature and behaviour for twoPaneMode
         void startActivity(Intent intent);
+    
+        void sendIntentToActivity(Intent intent);
         
         /**
          * @return selectedPage, boolean: true -> NewsFeed; false -> Favorites

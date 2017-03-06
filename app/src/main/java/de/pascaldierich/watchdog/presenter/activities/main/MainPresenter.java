@@ -13,6 +13,14 @@ public interface MainPresenter extends BaseUIPresenter {
     
     void onClickFab();
     
+    /**
+     * Method to send ObservableListFragment.Callback to Presenter
+     * <p/>
+     *
+     * @param item
+     */
+    void onObservableSelected(@NonNull Observable item);
+    
     interface View extends BaseView {
         
         /*

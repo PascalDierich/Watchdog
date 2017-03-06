@@ -2,6 +2,7 @@ package de.pascaldierich.watchdog.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,69 +28,76 @@ import de.pascaldierich.production.ProSite;
 import de.pascaldierich.sync.WatchdogSyncAdapter;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
-import de.pascaldierich.watchdog.presenter.fragments.main.ObservableListPresenter;
-import de.pascaldierich.watchdog.presenter.fragments.main.Presenter;
+import de.pascaldierich.watchdog.presenter.fragments.listobservables.ObservableListPresenter;
+import de.pascaldierich.watchdog.presenter.fragments.listobservables.Presenter;
 import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
-import de.pascaldierich.watchdog.ui.callbacks.MainActivityCallback;
-import de.pascaldierich.watchdog.ui.callbacks.ObservableListCallback;
 
 /**
  * Fragment for MainActivity.
  * Presents the List of Observables
  */
-public class ObservableListFragment extends Fragment implements ObservableListPresenter.View,
-        ObservableListCallback {
+public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
     private static final String LOG_TAG = ObservableListFragment.class.getSimpleName();
+    
+    /*
+        Instantiation
+     */
     
     private Presenter mPresenter;
     
-    private MainActivityCallback mCallback;
-
-    /* Layout */
-    @BindView(R.id.observables_container)
-    RecyclerView mObservablesContainer;
+    private ObservableListFragment.ObservableSelectedCallback mCallback; // TODO: 06.03.17 ?!?!?!
     
     private ObservablesContainerAdapter mAdapter;
 
     private View mRootView;
-
-    @Override
-    public void showError() {
-
-    }
-
+    
+    /* Layout */
+    @BindView(R.id.observables_container)
+    RecyclerView mObservablesContainer;
+    
+    
+    
+    /*
+        Initial Methods
+     */
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
+        
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
-
-        mAdapter = new ObservablesContainerAdapter(null, this);
+        
+        mAdapter = new ObservablesContainerAdapter(getContext(), null, mPresenter);
     }
     
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
+        mRootView = inflater.inflate(R.layout.fragment_observable_list, container, false);
+        ButterKnife.bind(this, mRootView);
+        
+        mObservablesContainer.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mObservablesContainer.setAdapter(mAdapter);
+        
+        return mRootView;
+    }
+    
+    // TODO: 06.03.17 Deprecated!
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallback = (MainActivityCallback) activity;
+            mCallback = (ObservableListFragment.ObservableSelectedCallback) activity;
         } catch (ClassCastException cce) {
             Log.w(LOG_TAG, "onAttach: ClassCastException. " + activity.toString() + " must" +
                     "implement Callback");
         }
     }
-
-
+    
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
-        mRootView = inflater.inflate(R.layout.fragment_observable_list, container, false);
-        ButterKnife.bind(this, mRootView);
+    public void showError() {
 
-        mObservablesContainer.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mObservablesContainer.setAdapter(mAdapter);
-
-        return mRootView;
     }
 
     @Override
@@ -106,27 +114,83 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     /**
      * show Observables
      * <p/>
-     * @param observables
+     * @param observables, ArrayList<Observables>: Observables-Collection received by StorageInteractor
      */
     @Override
     public void setData(ArrayList<Observable> observables) {
         mAdapter.setItems(observables);
     }
     
-    /**
-     * ObservableListCallback
-     * <p/>
-     * @param position, int:
+    
+    
+    /*
+        Methods to start/update activities/fragments
      */
-    @Override
-    public void onCardViewClick(int position) {
-        mPresenter.onObservableSelected(position);
-    }
     
     @Override
-    public void sendObservableToMain(Observable observable) {
+    public void sendObservableToMain(@NonNull Observable observable) {
         mCallback.onObservableSelected(observable);
     }
+    
+    
+    
+    /*
+        Interface to send selected Observable to MainActivity
+     */
+    public interface ObservableSelectedCallback {
+    
+        /**
+         * send selected Observable to MainActivity
+         * <p/>
+         * @param observable, Observable: selected NonNull Observable
+         */
+        void onObservableSelected(@NonNull Observable observable);
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /********************************************************************************

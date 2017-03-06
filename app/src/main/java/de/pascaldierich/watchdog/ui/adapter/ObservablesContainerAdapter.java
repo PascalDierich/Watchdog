@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.ui.Converter;
-import de.pascaldierich.watchdog.ui.callbacks.ObservableListCallback;
 
 /**
  * Adapter for RecyclerView to present the Observables
@@ -25,9 +24,10 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
     
     private Context mContext;
     private ArrayList<Observable> mItems;
-    private ObservableListCallback mCallback;
+    private ObservablesContainerAdapter.AdapterCallback mCallback;
     
-    public ObservablesContainerAdapter(Context context, ArrayList<Observable> items, ObservableListCallback callback) {
+    public ObservablesContainerAdapter(Context context, ArrayList<Observable> items,
+                                       ObservablesContainerAdapter.AdapterCallback callback) {
         mContext = context;
         mItems = items;
         mCallback = callback;
@@ -98,5 +98,14 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+    
+    /**
+     * Interface which got implemented by fragment.main.Presenter (ObservableListFragment's Presenter).
+     */
+    public interface AdapterCallback {
+        
+        void onCardViewClick(int position);
+    
     }
 }

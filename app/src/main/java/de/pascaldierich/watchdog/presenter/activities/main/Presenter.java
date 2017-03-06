@@ -1,12 +1,14 @@
 package de.pascaldierich.watchdog.presenter.activities.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.model.ModelErrorsCodes;
+import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import de.pascaldierich.watchdog.ui.activities.SetObservableActivity;
 import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
@@ -125,6 +127,21 @@ public class Presenter extends AbstractMainPresenter
         }
     }
     
+    /**
+     * Method to start PostFragment || PostActivity
+     * <p/>
+     *
+     * @param item, Observable: selected Observable to transmit
+     */
+    /* ObservableListFragment */
+    @Override
+    public void onObservableSelected(@NonNull Observable item) {
+        if (mTwoPaneMode) {
+            mView.updatePostsFragment(item);
+        } else {
+            mView.startPostsActivity(item);
+        }
+    }
     
     /*
         StorageInteractor Callbacks
@@ -154,6 +171,8 @@ public class Presenter extends AbstractMainPresenter
         Fragment Callbacks
      */
     
+    
+    
     /**
      * Presenter implements 3 Callback-classes:
      *
@@ -161,6 +180,7 @@ public class Presenter extends AbstractMainPresenter
      *          -> onObservableSelected(Observable observable)
      *              --> onePaneMode = start PostActivity
      *              --> twoPaneMode = update PostFragment
+     *
      *          -> onObservableSetting(Observable observable)
      *              --> onePaneMode = start SetObservableActivity
      *              --> twoPaneMode = replace SetObservableFragment with PostFragment

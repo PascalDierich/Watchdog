@@ -18,13 +18,12 @@ import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.activities.main.MainPresenter;
 import de.pascaldierich.watchdog.presenter.activities.main.Presenter;
-import de.pascaldierich.watchdog.ui.callbacks.MainActivityCallback;
 import de.pascaldierich.watchdog.ui.fragments.ObservableListFragment;
 import de.pascaldierich.watchdog.ui.fragments.PostsFragment;
 import de.pascaldierich.watchdog.ui.fragments.SetObservableFragment;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View,
-        MainActivityCallback {
+        ObservableListFragment.ObservableSelectedCallback, PostsFragment.ImplicitIntentCallback {
     
     /*
         Instantiation
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @BindView(R.id.fab_newObservable)
     FloatingActionButton mFab;
     
-    
+    // TODO: 06.03.17 MainActivity need to implement ObservableListFragment.ObservableSelectedCallback
     
     /*
         initial Methods
@@ -117,8 +116,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         Methods to start/update fragments/activities
      */
     
-    // TODO: implement same behaviour as SetObservableActivity (and related Presenter) for twoPaneMode = true
-    
     /**
      * starts the setObservable Activity
      * -> twoPaneMode = false
@@ -175,8 +172,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
      */
     @Override
     public void startPostsActivity(@NonNull Observable observable) {
-//        startActivity(new Intent(this, PostsActivity.class) // TODO: 05.03.17 create PostsActivity
-//                .putExtra(getString(R.string.parcelable_observable), observable));
+        startActivity(new Intent(this, PostsActivity.class) // TODO: 05.03.17 create PostsActivity
+                .putExtra(getString(R.string.parcelable_observable), observable));
     }
     
     /**
@@ -217,12 +214,23 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     
     
     
+    
+    
+    
+    
     /*
         production
      */
     
+    /* ObservableListFragment */
     @Override
     public void onObservableSelected(@NonNull Observable item) {
+        mPresenter.onObservableSelected(item);
+//        if (mTwoPaneMode) {
+//            mView.updatePostsFragment(item);
+//        } else {
+//            mView.startPostsActivity(item);
+//        }
 //        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
 //        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
 //
@@ -236,5 +244,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 //                    .commit();
 //        }
 //
+    }
+    
+    @Override
+    public void onStartIntent(@NonNull Intent intent) {
+        startActivity(intent);
     }
 }

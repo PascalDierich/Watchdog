@@ -25,13 +25,15 @@ public interface SetObservablePresenter extends BaseUIPresenter {
         /**
          * Replaces the container-placeholder with SetObservableFragment.class
          * <p/>
-         * @param fragment
+         * @param fragment, SetObservableFragment: fragment which may contain args
          */
         void setFragment(SetObservableFragment fragment);
     
         /**
          * returns this.getIntent to get Observable-Parameter
          * <p/>
+         *      key = R.string.parcelable_observable
+         *
          * @return intent, getIntent();
          */
         Intent getIntentExtra();

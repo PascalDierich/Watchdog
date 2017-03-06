@@ -1,6 +1,9 @@
 package de.pascaldierich.watchdog.ui.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +31,8 @@ public class PostsFragment extends Fragment implements Presenter.View {
     
     private Observable mObservable;
     
+    private PostsFragment.ImplicitIntentCallback mCallback;
+    
     // boolean to work with Paging. true -> NewsFeed, false -> Favorites
     private boolean mSelectedPage = true;
     
@@ -36,6 +41,13 @@ public class PostsFragment extends Fragment implements Presenter.View {
     RecyclerView mPostsContainer;
     
     private PostsContainerAdapter mAdapter;
+    
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallback = (ImplicitIntentCallback) activity;
+        
+    }
     
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -48,7 +60,7 @@ public class PostsFragment extends Fragment implements Presenter.View {
         mPresenter.setObservable(mObservable);
         mObservable = null;
     
-        mAdapter = new PostsContainerAdapter(null);
+        mAdapter = new PostsContainerAdapter(getContext(), null, mPresenter);
     }
     
     @Override
@@ -105,4 +117,19 @@ public class PostsFragment extends Fragment implements Presenter.View {
     public boolean getSelectedPage() {
         return mSelectedPage;
     }
+    
+    
+    @Override
+    public void sendIntentToActivity(Intent intent) {
+        
+    }
+    
+    
+    public interface ImplicitIntentCallback {
+    
+        void onStartIntent(@NonNull Intent intent);
+        
+    }
+    
+    
 }

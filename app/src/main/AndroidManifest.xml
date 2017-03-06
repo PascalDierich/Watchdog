@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <!--             Sync-Service -->
+        <!-- Sync-Service -->
         <service
             android:name="de.pascaldierich.sync.WatchdogSyncService"
             android:exported="false"
@@ -35,7 +35,7 @@
                 android:resource="@xml/syncadapter"/>
         </service>
 
-        <!--             Authenticator-Service -->
+        <!-- Authenticator-Service -->
         <service
             android:name="de.pascaldierich.sync.AuthenticatorService"
             android:exported="false">
@@ -49,6 +49,8 @@
         </service>
 
         <activity android:name=".ui.activities.SetObservableActivity">
+        </activity>
+        <activity android:name=".ui.activities.PostsActivity">
         </activity>
     </application>
 

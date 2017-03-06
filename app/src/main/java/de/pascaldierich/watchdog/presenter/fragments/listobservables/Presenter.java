@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.presenter.fragments.main;
+package de.pascaldierich.watchdog.presenter.fragments.listobservables;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,10 +10,12 @@ import de.pascaldierich.domain.executor.MainThread;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
+import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
 import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractObservableListPresenter
-        implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback {
+        implements ObservableListPresenter, de.pascaldierich.domain.interactors.storage.StorageInteractor.GetCallback,
+        ObservablesContainerAdapter.AdapterCallback {
     
     private ObservableListPresenter.View mView;
 
@@ -33,6 +35,12 @@ public class Presenter extends AbstractObservableListPresenter
         return new Presenter(executor, mainThread, savedInstance, view);
     }
     
+    
+    
+    /*
+        Initial Methods
+     */
+    
     @DebugLog
     @Override
     public void onStart() {
@@ -44,6 +52,57 @@ public class Presenter extends AbstractObservableListPresenter
     public void onResume() {
         
     }
+    
+    /**
+     * @param errorCode
+     */
+    @Override
+    public void onError(@ErrorPresenter int errorCode) {
+        mView.showError();
+    }
+    
+    @Override
+    public void onPause() {
+        
+    }
+    
+    @Override
+    public void onStop() {
+        
+    }
+    
+    @Override
+    public void onDestroy() {
+        
+    }
+    
+    
+    
+    /*
+        View Methods
+            --> AdapterCallback
+     */
+    
+    /**
+     * Callback from Adapter -> ObservableList
+     * <p/>
+     * @param index, int: position in Observable-Collection which got selected
+     */
+    @Override
+    public void onCardViewClick(int index) {
+        if (index < 0) return;
+        if (mObservables.get(index) == null) return;
+    
+        // TODO: 06.03.17 send either to MainActivity || PostsActivity
+        mView.sendObservableToMain( // TODO: 06.03.17 change Method-Name to sendToCallback
+                mObservables.get(index));
+    }
+    
+    
+    
+    /*
+        StorageInteractor Callbacks
+     */
     
     @DebugLog
     @Override
@@ -68,43 +127,5 @@ public class Presenter extends AbstractObservableListPresenter
         }
         mView.setData(super.mObservables);
         mView.sendObservableToMain(super.mObservables.get(0));
-    }
-    
-    /**
-     * @param errorCode
-     */
-    @Override
-    public void onError(@ErrorPresenter int errorCode) {
-        mView.showError();
-    }
-    
-    /**
-     * called by onClickListener for CardView
-     * <p/>
-     *
-     * @param index, int: indicates which Observable got selected
-     */
-    @Override
-    public void onObservableSelected(int index) {
-        if (index < 0) return;
-        if (mObservables.get(index) == null) return;
-        mView.sendObservableToMain(
-                mObservables.get(index)
-        );
-    }
-    
-    @Override
-    public void onPause() {
-        
-    }
-    
-    @Override
-    public void onStop() {
-        
-    }
-    
-    @Override
-    public void onDestroy() {
-        
     }
 }

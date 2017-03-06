@@ -1,5 +1,6 @@
 package de.pascaldierich.watchdog.presenter.fragments.posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,10 +14,12 @@ import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
+import de.pascaldierich.watchdog.ui.adapter.PostsContainerAdapter;
 import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractPostPresenter
-        implements PostPresenter, StorageInteractor.GetCallback, StorageInteractor.SetCallback {
+        implements PostPresenter, StorageInteractor.GetCallback, StorageInteractor.SetCallback,
+        PostsContainerAdapter.AdapterCallback{
     
     private PostPresenter.View mView;
     
@@ -129,5 +132,30 @@ public class Presenter extends AbstractPostPresenter
     @Override
     public void setObservable(Observable observable) {
         mObservable = observable;
+    }
+    
+    
+    
+    /*
+        View Methods
+            --> AdapterCallback
+     */
+    
+    @Override
+    public void onStartNetworkClicked(int index) {
+        if (index < 0) return;
+        if (mPosts.get(index) == null) return;
+        
+        mView.sendIntentToActivity(null);
+
+//        mView.startImplicitIntent(null); // TODO: 06.03.17 call create Intent(Site site)
+    }
+    
+    /*
+        private methods
+     */
+    
+    private Intent createIntent(Post post) {
+        return null;
     }
 }

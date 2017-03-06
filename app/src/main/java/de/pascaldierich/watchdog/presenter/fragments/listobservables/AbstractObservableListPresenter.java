@@ -1,4 +1,4 @@
-package de.pascaldierich.watchdog.presenter.fragments.main;
+package de.pascaldierich.watchdog.presenter.fragments.listobservables;
 
 import android.content.Context;
 import android.os.Bundle;

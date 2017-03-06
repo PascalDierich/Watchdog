@@ -3,6 +3,7 @@ package de.pascaldierich.watchdog.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,13 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
     
     private ArrayList<Post> mItems;
     private Context mContext;
+    private PostsContainerAdapter.AdapterCallback mCallback;
     
-    public PostsContainerAdapter(Context context, @Nullable ArrayList<Post> items) {
+    public PostsContainerAdapter(Context context, @Nullable ArrayList<Post> items,
+                                 PostsContainerAdapter.AdapterCallback callback) {
         mContext = context;
         mItems = items;
+        mCallback = callback;
     }
     
     public void setItems(@NonNull ArrayList<Post> items) {
@@ -49,7 +53,7 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
     }
     
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
     
         switch (mItems.get(position).getSite()) {
             case SupportedNetworks.YOUTUBE: {
@@ -63,6 +67,14 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
         
         holder.vTitle.setText(mItems.get(position).getTitle());
         holder.vDescription.setText(mItems.get(position).getDescription());
+        
+        holder.vLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Callback to holding Activity
+                mCallback.onStartNetworkClicked(holder.getAdapterPosition());
+            }
+        });
     }
     
     @Override
@@ -74,6 +86,8 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
     }
     
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_post)
+        CardView vLayout;
         @BindView(R.id.layoutPost_title)
         TextView vTitle;
         @BindView(R.id.layoutPost_description)
@@ -88,6 +102,15 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+    
+    
+    /**
+     * Interface which got implemented by holding Activity (MainActivity || PostActivity)
+     */
+    public interface AdapterCallback {
+    
+        void onStartNetworkClicked(int position);
         
     }
 }
