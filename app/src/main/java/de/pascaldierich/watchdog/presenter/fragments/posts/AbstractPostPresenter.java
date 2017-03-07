@@ -15,7 +15,6 @@ import de.pascaldierich.domain.interactors.storage.favorites.Set;
 import de.pascaldierich.domain.interactors.storage.observable.Get;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
-import hugo.weaving.DebugLog;
 
 abstract class AbstractPostPresenter extends AbstractPresenter {
     
@@ -34,7 +33,6 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
      * @param selectedPage, boolean: true -> NewsFeed; false -> Favorites
      * @see {@link Get}
      */
-    @DebugLog
     void getPosts(Context context, StorageInteractor.GetCallback presenter,
                             boolean selectedPage, int id) {
         if (selectedPage) {
@@ -65,7 +63,6 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
     /**
      * @see {@link Set}
      */
-    @DebugLog
     void setFavorites(Context context, StorageInteractor.SetCallback presenter,
                                 @NonNull Post post) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(

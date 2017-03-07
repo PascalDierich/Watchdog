@@ -233,13 +233,15 @@ public class Converter {
             Observable item = new Observable();
             item.setUserId(entries.getInt(WatchdogContract.Observables.COLUMN_USER_ID_ID))
                     .setDisplayName(entries.getString(WatchdogContract.Observables.COLUMN_NAME_ID));
-            
-            try {
+    
+            if (entries.getBlob(WatchdogContract.Observables.COLUMN_THUMBNAIL_ID) == null) {
+                item.setThumbnail(null);
+                item.setGotThumbnail(false);
+            } else {
                 item.setThumbnail(entries.getBlob(WatchdogContract.Observables.COLUMN_THUMBNAIL_ID));
                 item.setGotThumbnail(true);
-            } catch (SQLException e) {
-                item.setGotThumbnail(false);
             }
+            
             result.add(item);
         } while (entries.moveToNext());
         

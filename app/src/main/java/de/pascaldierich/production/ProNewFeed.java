@@ -18,15 +18,18 @@ public final class ProNewFeed implements StorageInteractor.SetCallback {
     
     private static final String LOG_TAG = ProNewFeed.class.getSimpleName();
     
+    int number = 0;
+    
     public void addNewNewsFeedPosts(Executor e, MainThread m, Context c, int observableId) throws ModelException {
         
         // real bad...................
         
+        
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
                  e, m, c, this, new Post().setUserId(observableId)
-                .setDescription("Description").setSite(SupportedNetworks.YOUTUBE)
-                .setThumbnailUrl("lalala.jpg").setTitle("Title here").setPostId("I'm unique XD")
-        ));
+                .setDescription("Description " + ++number).setSite(SupportedNetworks.YOUTUBE)
+                .setThumbnailUrl("lalala.jpg " + number).setTitle("Title here " + number)
+                .setPostId("I'm unique XD " + number)));
         
         wInteractor.get().execute();
     }

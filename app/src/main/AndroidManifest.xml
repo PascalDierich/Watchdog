@@ -24,7 +24,7 @@
         <!-- Sync-Service -->
         <service
             android:name="de.pascaldierich.sync.WatchdogSyncService"
-            android:exported="false"
+            android:exported="true"
             android:process=":sync">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>

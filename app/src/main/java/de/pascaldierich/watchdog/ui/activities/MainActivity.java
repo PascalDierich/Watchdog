@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
         
-        WatchdogSyncAdapter.initializeSyncAdapter(this); // <---------- remove
+//        WatchdogSyncAdapter.initializeSyncAdapter(this);
         WatchdogSyncAdapter.syncImmediately(this);
     }
     

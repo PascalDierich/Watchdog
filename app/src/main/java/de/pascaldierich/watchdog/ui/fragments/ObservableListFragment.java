@@ -48,7 +48,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     private ObservableListFragment.ObservableSelectedCallback mCallback; // TODO: 06.03.17 ?!?!?!
     
     private ObservablesContainerAdapter mAdapter;
-
+    
     private View mRootView;
     
     /* Layout */
@@ -97,24 +97,25 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     
     @Override
     public void showError() {
-
+        
     }
-
+    
     @Override
     public void onStart() {
         super.onStart();
         
     }
-
+    
     @Override
     public void onResume() {
         super.onResume();
         mPresenter.onStart();
     }
-
+    
     /**
      * show Observables
      * <p/>
+     *
      * @param observables, ArrayList<Observables>: Observables-Collection received by StorageInteractor
      */
     @Override
@@ -136,7 +137,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
      *
      * @param observable, Observable: chosen Observable to transmit
      * @param defaultArg, boolean: true -> default start of method
-     *                             false -> start of method because of active user-interaction
+     *                    false -> start of method because of active user-interaction
      */
     @Override
     public void sendObservableToCallback(@NonNull Observable observable, boolean defaultArg) {
@@ -144,71 +145,27 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     }
     
     
-    
     /*
         Interface to send selected Observable to MainActivity
      */
     public interface ObservableSelectedCallback {
-    
+        
         /**
          * send selected Observable to MainActivity
          * <p/>
+         *
          * @param observable, Observable: selected NonNull Observable
          * @param defaultArg, boolean: true -> starting routine to transmit fist Observable
-         *                             false -> user actively choose this Observable
+         *                    false -> user actively choose this Observable
          */
         void onObservableSelected(@NonNull Observable observable, boolean defaultArg);
         
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /********************************************************************************
-        only for production:
-            - menu for basic operations
+     only for production:
+     - menu for basic operations
      ********************************************************************************/
     
     @Override
@@ -216,11 +173,11 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.production_menu, menu);
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        
         switch (id) {
             case R.id.menu_newObservables: {
                 try {
@@ -246,8 +203,11 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
             case R.id.menu_newNewsFeed: {
                 try {
                     ProNewFeed test = new ProNewFeed();
+                    
+                    
                     test.addNewNewsFeedPosts(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                            getContext(), 1); // <-- TODO: magic number
+                            getContext(), 38);
+                    
                     break;
                 } catch (ModelException e) {
                     Log.d(LOG_TAG, "onOptionsItemSelected: " + e.getErrorCode());
@@ -262,26 +222,26 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
                 }
             }
             case R.id.menu_removeSites: {
-
+                
             }
             case R.id.menu_removeFavorites: {
-
+                
             }
             case R.id.menu_removeNewsFeed: {
-
+                
             }
             case R.id.startSync: {
-                
+
 //                ContentResolver.requestSync(WatchdogSyncAdapter.getSyncAccount(getContext()),
 //                        "de.pascaldierich.watchdogs", new Bundle());
                 WatchdogSyncAdapter.syncImmediately(getContext());
                 break;
             }
-
+            
             default:
                 Toast.makeText(this.getContext(), "option number " + id, Toast.LENGTH_SHORT).show();
         }
-
+        
         return true;
     }
 }

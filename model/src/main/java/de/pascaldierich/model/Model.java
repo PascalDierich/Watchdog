@@ -454,7 +454,7 @@ public class Model {
         // Instantiation
         Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
-    
+        
         Log.w("Model.class", "going to setup Loader");
         // Setup CursorLoader
         loaderWeakReference.get().setUri(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED);
@@ -486,6 +486,7 @@ public class Model {
 
     /*
         set Methods (write)
+            TODO: change set-methods to return id of inserted element
      */
     
     /**
@@ -497,7 +498,6 @@ public class Model {
      * @return id, long: unique ObservableId
      * @throws ModelException
      */
-    @DebugLog
     public long setObservable(Context context, Observable observables) throws ModelException {
         try {
             Uri uri = context.getContentResolver()
@@ -521,7 +521,6 @@ public class Model {
      * @param site,    Site, POJO to write in 'Sites'
      * @throws ModelException
      */
-    @DebugLog
     public void setSite(Context context, Site site) throws ModelException {
         try {
             context.getContentResolver()
@@ -542,7 +541,6 @@ public class Model {
      * @param post,    Post, POJO to write in 'Favorites'
      * @throws ModelException
      */
-    @DebugLog
     public void setFavorite(Context context, Post post) throws ModelException {
         try {
             context.getContentResolver()
@@ -561,14 +559,16 @@ public class Model {
      *
      * @param context, Context: to access ContentResolver
      * @param post,    Post, POJO to write in 'NewsFeed'
+     * @return id, long: unique PostId
      * @throws ModelException
      */
-    @DebugLog
-    public void setNewsFeed(Context context, Post post) throws ModelException {
+    public long setNewsFeed(Context context, Post post) throws ModelException {
         try {
-            context.getContentResolver()
+            Uri uri = context.getContentResolver()
                     .insert(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED,
                             mConverter.getContentValues(post));
+            
+            return Long.parseLong(uri.getLastPathSegment());
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
         } catch (UnsupportedOperationException ue) {

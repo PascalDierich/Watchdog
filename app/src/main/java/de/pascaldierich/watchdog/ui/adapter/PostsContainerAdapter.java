@@ -63,7 +63,7 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
             // [...] <-- easy to update for more Networks
         }
     
-        // TODO: 06.03.17 add picasso and load with it ThumbanilUrl in vThumbnail
+        // TODO: 06.03.17 add picasso and load with it ThumbnailUrl in vThumbnail
         
         holder.vTitle.setText(mItems.get(position).getTitle());
         holder.vDescription.setText(mItems.get(position).getDescription());
@@ -98,8 +98,8 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
         ImageView vIcon;
                 
         ViewHolder(View itemView) {
-            
             super(itemView);
+            
             ButterKnife.bind(this, itemView);
         }
     }

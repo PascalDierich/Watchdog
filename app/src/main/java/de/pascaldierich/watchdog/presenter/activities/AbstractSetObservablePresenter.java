@@ -15,7 +15,6 @@ import de.pascaldierich.domain.interactors.storage.observable.Set;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Site;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
-import hugo.weaving.DebugLog;
 
 public abstract class AbstractSetObservablePresenter extends AbstractPresenter {
     
@@ -28,7 +27,6 @@ public abstract class AbstractSetObservablePresenter extends AbstractPresenter {
         super(executor, mainThread, savedInstance);
     }
     
-    @DebugLog
     public void setObservable(Observable item, Context context,
                        StorageInteractor.SetCallback presenter) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
@@ -42,7 +40,6 @@ public abstract class AbstractSetObservablePresenter extends AbstractPresenter {
         wInteractor.get().execute();
     }
     
-    @DebugLog
     public void setSites(@NonNull ArrayList<Site> items, Context context,
                   StorageInteractor.SetCallback presenter) {
         WeakReference<de.pascaldierich.domain.interactors.storage.site.Set> wInteractor =

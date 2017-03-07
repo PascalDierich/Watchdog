@@ -64,12 +64,12 @@ public class Set extends Storage implements StorageInteractor {
                 });
             }
 
-            ApiConnector.getApi().get().setNewsFeed(mContext, mItem);
+            final long postId = ApiConnector.getApi().get().setNewsFeed(mContext, mItem);
 
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onSuccess(0);
+                    mCallback.onSuccess(postId);
                 }
             });
         } catch (final ModelException modelE) {
