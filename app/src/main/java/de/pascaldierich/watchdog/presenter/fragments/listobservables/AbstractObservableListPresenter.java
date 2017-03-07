@@ -12,7 +12,6 @@ import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.interactors.storage.observable.Get;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.watchdog.presenter.base.AbstractPresenter;
-import hugo.weaving.DebugLog;
 
 abstract class AbstractObservableListPresenter extends AbstractPresenter {
     
@@ -30,7 +29,6 @@ abstract class AbstractObservableListPresenter extends AbstractPresenter {
     /**
      * @see {@link Get}
      */
-    @DebugLog
     void getObservables(Context context, StorageInteractor.GetCallback presenter) {
         WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
                 super.mExecutor,

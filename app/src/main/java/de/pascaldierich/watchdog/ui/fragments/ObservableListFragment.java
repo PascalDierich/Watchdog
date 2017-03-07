@@ -103,12 +103,13 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.onStart();
+        
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mPresenter.onStart();
     }
 
     /**

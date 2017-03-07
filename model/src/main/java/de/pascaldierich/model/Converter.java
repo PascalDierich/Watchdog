@@ -214,7 +214,6 @@ public class Converter {
      * @return result, ArrayList<Observable>: Collection of all given Observables in Cursor
      * @throws ModelException
      */
-    @DebugLog
     public ArrayList<Observable> getObservable(@Nullable Cursor entries) throws ModelException {
         ArrayList<Observable> result = new ArrayList<>();
         Log.w("Converter.class", "received entries, going to check");

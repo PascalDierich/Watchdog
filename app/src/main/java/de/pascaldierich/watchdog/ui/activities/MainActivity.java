@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     /*
         initial Methods
      */
+    ObservableListFragment fragment;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                 savedInstanceState, this);
         
         WatchdogSyncAdapter.initializeSyncAdapter(this); // <---------- remove
+        WatchdogSyncAdapter.syncImmediately(this);
     }
     
     @Override
@@ -70,9 +72,19 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                     .replace(R.id.fragment_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG)
                     .commit();
         }
+        if (fragment == null) {
+            fragment = new ObservableListFragment();
+        }
+        if (fragment.isAdded()) {
+            return;
+        }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.observableList_container, new ObservableListFragment(), OBSERVABLE_LIST_FRAGMENT_TAG)
+                .replace(R.id.observableList_container, fragment, OBSERVABLE_LIST_FRAGMENT_TAG)
                 .commit();
+        
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.observableList_container, new ObservableListFragment(), OBSERVABLE_LIST_FRAGMENT_TAG)
+//                .commit();
     }
     
     @Override

@@ -169,7 +169,6 @@ public class Model {
      * @return POJO Collection, ArrayList<Observable>
      * @throws ModelException
      */
-    @DebugLog
     @MainThread
     public ArrayList<Observable> getObservables(Context context) throws ModelException {
         // Instantiation

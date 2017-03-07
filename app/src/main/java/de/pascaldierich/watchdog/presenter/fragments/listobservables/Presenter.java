@@ -41,7 +41,6 @@ public class Presenter extends AbstractObservableListPresenter
         Initial Methods
      */
     
-    @DebugLog
     @Override
     public void onStart() {
         // read out intern Storage to get all Observables
@@ -107,7 +106,7 @@ public class Presenter extends AbstractObservableListPresenter
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
         // TODO: 27.02.17 define Error-Codes
-        onError(-1);
+        onError(errorCode);
     }
     
     /**
