@@ -132,19 +132,22 @@ public class Presenter extends AbstractMainPresenter
      * <p/>
      *
      * @param item, Observable: selected Observable to transmit
+     * @param defaultArg, boolean: indicates if PostActivity should launch
      */
     /* ObservableListFragment */
     @Override
-    public void onObservableSelected(@NonNull Observable item) {
+    public void onObservableSelected(@NonNull Observable item, boolean defaultArg) {
+        // show Observable only if twoPaneMode = true
+        // OR twoPaneMode = false && defaultArg = false -> so PostsActivity will not launched at app-launch
         if (mTwoPaneMode) {
             mView.updatePostsFragment(item);
-        } else {
+        } else if (!defaultArg){
             mView.startPostsActivity(item);
         }
     }
     
     /*
-        StorageInteractor Callbacks
+        Set StorageInteractor Callbacks
      */
     
     @Override
@@ -162,35 +165,5 @@ public class Presenter extends AbstractMainPresenter
         // TODO: 06.03.17 load Observable with parameter id and update PostsFragment
         mView.updatePostsFragment(null);
     }
-    
-    
-    
-    
-    
-    /*
-        Fragment Callbacks
-     */
-    
-    
-    
-    /**
-     * Presenter implements 3 Callback-classes:
-     *
-     *      - ObservableListFragment.Callback
-     *          -> onObservableSelected(Observable observable)
-     *              --> onePaneMode = start PostActivity
-     *              --> twoPaneMode = update PostFragment
-     *
-     *          -> onObservableSetting(Observable observable)
-     *              --> onePaneMode = start SetObservableActivity
-     *              --> twoPaneMode = replace SetObservableFragment with PostFragment
-     *
-     *      - PostFragment.Callback
-     *          -> onPostSelected(Post post)
-     *              --> onePaneMode = start explicit Intent
-     *              --> twoPaneMode =  ``    ``      ``
-     *
-     *
-     */
     
 }

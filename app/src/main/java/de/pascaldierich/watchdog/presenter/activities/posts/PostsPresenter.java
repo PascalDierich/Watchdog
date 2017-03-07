@@ -9,7 +9,6 @@ import de.pascaldierich.watchdog.ui.fragments.PostsFragment;
 
 public interface PostsPresenter extends BaseUIPresenter {
     
-    
     interface View extends BaseView {
     
         /**
@@ -28,14 +27,5 @@ public interface PostsPresenter extends BaseUIPresenter {
          */
         @NonNull
         Intent getIntentExtra();
-    
-        /**
-         * implicit intent to start
-         * <p/>
-         *
-         * @param intent
-         */
-        void startImplicitIntent(@NonNull Intent intent); // TODO: 06.03.17 define Callback
-        
     }
 }

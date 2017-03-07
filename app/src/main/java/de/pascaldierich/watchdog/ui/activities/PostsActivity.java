@@ -28,7 +28,6 @@ public class PostsActivity extends AppCompatActivity implements PostsPresenter.V
     private static final String POST_LIST_FRAGMENT_TAG = "PL_FragmentTag";
     
     
-    
     /*
         Initial Methods
      */
@@ -95,20 +94,8 @@ public class PostsActivity extends AppCompatActivity implements PostsPresenter.V
     
     
     /*
-        Methods to start activities
+        PostsFragment Callback
      */
-    
-    /**
-     * implicit intent to start
-     * <p/>
-     *
-     * @param intent
-     */
-    @Override
-    public void startImplicitIntent(@NonNull Intent intent) {
-        startActivity(intent);
-    }
-    
     
     @Override
     public void onStartIntent(@NonNull Intent intent) {

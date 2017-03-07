@@ -3,7 +3,6 @@ package de.pascaldierich.watchdog.presenter.fragments.posts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,6 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import de.pascaldierich.watchdog.ui.adapter.PostsContainerAdapter;
-import hugo.weaving.DebugLog;
 
 public class Presenter extends AbstractPostPresenter
         implements PostPresenter, StorageInteractor.GetCallback, StorageInteractor.SetCallback,
@@ -41,7 +39,12 @@ public class Presenter extends AbstractPostPresenter
         return new Presenter(executor, mainThread, savedInstance, view);
     }
     
-    @DebugLog
+    
+    
+    /*
+        Initial Methods
+     */
+    
     @Override
     public void onStart() {
         if (mObservable == null) {
@@ -55,63 +58,12 @@ public class Presenter extends AbstractPostPresenter
         
     }
     
-    @DebugLog
-    @Override
-    public void onFailure(@ModelErrorsCodes int errorCode) {
-        onError(errorCode);
-    }
-    
-    /**
-     * onSuccess method of Get-Callbacks.
-     * unchecked Cast to Post
-     * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
-     */
-    @DebugLog
-    @Override
-    @SuppressWarnings("unchecked")
-    public void onSuccess(@NonNull ArrayList<?> result) {
-        try {
-            super.mPosts = (ArrayList<Post>) result;
-            
-            /* production tests */
-            Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getUserId());
-            Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getDescription());
-            Log.d("PostPresenter", "result.... " + mPosts.size() + ", " + mPosts.get(mPosts.size()-1).getTitle());
-        } catch (ClassCastException e) {
-            onFailure(ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
-        }
-        mView.setData(super.mPosts);
-    }
-    
-    // Set Method Callback
-    @Override
-    public void onSuccess(long id) {
-        // TODO: 28.02.17 notify user, e.g. show Toast
-    }
-    
     /**
      * @param errorCode
      */
     @Override
     public void onError(@ErrorPresenter int errorCode) {
         mView.showError();
-    }
-    
-    @Override
-    public void onPageChanged(boolean selectedPage) {
-        if (mObservable == null) {
-            return;
-        }
-        super.getPosts(mView.getContext(), this, selectedPage, mObservable.getUserId());
-    }
-    
-    /**
-     * saves given Post local on device
-     * @param post, Post: Post to save on device
-     */
-    @Override
-    public void onSavePost(Post post) {
-        super.setFavorites(mView.getContext(), this, post);
     }
     
     @Override
@@ -129,6 +81,69 @@ public class Presenter extends AbstractPostPresenter
         
     }
     
+    
+    
+    /*
+        Get StorageInteractor Callback
+     */
+    
+    /**
+     * onSuccess method of Get-Callbacks.
+     * unchecked Cast to Post
+     * <p/>
+     * @param result, ArrayList<?>: Collection of queried data as POJO of 'domainmodels'
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public void onSuccess(@NonNull ArrayList<?> result) {
+        try {
+            super.mPosts = (ArrayList<Post>) result;
+            mView.setData(super.mPosts);
+        } catch (ClassCastException e) {
+            mView.showError();
+        }
+    }
+    
+    @Override
+    public void onFailure(@ModelErrorsCodes int errorCode) {
+        onError(errorCode);
+    }
+    
+    
+    
+    /*
+        Set StorageInteractor Callback
+     */
+    
+    @Override
+    public void onSuccess(long id) {
+        // TODO: 28.02.17 notify user, e.g. show Toast
+    }
+    
+    
+    
+    /*
+        View Methods
+     */
+    
+    @Override
+    public void onPageChanged(boolean selectedPage) {
+        if (mObservable == null) {
+            return;
+        }
+        super.getPosts(mView.getContext(), this, selectedPage, mObservable.getUserId());
+    }
+    
+    /**
+     * saves given Post local on device
+     * <p/>
+     * @param post, Post: Post to save on device
+     */
+    @Override
+    public void onSavePost(Post post) {
+        super.setFavorites(mView.getContext(), this, post);
+    }
+    
     @Override
     public void setObservable(Observable observable) {
         mObservable = observable;
@@ -137,8 +152,7 @@ public class Presenter extends AbstractPostPresenter
     
     
     /*
-        View Methods
-            --> AdapterCallback
+        --> AdapterCallback
      */
     
     @Override
@@ -151,11 +165,14 @@ public class Presenter extends AbstractPostPresenter
 //        mView.startImplicitIntent(null); // TODO: 06.03.17 call create Intent(Site site)
     }
     
+    
+    
     /*
         private methods
      */
     
     private Intent createIntent(Post post) {
+        // TODO: 06.03.17 create intent with ACTION etc. 
         return null;
     }
 }

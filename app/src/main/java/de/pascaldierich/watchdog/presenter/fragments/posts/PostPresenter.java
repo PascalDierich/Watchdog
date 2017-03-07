@@ -12,7 +12,7 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 /**
  * Interface between PostFragment and related Presenter
  */
-interface PostPresenter extends BaseUIPresenter {
+public interface PostPresenter extends BaseUIPresenter {
     
     /**
      * @param selectedPage, boolean: true -> NewsFeed, false -> Favorites
@@ -28,7 +28,7 @@ interface PostPresenter extends BaseUIPresenter {
     
     void setObservable(Observable observable);
     
-    interface View extends BaseView {
+    public interface View extends BaseView {
         
         /**
          * show Posts (either NewsFeed or Favorites)

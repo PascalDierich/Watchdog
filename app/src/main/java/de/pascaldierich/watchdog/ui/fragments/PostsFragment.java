@@ -21,10 +21,11 @@ import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
+import de.pascaldierich.watchdog.presenter.fragments.posts.PostPresenter;
 import de.pascaldierich.watchdog.presenter.fragments.posts.Presenter;
 import de.pascaldierich.watchdog.ui.adapter.PostsContainerAdapter;
 
-public class PostsFragment extends Fragment implements Presenter.View {
+public class PostsFragment extends Fragment implements PostPresenter.View {
     
     private Presenter mPresenter;
     private View mRootView;
@@ -130,6 +131,4 @@ public class PostsFragment extends Fragment implements Presenter.View {
         void onStartIntent(@NonNull Intent intent);
         
     }
-    
-    
 }

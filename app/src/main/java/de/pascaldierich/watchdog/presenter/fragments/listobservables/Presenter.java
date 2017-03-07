@@ -93,15 +93,14 @@ public class Presenter extends AbstractObservableListPresenter
         if (index < 0) return;
         if (mObservables.get(index) == null) return;
     
-        // TODO: 06.03.17 send either to MainActivity || PostsActivity
-        mView.sendObservableToMain( // TODO: 06.03.17 change Method-Name to sendToCallback
-                mObservables.get(index));
+        // defaultArg = false -> indicates that user selected Item
+        mView.sendObservableToCallback(mObservables.get(index), false);
     }
     
     
     
     /*
-        StorageInteractor Callbacks
+        Get StorageInteractor Callbacks
      */
     
     @DebugLog
@@ -126,6 +125,8 @@ public class Presenter extends AbstractObservableListPresenter
             onFailure(ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
         }
         mView.setData(super.mObservables);
-        mView.sendObservableToMain(super.mObservables.get(0));
+        
+        // defaultArg = true -> indicates that only usable in TwoPaneMode
+        mView.sendObservableToCallback(super.mObservables.get(0), true);
     }
 }

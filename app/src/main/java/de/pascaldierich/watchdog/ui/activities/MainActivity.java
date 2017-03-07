@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @BindView(R.id.fab_newObservable)
     FloatingActionButton mFab;
     
-    // TODO: 06.03.17 MainActivity need to implement ObservableListFragment.ObservableSelectedCallback
-    
     /*
         initial Methods
      */
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
      */
     @Override
     public void startPostsActivity(@NonNull Observable observable) {
-        startActivity(new Intent(this, PostsActivity.class) // TODO: 05.03.17 create PostsActivity
+        startActivity(new Intent(this, PostsActivity.class)
                 .putExtra(getString(R.string.parcelable_observable), observable));
     }
     
@@ -210,44 +208,21 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     /*
-        production
+        Fragment Callbacks
      */
     
-    /* ObservableListFragment */
-    @Override
-    public void onObservableSelected(@NonNull Observable item) {
-        mPresenter.onObservableSelected(item);
-//        if (mTwoPaneMode) {
-//            mView.updatePostsFragment(item);
-//        } else {
-//            mView.startPostsActivity(item);
-//        }
-//        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getDisplayName());
-//        Log.d(LOG_TAG, "onObservableSelected: name = " + item.getUserId());
-//
-//
-//        /*
-//        start Activity or Fragment (twoPaneMode)
-//         */
-//        if (mPresenter.getTwoPaneMode()) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.postList_container, new PostsFragment().setObservable(item), POST_LIST_FRAGMENT_TAG)
-//                    .commit();
-//        }
-//
-    }
-    
+    /* PostFragment Callback */
     @Override
     public void onStartIntent(@NonNull Intent intent) {
         startActivity(intent);
     }
+    
+    /* ObservableList Callback */
+    @Override
+    public void onObservableSelected(@NonNull Observable item, boolean defaultArg) {
+        mPresenter.onObservableSelected(item, defaultArg);
+    }
+    
+    
 }

@@ -14,12 +14,13 @@ public interface MainPresenter extends BaseUIPresenter {
     void onClickFab();
     
     /**
-     * Method to send ObservableListFragment.Callback to Presenter
+     * Method to start PostFragment || PostActivity
      * <p/>
      *
-     * @param item
+     * @param item, Observable: selected Observable to transmit
+     * @param defaultArg, boolean: indicates if PostActivity should launch
      */
-    void onObservableSelected(@NonNull Observable item);
+    void onObservableSelected(@NonNull Observable item, boolean defaultArg);
     
     interface View extends BaseView {
         

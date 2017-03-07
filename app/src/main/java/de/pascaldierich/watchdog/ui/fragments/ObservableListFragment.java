@@ -127,9 +127,19 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
         Methods to start/update activities/fragments
      */
     
+    /**
+     * send the Observable to Callback (MainActivity XOR PostsActivity)
+     * gets fired each time at CardView onClick event and
+     * at launch by default.
+     * <p/>
+     *
+     * @param observable, Observable: chosen Observable to transmit
+     * @param defaultArg, boolean: true -> default start of method
+     *                             false -> start of method because of active user-interaction
+     */
     @Override
-    public void sendObservableToMain(@NonNull Observable observable) {
-        mCallback.onObservableSelected(observable);
+    public void sendObservableToCallback(@NonNull Observable observable, boolean defaultArg) {
+        mCallback.onObservableSelected(observable, defaultArg);
     }
     
     
@@ -143,8 +153,10 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
          * send selected Observable to MainActivity
          * <p/>
          * @param observable, Observable: selected NonNull Observable
+         * @param defaultArg, boolean: true -> starting routine to transmit fist Observable
+         *                             false -> user actively choose this Observable
          */
-        void onObservableSelected(@NonNull Observable observable);
+        void onObservableSelected(@NonNull Observable observable, boolean defaultArg);
         
     }
     

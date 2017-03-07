@@ -18,10 +18,16 @@ public interface ObservableListPresenter extends BaseUIPresenter {
         void setData(ArrayList<Observable> observables);
     
         /**
-         * TODO: write DOC
-         * @param observable
+         * send the Observable to Callback (MainActivity XOR PostsActivity)
+         * gets fired each time at CardView onClick event and
+         * at launch by default.
+         * <p/>
+         *
+         * @param observable, Observable: chosen Observable to transmit
+         * @param defaultArg, boolean: true -> default start of method
+         *                             false -> start of method because of active user-interaction
          */
-        void sendObservableToMain(@NonNull Observable observable);
+        void sendObservableToCallback(@NonNull Observable observable, boolean defaultArg);
         
     }
     
