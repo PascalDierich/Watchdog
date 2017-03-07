@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent" >
 
-    <include layout="@layout/layout_observable_big"/>
+    <include layout="@layout/layout_observable_big"
+        android:id="@+id/included_observable_default_layout"/>
 
     <ScrollView
         android:layout_width="0dp"

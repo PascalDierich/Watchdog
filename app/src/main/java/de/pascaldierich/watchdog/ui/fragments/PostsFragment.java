@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,10 +29,12 @@ import de.pascaldierich.watchdog.ui.adapter.PostsContainerAdapter;
 
 public class PostsFragment extends Fragment implements PostPresenter.View {
     
+    /*
+        Instantiation
+     */
+    
     private Presenter mPresenter;
     private View mRootView;
-    
-    private Observable mObservable;
     
     private PostsFragment.ImplicitIntentCallback mCallback;
     
@@ -43,12 +47,11 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     
     private PostsContainerAdapter mAdapter;
     
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mCallback = (ImplicitIntentCallback) activity;
-        
-    }
+    
+    
+    /*
+        Initial Methods
+     */
     
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -57,9 +60,6 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstance, this);
-        
-        mPresenter.setObservable(mObservable);
-        mObservable = null;
     
         mAdapter = new PostsContainerAdapter(getContext(), null, mPresenter);
     }
@@ -75,20 +75,18 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
         return mRootView;
     }
     
+    // TODO: 07.03.17 DEPRECATED!
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallback = (ImplicitIntentCallback) activity;
+        
+    }
+    
     @Override
     public void onStart() {
         super.onStart();
         mPresenter.onStart();
-    }
-    
-    /**
-     *
-     * @param observable
-     * @return this, PostFragment
-     */
-    public PostsFragment setObservable(Observable observable) {
-        mObservable = observable;
-        return this;
     }
     
     @Override
@@ -99,6 +97,25 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     @Override
     public void showError() {
         Toast.makeText(getContext(), "UnknownError", Toast.LENGTH_SHORT).show();
+    }
+    
+    
+    
+   /*
+        View-Methods for Presenter
+     */
+    
+    /**
+     * returns the args the fragment got created with.
+     *      <b>Note:</b> key := R.string.parcelable_observable
+     * <p/>
+     *
+     * @return args, Bundle: contains an Observable-Object
+     */
+    @NonNull
+    @Override
+    public Bundle getArgumentsBundle() {
+        return this.getArguments();
     }
     
     /**
@@ -119,6 +136,25 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
         return mSelectedPage;
     }
     
+    /**
+     * shows the current Observable in included default layout.
+     * <p/>
+     *
+     * @param observable
+     */
+    @Override
+    public void showObservable(Observable observable) {
+        IncludedObservableLayoutHolder holder = new IncludedObservableLayoutHolder(mRootView);
+        
+        holder.mObservableDisplayName.setText(observable.getDisplayName());
+           
+    }
+    
+    
+    
+    /*
+        Method to start/update activities/fragment
+     */
     
     @Override
     public void sendIntentToActivity(Intent intent) {
@@ -126,9 +162,38 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     }
     
     
+    
+    /*
+        Callback Interfaces
+     */
+    
+    /**
+     *
+     */
     public interface ImplicitIntentCallback {
     
         void onStartIntent(@NonNull Intent intent);
         
+    }
+    
+    
+    
+    /*
+        static class for ViewHolder
+     */
+    
+    static class IncludedObservableLayoutHolder {
+        // included Observable Default Layout
+        @BindView(R.id.included_observable_default_layout)
+        View mObservableRootView;
+        @BindView(R.id.layoutObservable_thumbnail)
+        ImageView mObservableImageView;
+        @BindView(R.id.layoutObservable_displayName)
+        TextView mObservableDisplayName;
+            // Icons, @see {layout_observable_big.xml}
+    
+        public IncludedObservableLayoutHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

@@ -149,7 +149,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
      * show loaded Sites if Observable set
      * <p/>
      *
-     * @param sites : ArrayList<Sites>: related Sites for set Observable
+     * @param sites, ArrayList<Sites>: related Sites for set Observable
      */
     @Override
     public void setSites(@NonNull ArrayList<Site> sites) {

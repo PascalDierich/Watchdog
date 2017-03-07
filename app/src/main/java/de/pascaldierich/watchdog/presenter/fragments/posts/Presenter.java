@@ -12,6 +12,7 @@ import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.model.ModelErrorsCodes;
 import de.pascaldierich.model.domainmodels.Observable;
 import de.pascaldierich.model.domainmodels.Post;
+import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.base.ErrorPresenter;
 import de.pascaldierich.watchdog.ui.adapter.PostsContainerAdapter;
 
@@ -39,7 +40,7 @@ public class Presenter extends AbstractPostPresenter
         return new Presenter(executor, mainThread, savedInstance, view);
     }
     
-    
+     
     
     /*
         Initial Methods
@@ -47,9 +48,17 @@ public class Presenter extends AbstractPostPresenter
     
     @Override
     public void onStart() {
-        if (mObservable == null) {
-            return; // TODO: 04.03.17 show first Observable in Collection
+        // if (Observable == null) -> something went wrong
+        // We need Observable != null to 1. getPosts and 2. set ObservableLayout
+        try {
+            mObservable = mView.getArgumentsBundle().getParcelable(
+                    mView.getContext().getString(R.string.parcelable_observable));
+        } catch (NullPointerException npe) {
+            return;
+            // TODO: 07.03.17 set ObservableLayout to e.g. example data 
         }
+        // TODO: 07.03.17 call method to show Observable
+        mView.showObservable(mObservable);
         super.getPosts(mView.getContext(), this, mView.getSelectedPage(), mObservable.getUserId());
     }
     
@@ -142,11 +151,6 @@ public class Presenter extends AbstractPostPresenter
     @Override
     public void onSavePost(Post post) {
         super.setFavorites(mView.getContext(), this, post);
-    }
-    
-    @Override
-    public void setObservable(Observable observable) {
-        mObservable = observable;
     }
     
     
