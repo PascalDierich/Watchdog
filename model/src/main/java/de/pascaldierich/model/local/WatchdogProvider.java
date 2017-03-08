@@ -109,6 +109,7 @@ public class WatchdogProvider extends ContentProvider {
             case CODE_OBSERVABLES: {
                 long _id = db.insert(WatchdogContract.Observables.TABLE_NAME, null, values);
                 if (_id > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
                     return WatchdogContract.Observables.buildObservableUriWithId(_id);
                 } else {
                     throw new SQLException("failed to insert row: " + CODE_OBSERVABLES);
@@ -117,6 +118,7 @@ public class WatchdogProvider extends ContentProvider {
             case CODE_SITES: {
                 long _id = db.insert(WatchdogContract.Sites.TABLE_NAME, null, values);
                 if (_id > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
                     return WatchdogContract.Sites.buildSitesUriWithId(_id);
                 } else {
                     throw new SQLException("failed to insert row: " + CODE_SITES);
@@ -125,6 +127,7 @@ public class WatchdogProvider extends ContentProvider {
             case CODE_FAVORITES: {
                 long _id = db.insert(WatchdogContract.Posts.Favorites.TABLE_NAME, null, values);
                 if (_id > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
                     return WatchdogContract.Posts.Favorites.buildFavoritesUriWithId(_id);
                 } else {
                     throw new SQLException("failed to insert row: " + CODE_FAVORITES);
@@ -133,6 +136,7 @@ public class WatchdogProvider extends ContentProvider {
             case CODE_NEWS_FEED: {
                 long _id = db.insert(WatchdogContract.Posts.NewsFeed.TABLE_NAME, null, values);
                 if (_id > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
                     return WatchdogContract.Posts.NewsFeed.buildNewsFeedUriWithId(_id);
                 } else {
                     throw new SQLException("failed to insert row: " + CODE_NEWS_FEED);
@@ -144,7 +148,7 @@ public class WatchdogProvider extends ContentProvider {
     }
     
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         final SQLiteDatabase db = mHelper.getWritableDatabase();
     
         switch (sMatcher.match(uri)) {

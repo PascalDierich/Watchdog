@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
         
-//        WatchdogSyncAdapter.initializeSyncAdapter(this);
-        WatchdogSyncAdapter.syncImmediately(this);
+        WatchdogSyncAdapter.initializeSyncAdapter(this);
+//        WatchdogSyncAdapter.syncImmediately(this);
     }
     
     @Override
     protected void onStart() {
         super.onStart();
-//        mPresenter.onStart(); // <--- commented out for test reason
+        mPresenter.onStart(); // <--- commented out for test reason
     }
     
     @Override
@@ -81,10 +81,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.observableList_container, fragment, OBSERVABLE_LIST_FRAGMENT_TAG)
                 .commit();
-        
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.observableList_container, new ObservableListFragment(), OBSERVABLE_LIST_FRAGMENT_TAG)
-//                .commit();
     }
     
     @Override

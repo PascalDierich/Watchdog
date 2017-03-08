@@ -2,7 +2,6 @@ package de.pascaldierich.domain.interactors.service;
 
 import android.content.Context;
 import android.support.annotation.IntRange;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,12 +20,6 @@ public class Search {
     private String mTime;
     private Context mContext;
     private int mRange;
-
-    /*
-        1. get all Sites
-        2. for each Site / key call Model
-        3. save all new Sites in NewsFeed
-     */
     
     /**
      * Constructor
@@ -43,36 +36,11 @@ public class Search {
     }
     
     /**
-     * run Interactor
+     * Execute Service
+     * <p/>
+     *
+     * @throws ModelException
      */
-    public void run() {
-        Log.w("Search", "sync interactor starting...");
-        try {
-            ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
-            ArrayList<Post> result = new ArrayList<>();
-            
-            for (int i = 0; i < sites.size(); i++) {
-                switch (sites.get(i).getSite()) {
-                    // Check for all SupportedNetworks
-                    case SupportedNetworks.YOUTUBE: {
-                        result.addAll(ApiConnector.getApi().get().searchYouTube(
-                                sites.get(i).getKey(), sites.get(i).getUserId(), mTime, mRange));
-                        break;
-                    }
-                }
-            }
-            // TODO: 08.03.17 make some shitty working algorithm.... >:|
-            
-            // TODO: implement insertAndThrow method in Provider >:(
-            for (int i = 0; i < result.size(); i++) {
-                ApiConnector.getApi().get().setNewsFeed(mContext, result.get(i));
-            }
-        } catch (ModelException modelEx) {
-            Log.e("ModelException", "modelEx: " + modelEx.getErrorCode());
-            // TODO: 23.02.17 define Error-Routine
-        }
-    }
-    
     public void execute() throws ModelException {
         // throws ModelException, but without Site-Object not reason to go on
         ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
@@ -98,6 +66,12 @@ public class Search {
                 // [...] <-- insert new Networks
             }
         }
-        // TODO: 08.03.17 insert here insertAndThrow method.
+        try {
+            if (result.isEmpty()) return;
+            
+            ApiConnector.getApi().get().setNewsFeed(mContext, result);
+        } catch (ModelException modelE) {
+            // TODO: 08.03.17 report to Firebase
+        }
     }
 }

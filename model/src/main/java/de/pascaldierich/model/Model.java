@@ -485,7 +485,6 @@ public class Model {
 
     /*
         set Methods (write)
-            TODO: change set-methods to return id of inserted element
      */
     
     /**
@@ -574,6 +573,27 @@ public class Model {
                             mConverter.getContentValues(post));
             
             return Long.parseLong(uri.getLastPathSegment());
+        } catch (SQLException e) {
+            throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
+        } catch (UnsupportedOperationException ue) {
+            throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
+        }
+    }
+    
+    /**
+     * Write a new Post Collection in table 'NewsFeed'
+     * <p>
+     *
+     * @param context, Context: to access ContentResolver
+     * @param postList,    ArrayLIst<Post>, POJO's to write in 'NewsFeed'
+     * @return counts, int: number of rows added
+     * @throws ModelException
+     */
+    public long setNewsFeed(Context context, ArrayList<Post> postList) throws ModelException {
+        try {
+            return context.getContentResolver()
+                    .bulkInsert(WatchdogContract.Posts.NewsFeed.CONTENT_URI_NEWS_FEED,
+                            mConverter.getContentValues(postList));
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
         } catch (UnsupportedOperationException ue) {

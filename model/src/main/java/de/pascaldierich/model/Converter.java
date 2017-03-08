@@ -323,6 +323,29 @@ public class Converter {
         return result;
     }
     
+    /**
+     * Converts post model to ContentValues Array.
+     * This method is independent from the different Post-tables.
+     * <p>
+     *
+     * @param postList, ArrayList<Post>
+     * @return result, ContentValues[]: converted Post with ColumnName's as key
+     */
+    public ContentValues[] getContentValues(@NonNull ArrayList<Post> postList) {
+        ContentValues[] result = new ContentValues[postList.size()];
+    
+        for (int i = 0; i < postList.size(); i++) {
+            result[i].put(WatchdogContract.Posts.COLUMN_USER_ID, postList.get(i).getUserId());
+            result[i].put(WatchdogContract.Posts.COLUMN_THUMBNAIL_URL, postList.get(i).getThumbnailUrl());
+            result[i].put(WatchdogContract.Posts.COLUMN_DESCRIPTION, postList.get(i).getDescription());
+            result[i].put(WatchdogContract.Posts.COLUMN_TITLE, postList.get(i).getTitle());
+            result[i].put(WatchdogContract.Posts.COLUMN_POST_ID, postList.get(i).getPostId());
+            result[i].put(WatchdogContract.Posts.COLUMN_SITE, postList.get(i).getSite());
+        }
+        
+        return result;
+    }
+    
     
     /********************************************************************************************
      * getId methods
