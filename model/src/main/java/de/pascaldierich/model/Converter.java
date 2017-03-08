@@ -335,6 +335,7 @@ public class Converter {
         ContentValues[] result = new ContentValues[postList.size()];
     
         for (int i = 0; i < postList.size(); i++) {
+            result[i] = new ContentValues();
             result[i].put(WatchdogContract.Posts.COLUMN_USER_ID, postList.get(i).getUserId());
             result[i].put(WatchdogContract.Posts.COLUMN_THUMBNAIL_URL, postList.get(i).getThumbnailUrl());
             result[i].put(WatchdogContract.Posts.COLUMN_DESCRIPTION, postList.get(i).getDescription());

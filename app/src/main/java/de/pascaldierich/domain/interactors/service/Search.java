@@ -69,7 +69,8 @@ public class Search {
         try {
             if (result.isEmpty()) return;
             
-            ApiConnector.getApi().get().setNewsFeed(mContext, result);
+            long numberOfRows = ApiConnector.getApi().get().setNewsFeed(mContext, result);
+            
         } catch (ModelException modelE) {
             // TODO: 08.03.17 report to Firebase
         }
