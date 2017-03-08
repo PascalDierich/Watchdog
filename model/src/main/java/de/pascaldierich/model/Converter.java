@@ -94,6 +94,7 @@ public class Converter {
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
+            entries.close();
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
         
@@ -182,6 +183,7 @@ public class Converter {
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
+            entries.close();
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
         
@@ -223,6 +225,7 @@ public class Converter {
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
+            entries.close();
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
         
@@ -334,6 +337,7 @@ public class Converter {
         try {
             entries.moveToFirst();
         } catch (SQLException e) {
+            entries.close();
             throw new ModelException(ModelErrorsCodes.Converter.PARAMETER_EMPTY);
         }
         

@@ -45,7 +45,7 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     
     private Presenter mPresenter;
     
-    private ObservableListFragment.ObservableSelectedCallback mCallback; // TODO: 06.03.17 ?!?!?!
+    private ObservableListFragment.ObservableSelectedCallback mCallback;
     
     private ObservablesContainerAdapter mAdapter;
     
@@ -203,10 +203,11 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
             case R.id.menu_newNewsFeed: {
                 try {
                     ProNewFeed test = new ProNewFeed();
-                    
-                    
-                    test.addNewNewsFeedPosts(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                            getContext(), 38);
+    
+                    for (int i = 0; i < 10; i++) {
+                        test.addNewNewsFeedPosts(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
+                                getContext(), 173);
+                    }
                     
                     break;
                 } catch (ModelException e) {

@@ -61,13 +61,43 @@ public class Search {
                     }
                 }
             }
+            // TODO: 08.03.17 make some shitty working algorithm.... >:|
             
             // TODO: implement insertAndThrow method in Provider >:(
-            for (int a = 0; a < result.size(); a++) {
-                ApiConnector.getApi().get().setNewsFeed(mContext, result.get(a));
+            for (int i = 0; i < result.size(); i++) {
+                ApiConnector.getApi().get().setNewsFeed(mContext, result.get(i));
             }
         } catch (ModelException modelEx) {
+            Log.e("ModelException", "modelEx: " + modelEx.getErrorCode());
             // TODO: 23.02.17 define Error-Routine
         }
+    }
+    
+    public void execute() throws ModelException {
+        // throws ModelException, but without Site-Object not reason to go on
+        ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
+        ArrayList<Post> result = new ArrayList<>();
+    
+        for (int i = 0; i < sites.size(); i++) {
+            switch (sites.get(i).getSite()) {
+                // Check for all SupportedNetworks
+                case SupportedNetworks.YOUTUBE: {
+                    try {
+                        result.addAll(ApiConnector.getApi().get().searchYouTube(
+                                sites.get(i).getKey(), sites.get(i).getUserId(), mTime, mRange));
+                    } catch (ModelException modelE) {
+                        // ErrorCode < 200 means Fatal and Network Errors
+                        if (modelE.getErrorCode() < 200) {
+                            // TODO: 08.03.17 report Code to Firebase
+                        } else {
+                            // TODO: 08.03.17 maybe transmit to Analytics. No big deals, but interesting data
+                        }
+                    }
+                    break;
+                }
+                // [...] <-- insert new Networks
+            }
+        }
+        // TODO: 08.03.17 insert here insertAndThrow method.
     }
 }

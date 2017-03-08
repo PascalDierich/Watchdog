@@ -114,7 +114,7 @@ public class Model {
             
             return mConverter.getPost(page, observableId);
         } catch (IOException e) {
-            throw new ModelException(-1);
+            throw new ModelException(ModelErrorsCodes.Network.IO_ERROR);
         }
     }
     
@@ -142,7 +142,7 @@ public class Model {
             
             return mConverter.getSite(page);
         } catch (IOException e) {
-            throw new ModelException(-1);
+            throw new ModelException(ModelErrorsCodes.Network.IO_ERROR);
         }
     }
     
@@ -230,7 +230,6 @@ public class Model {
      * @return POJO Collection, ArrayList<Site>
      * @throws ModelException
      */
-    @DebugLog
     @MainThread
     public ArrayList<Site> getSites(Context context) throws ModelException {
         // Instantiation
@@ -519,13 +518,16 @@ public class Model {
      *
      * @param context, Context: to access ContentResolver
      * @param site,    Site, POJO to write in 'Sites'
+     * @return id, long: unique PostId
      * @throws ModelException
      */
-    public void setSite(Context context, Site site) throws ModelException {
+    public long setSite(Context context, Site site) throws ModelException {
         try {
-            context.getContentResolver()
+            Uri uri = context.getContentResolver()
                     .insert(WatchdogContract.Sites.CONTENT_URI_SITES,
                             mConverter.getContentValues(site));
+    
+            return Long.parseLong(uri.getLastPathSegment());
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
         } catch (UnsupportedOperationException ue) {
@@ -539,13 +541,16 @@ public class Model {
      *
      * @param context, Context: to access ContentResolver
      * @param post,    Post, POJO to write in 'Favorites'
+     * @return id, long: unique PostId
      * @throws ModelException
      */
-    public void setFavorite(Context context, Post post) throws ModelException {
+    public long setFavorite(Context context, Post post) throws ModelException {
         try {
-            context.getContentResolver()
+            Uri uri = context.getContentResolver()
                     .insert(WatchdogContract.Posts.Favorites.CONTENT_URI_FAVORITES,
                             mConverter.getContentValues(post));
+    
+            return Long.parseLong(uri.getLastPathSegment());
         } catch (SQLException e) {
             throw new ModelException(ModelErrorsCodes.Storage.INSERT_FAILED);
         } catch (UnsupportedOperationException ue) {

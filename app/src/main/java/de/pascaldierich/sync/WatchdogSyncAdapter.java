@@ -6,6 +6,7 @@ import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Bundle;
@@ -17,21 +18,18 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.pascaldierich.domain.interactors.service.Search;
+import de.pascaldierich.model.ModelException;
 import de.pascaldierich.watchdog.R;
 
 public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     
-    static final int SYNC_INTERVAL = 60 * 5; // TODO: 07.03.17 change SYNC_INTERVAL back to 60 * 120
+    static final int SYNC_INTERVAL = 60 * 120;
     static final int FLEX_TIME = SYNC_INTERVAL / 2;
     
     static final int RANGE = 5;
     
     public WatchdogSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-    }
-    
-    private String getTime() {
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date());
     }
     
     @Override
@@ -41,12 +39,62 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 getContext(),
                 RANGE
         ));
-    
-        Log.d("SyncAdapter", "starting sync...");
-        wInteractor.get().run();
+        
+        try {
+            wInteractor.get().execute();
+            saveTime();
+        } catch (ModelException modelE) {
+            // TODO: 08.03.17 report ExceptionCode to Firebase
+        }
     }
-
-
+    
+    
+    
+    /*
+        private Methods
+     */
+    
+    /**
+     * return the last time of sync.
+     * Used for Api-Request inside Model
+     * <p/>
+     *
+     * @return date, String: the date saved in SharedPrefenreces. getDefaultTime() if error
+     */
+    private String getTime() {
+        SharedPreferences sharedPref = getContext().getSharedPreferences(
+                getContext().getString(R.string.sharedPref_fileName), Context.MODE_PRIVATE);
+        
+        return sharedPref.getString(getContext().getString(R.string.syncService_sharedPref_timeKey), getDefaultTime());
+    }
+    
+    /**
+     * This method returns current date - 1 day.
+     * Is used as default value for SharedPreferences
+     * <p/>
+     *
+     * @return date, String: the date of yesterday
+     */
+    private String getDefaultTime() {
+        return new SimpleDateFormat(getContext().getString(R.string.rfc3339_format), Locale.US)
+                .format(new Date(System.currentTimeMillis() - 24*60*60*1000));
+    }
+    
+    /**
+     * saves the current Time in SharedPreferences
+     */
+    private void saveTime() {
+        SharedPreferences sharedPref = getContext().getSharedPreferences(
+                getContext().getString(R.string.sharedPref_fileName), Context.MODE_PRIVATE);
+    
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getContext().getString(R.string.syncService_sharedPref_timeKey),
+                new SimpleDateFormat(getContext().getString(R.string.rfc3339_format), Locale.US).format(new Date()));
+        editor.apply();
+    }
+    
+    
+    
     /*
         static Helper methods
      */

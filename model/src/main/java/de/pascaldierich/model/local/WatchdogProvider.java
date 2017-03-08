@@ -142,6 +142,80 @@ public class WatchdogProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Not supported URI: " + uri);
         }
     }
+    
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        final SQLiteDatabase db = mHelper.getWritableDatabase();
+    
+        switch (sMatcher.match(uri)) {
+            case CODE_OBSERVABLES: {
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (int i = 0; i < values.length; i++) {
+                        long _id = db.insert(WatchdogContract.Observables.TABLE_NAME, null, values[i]);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
+            case CODE_SITES: {
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (int i = 0; i < values.length; i++) {
+                        long _id = db.insert(WatchdogContract.Sites.TABLE_NAME, null, values[i]);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
+            case CODE_FAVORITES: {
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (int i = 0; i < values.length; i++) {
+                        long _id = db.insert(WatchdogContract.Posts.Favorites.TABLE_NAME, null, values[i]);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
+            case CODE_NEWS_FEED: {
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (int i = 0; i < values.length; i++) {
+                        long _id = db.insert(WatchdogContract.Posts.Favorites.TABLE_NAME, null, values[i]);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            }
+            default:
+                return super.bulkInsert(uri, values);
+        }
+    }
 
     @IntRange(from = -1, to = 1)
     @Override

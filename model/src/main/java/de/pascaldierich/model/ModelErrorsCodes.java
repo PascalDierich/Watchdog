@@ -13,10 +13,6 @@ import static de.pascaldierich.model.ModelErrorsCodes.Storage.UNKNOWN_URI;
 import static de.pascaldierich.model.ModelErrorsCodes.UNKNOWN_FATAL_ERROR;
 
 /**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
-/**
  * Error-Codes for communication between app - model
  * <p>
  * Get transmitted by ModelException.class
@@ -34,10 +30,12 @@ public @interface ModelErrorsCodes {
      */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-            Network.RUNTIME_ERROR
+            Network.RUNTIME_ERROR,
+            Network.IO_ERROR
     })
     @interface Network {
         int RUNTIME_ERROR = 100;
+        int IO_ERROR = 101;
     }
     
     /**

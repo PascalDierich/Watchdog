@@ -57,7 +57,6 @@ public class Presenter extends AbstractPostPresenter
             return;
             // TODO: 07.03.17 set ObservableLayout to e.g. example data 
         }
-        // TODO: 07.03.17 call method to show Observable
         mView.showObservable(mObservable);
         super.getPosts(mView.getContext(), this, mView.getSelectedPage(), mObservable.getUserId());
     }

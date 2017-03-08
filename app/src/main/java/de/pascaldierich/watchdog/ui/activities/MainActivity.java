@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.onStart();
+//        mPresenter.onStart(); // <--- commented out for test reason
     }
     
     @Override
