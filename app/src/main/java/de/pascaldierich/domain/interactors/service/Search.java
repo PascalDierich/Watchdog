@@ -44,7 +44,7 @@ public class Search {
      *
      * @throws ModelException
      */
-    public void execute() throws ModelException {
+    public long execute() throws ModelException {
         // throws ModelException, but without Site-Object not reason to go on
         ArrayList<Site> sites = ApiConnector.getApi().get().getSites(mContext);
         ArrayList<Post> result = new ArrayList<>();
@@ -71,14 +71,15 @@ public class Search {
         }
         try {
             Log.d(LOG_TAG, "execute: result == null -> " + result.isEmpty());
-            if (result.isEmpty()) return;
+            if (result.isEmpty()) return -1;
             
             long numberOfRows = ApiConnector.getApi().get().setNewsFeed(mContext, result);
     
             Log.d(LOG_TAG, "execute: numberOfRows added = " + numberOfRows);
-            
+            return numberOfRows;
         } catch (ModelException modelE) {
             // TODO: 08.03.17 report to Firebase
+            return -1;
         }
     }
 }

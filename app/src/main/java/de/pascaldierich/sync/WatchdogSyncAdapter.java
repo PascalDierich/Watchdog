@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -42,7 +43,10 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
         ));
         
         try {
-            wInteractor.get().execute();
+            long numberOfRowsAdded = wInteractor.get().execute();
+            if (numberOfRowsAdded > 0) {
+                sendBasicNotification(numberOfRowsAdded);
+            }
             saveTime();
         } catch (ModelException modelE) {
             // TODO: 08.03.17 report ExceptionCode to Firebase
@@ -54,6 +58,20 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     /*
         private Methods
      */
+    
+    // Notification
+    
+    private void sendBasicNotification(long number) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this.getContext())
+                        .setSmallIcon(R.drawable.icon_youtube_small)
+                        .setContentTitle("My notification")
+                        .setContentText(number + " new Activities got monitored"); // TODO: 10.03.17 strings.xml 
+        
+    }
+    
+    
+    // Time
     
     /**
      * return the last time of sync.
