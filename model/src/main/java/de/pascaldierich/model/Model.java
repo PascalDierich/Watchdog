@@ -172,7 +172,6 @@ public class Model {
     @MainThread
     public ArrayList<Observable> getObservables(Context context) throws ModelException {
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         Log.w("Model.class", "going to SetUp Loader");
@@ -206,7 +205,6 @@ public class Model {
     public long getObservables(Context context, Uri uri) throws ModelException {
         Log.w("Model.class", "getObservables: uri = " + uri);
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
@@ -265,7 +263,6 @@ public class Model {
     @MainThread
     public ArrayList<Site> getSites(Context context, int observableId) throws ModelException {
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
@@ -301,7 +298,6 @@ public class Model {
     @MainThread
     public ArrayList<Site> getSites(Context context, @SupportedNetworks String site) throws ModelException {
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
@@ -336,7 +332,6 @@ public class Model {
     @MainThread
     public ArrayList<Post> getFavorites(Context context) throws ModelException {
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
@@ -373,7 +368,6 @@ public class Model {
     @MainThread
     public ArrayList<Post> getFavorites(Context context, int observableId) throws ModelException {
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
@@ -413,7 +407,6 @@ public class Model {
     @MainThread
     public ArrayList<Post> getNewsFeed(Context context) throws ModelException {
         // Instantiation
-        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         // Setup CursorLoader
@@ -451,7 +444,6 @@ public class Model {
     public ArrayList<Post> getNewsFeed(Context context, int observableId) throws ModelException {
         Log.w("Model.class", "getNewsFeed starts...");
         // Instantiation
-//        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         Log.w("Model.class", "going to setup Loader");

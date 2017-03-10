@@ -16,6 +16,7 @@ import de.pascaldierich.model.domainmodels.Post;
 /**
  * Interactor to get a Post from 'Favorites'
  */
+@Deprecated
 public class Get extends Storage implements StorageInteractor {
     private StorageInteractor.GetCallback mCallback;
     private int mObservableId = -1;

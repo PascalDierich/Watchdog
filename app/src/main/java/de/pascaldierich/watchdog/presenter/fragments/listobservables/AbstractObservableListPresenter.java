@@ -30,13 +30,20 @@ abstract class AbstractObservableListPresenter extends AbstractPresenter {
      * @see {@link Get}
      */
     void getObservables(Context context, StorageInteractor.GetCallback presenter) {
-        WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
-                super.mExecutor,
-                super.mMainThread,
-                context,
-                presenter
-        ));
+//        WeakReference<Get> wInteractor = new WeakReference<Get>(new Get(
+//                super.mExecutor,
+//                super.mMainThread,
+//                context,
+//                presenter
+//        ));
+//
+//        wInteractor.get().execute();
+    
+        WeakReference<de.pascaldierich.domain.interactors.storage.Get> testInteractor =
+                new WeakReference<de.pascaldierich.domain.interactors.storage.Get>(
+                        new de.pascaldierich.domain.interactors.storage.Get(context, presenter));
         
-        wInteractor.get().execute();
+        testInteractor.get().getObservable();
+        
     }
 }

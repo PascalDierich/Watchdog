@@ -16,6 +16,7 @@ import de.pascaldierich.model.domainmodels.Observable;
 /**
  * Interactor to get an Observable from intern storage
  */
+@Deprecated
 public class Get extends Storage implements StorageInteractor {
     private StorageInteractor.GetCallback mCallback;
     

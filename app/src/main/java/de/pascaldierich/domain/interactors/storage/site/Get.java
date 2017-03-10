@@ -16,6 +16,7 @@ import de.pascaldierich.model.domainmodels.Site;
 /**
  * Interactor to get a Site from intern storage
  */
+@Deprecated
 public class Get extends Storage implements StorageInteractor {
     private StorageInteractor.GetCallback mCallback;
     private int mObservableId = -1;

@@ -19,6 +19,7 @@ import hugo.weaving.DebugLog;
 /**
  * Interactor to get a Post from 'NewsFeed'
  */
+@Deprecated
 public class Get extends Storage implements StorageInteractor {
     private StorageInteractor.GetCallback mCallback;
     private int mObservableId = -1;
