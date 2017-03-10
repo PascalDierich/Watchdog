@@ -14,8 +14,9 @@
 
     <!-- Text -->
     <color name="colorTextPrimary">#ffffff</color>
-    <color name="colorTextError">#ffcc0000</color>
+    <color name="colorTextError">#cc0000</color>
     <color name="colorTextVerified">#feaa0c</color>
     <color name="colorTextDisabled">#5a595b</color>
+    <color name="colorTextAppTitle">#cc0000</color>
 
 </resources>

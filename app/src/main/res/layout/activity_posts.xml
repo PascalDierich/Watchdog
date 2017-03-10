@@ -7,6 +7,47 @@
     android:layout_height="match_parent"
     tools:context="de.pascaldierich.watchdog.ui.activities.PostsActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        android:fitsSystemWindows="true"
+        app:elevation="@dimen/AppBarElevation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/colorPrimary"
+            android:elevation="@dimen/AppBarElevation"
+            android:fitsSystemWindows="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:title="@string/app_name"
+                app:titleTextColor="@color/colorTextAppTitle">
+
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
@@ -15,6 +56,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="64dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintVertical_bias="0.5"/>
 
 </android.support.constraint.ConstraintLayout>

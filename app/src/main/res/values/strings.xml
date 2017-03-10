@@ -4,6 +4,7 @@
         app
     -->
     <string name="app_name" translatable="false">Watchdog</string>
+    <string name="appVersion">beta</string>
 
     <string name="sync_account_type" translatable="false">watchdog.pascaldierich.de</string>
 
