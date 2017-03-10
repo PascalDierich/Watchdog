@@ -156,7 +156,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
         for (int i = 0; i < sites.size(); i++) {
             switch (sites.get(i).getSite()) {
                 case SupportedNetworks.YOUTUBE: {
-                    mTextYouTube.setText("got a User for this"); // TODO: 05.03.17 really?
+                    mTextYouTube.setText(getContext().getString(R.string.setObservableActivity_editText_site_defined));
                 }
                 // [...] <-- ...
             }
@@ -241,7 +241,8 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onAfterTextChangedYouTube(final Editable newText) {
         if (newText.length() == 20) {
-            Toast.makeText(getContext(), "Your reach the limit", Toast.LENGTH_SHORT).show(); // TODO: 03.03.17 strings.xml
+            Toast.makeText(getContext(), getContext().getString(R.string.setObservableActivity_editText_charErrorMessage),
+                    Toast.LENGTH_SHORT).show();
         }
         new Handler().postDelayed(new Runnable() {
             @Override

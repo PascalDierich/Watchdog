@@ -28,8 +28,12 @@
     <string name="setObservableActivity_editTest_youtubeName_hint">YouTube Channel Name</string>
     <string name="contentDescription_iconYouTube">YouTube icon</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- setSite already defined -->
+    <string name="setObservableActivity_editText_site_defined">already defined</string>
+
+    <!-- too many chars -->
+    <string name="setObservableActivity_editText_charErrorMessage">you reached the end</string>
+
 
 
 
@@ -56,5 +60,26 @@
     -->
     <!-- YouTube base-url to append postId for implicit intent -->
     <string name="youtube_baseUrl">https://wwww.youtube.com/watch?v=</string>
+
+
+    <!--
+        Error-Messages
+    -->
+    <!-- If no NewsFeed could get loaded-->
+    <string name="error_noNewsFedd">No new Activities</string>
+
+    <!-- If no Favorites could get loaded-->
+    <string name="error_noFavorites">No Favorites saved yet</string>
+
+
+    <!--
+        Notifications
+    -->
+    <!-- Service normal notification -->
+    <string name="notification_normal_title">new Activities</string>
+    <string name="notification_normal_body"> new Activities got monitored</string>
+
+
+
 
 </resources>

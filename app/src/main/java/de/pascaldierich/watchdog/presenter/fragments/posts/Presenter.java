@@ -57,8 +57,11 @@ public class Presenter extends AbstractPostPresenter
                     mView.getContext().getString(R.string.parcelable_observable));
         } catch (NullPointerException npe) {
             return;
-            // TODO: 07.03.17 set ObservableLayout to e.g. example data 
         }
+        if (mObservable == null) {
+            return;
+        }
+        
         mView.showObservable(mObservable);
         super.getPosts(mView.getContext(), this, mView.getSelectedPage(), mObservable.getUserId());
     }
@@ -119,7 +122,11 @@ public class Presenter extends AbstractPostPresenter
     
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
-        onError(errorCode);
+        if (mView.getSelectedPage()) { // NewsFeed
+            mView.setErrorMessage(mView.getContext().getString(R.string.error_noNewsFedd));
+        } else { // Favorites
+            mView.setErrorMessage(mView.getContext().getString(R.string.error_noFavorites));
+        }
     }
     
     
@@ -169,8 +176,6 @@ public class Presenter extends AbstractPostPresenter
         if (mPosts.get(index) == null) return;
         
         mView.sendIntentToActivity(createIntent(mPosts.get(index)));
-
-//        mView.startImplicitIntent(null); // TODO: 06.03.17 call create Intent(Site site)
     }
     
     
@@ -180,7 +185,6 @@ public class Presenter extends AbstractPostPresenter
      */
     
     private Intent createIntent(Post post) {
-        // TODO: 06.03.17 create intent with ACTION etc. 
         return new Intent(Intent.ACTION_VIEW, Uri.parse(
                 mView.getContext().getString(R.string.youtube_baseUrl) + post.getPostId()));
     }

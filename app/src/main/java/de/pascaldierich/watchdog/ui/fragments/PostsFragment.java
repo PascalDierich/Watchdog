@@ -184,7 +184,10 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
            
     }
     
-    
+    @Override
+    public void setErrorMessage(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
     
     /*
         Method to start/update activities/fragment

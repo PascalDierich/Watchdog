@@ -43,9 +43,8 @@ public interface PostPresenter extends BaseUIPresenter {
          * show Posts (either NewsFeed or Favorites)
          */
         void setData(ArrayList<Post> posts);
-        
-        // TODO: change method signature and behaviour for twoPaneMode
-        void startActivity(Intent intent);
+    
+        void setErrorMessage(String message);
     
         void sendIntentToActivity(Intent intent);
         

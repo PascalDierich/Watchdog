@@ -2,15 +2,19 @@ package de.pascaldierich.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -21,6 +25,7 @@ import java.util.Locale;
 import de.pascaldierich.domain.interactors.service.Search;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.watchdog.R;
+import de.pascaldierich.watchdog.ui.activities.MainActivity;
 
 public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     private static final String LOG_TAG = WatchdogSyncAdapter.class.getSimpleName();
@@ -37,7 +42,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         WeakReference<Search> wInteractor = new WeakReference<Search>(new Search(
-                getTime(), // time // TODO: 08.03.17 replace with getTime()
+                getTime(), // time
                 getContext(),
                 RANGE
         ));
@@ -65,8 +70,22 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this.getContext())
                         .setSmallIcon(R.drawable.icon_youtube_small)
-                        .setContentTitle("My notification")
-                        .setContentText(number + " new Activities got monitored"); // TODO: 10.03.17 strings.xml
+                        .setContentTitle(this.getContext().getString(R.string.notification_normal_title))
+                        .setContentText(number + this.getContext().getString(R.string.notification_normal_body));
+    
+        Intent resultIntent = new Intent(this.getContext(), MainActivity.class);
+    
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this.getContext());
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        
+        mBuilder.setContentIntent(resultPendingIntent);
+    
+        NotificationManager mNotificationManager =
+                (NotificationManager) this.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
         
     }
     
@@ -96,7 +115,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     private String getDefaultTime() {
         return new SimpleDateFormat(getContext().getString(R.string.rfc3339_format), Locale.US)
-                .format(new Date(System.currentTimeMillis() - 24*60*60*1000));
+                .format(new Date(System.currentTimeMillis() - 24*60*60*1000)); // <- one day
     }
     
     /**
