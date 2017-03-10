@@ -36,9 +36,6 @@ dependencies {
     // Support annotations
     compile 'com.android.support:support-annotations:25.2.0'
 
-    // Stetho
-    compile 'com.facebook.stetho:stetho:1.4.2'
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

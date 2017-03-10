@@ -22,11 +22,12 @@ import de.pascaldierich.model.ModelException;
 import de.pascaldierich.watchdog.R;
 
 public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
+    private static final String LOG_TAG = WatchdogSyncAdapter.class.getSimpleName();
     
     static final int SYNC_INTERVAL = 60 * 120;
     static final int FLEX_TIME = SYNC_INTERVAL / 2;
     
-    static final int RANGE = 5;
+    static final int RANGE = 30;
     
     public WatchdogSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -35,7 +36,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         WeakReference<Search> wInteractor = new WeakReference<Search>(new Search(
-                "2016-01-08T12:14:17Z", // time // TODO: 08.03.17 replace with getTime()
+                getTime(), // time // TODO: 08.03.17 replace with getTime()
                 getContext(),
                 RANGE
         ));

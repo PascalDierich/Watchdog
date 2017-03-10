@@ -2,6 +2,7 @@ package de.pascaldierich.domain.interactors.service;
 
 import android.content.Context;
 import android.support.annotation.IntRange;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,8 @@ import de.pascaldierich.model.domainmodels.Site;
  * -> so no need to worry about background Thread
  */
 public class Search {
+    private static final String LOG_TAG = Search.class.getSimpleName();
+    
     private String mTime;
     private Context mContext;
     private int mRange;
@@ -67,9 +70,12 @@ public class Search {
             }
         }
         try {
+            Log.d(LOG_TAG, "execute: result == null -> " + result.isEmpty());
             if (result.isEmpty()) return;
             
             long numberOfRows = ApiConnector.getApi().get().setNewsFeed(mContext, result);
+    
+            Log.d(LOG_TAG, "execute: numberOfRows added = " + numberOfRows);
             
         } catch (ModelException modelE) {
             // TODO: 08.03.17 report to Firebase

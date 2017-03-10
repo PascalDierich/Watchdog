@@ -3,6 +3,7 @@ package de.pascaldierich.watchdog.presenter.fragments.posts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -108,6 +109,8 @@ public class Presenter extends AbstractPostPresenter
             super.mPosts = (ArrayList<Post>) result;
             mView.setData(super.mPosts);
         } catch (ClassCastException e) {
+            // TODO: 10.03.17 report ot Firebase
+            Log.d("PostPresenter", "ClassCastException in onSuccess: " + e.getMessage());
             mView.showError();
         }
     }
