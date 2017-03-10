@@ -66,7 +66,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
                 new NotificationCompat.Builder(this.getContext())
                         .setSmallIcon(R.drawable.icon_youtube_small)
                         .setContentTitle("My notification")
-                        .setContentText(number + " new Activities got monitored"); // TODO: 10.03.17 strings.xml 
+                        .setContentText(number + " new Activities got monitored"); // TODO: 10.03.17 strings.xml
         
     }
     

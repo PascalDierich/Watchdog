@@ -18,10 +18,6 @@ import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_SEARCH_PART;
 import static de.pascaldierich.model.network.ConstantsApi.YOUTUBE_SEARCH_TYPE;
 
 /**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
-/**
  * Api Constants for Retrofit
  */
 @Retention(RetentionPolicy.SOURCE)

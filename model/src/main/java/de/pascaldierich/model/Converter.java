@@ -25,6 +25,8 @@ public class Converter {
     // This boolean value indicates if there are SQL-specific values (_ID and timestamp)
     private boolean gotDownloaded;
     
+    // TODO: 10.03.17 use one ArrayList with Generics for all methods
+    
     /********************************************************************************************
      * getPost methods
      *
@@ -40,7 +42,6 @@ public class Converter {
      * @return result, ArrayList<Post>: Collection of all Posts
      * @throws ModelException
      */
-    @DebugLog
     public ArrayList<Post> getPost(@Nullable YouTubeSearchPage page, int userId) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = false;
@@ -83,7 +84,6 @@ public class Converter {
      * @return result, ArrayList<Post>: Collection of all given Posts in Cursor
      * @throws ModelException
      */
-    @DebugLog
     public ArrayList<Post> getPost(@Nullable Cursor entries) throws ModelException {
         ArrayList<Post> result = new ArrayList<>();
         gotDownloaded = true;
@@ -114,6 +114,7 @@ public class Converter {
                     .setTimestamp(entries.getString(WatchdogContract.Posts.COLUMN_TIMESTAMP_ID))
             );
         } while (entries.moveToNext());
+        entries.close();
         
         return result;
     }
@@ -133,7 +134,6 @@ public class Converter {
      * @return result, ArrayList<Site>: Collection of all Sites
      * @throws ModelException
      */
-    @DebugLog
     public ArrayList<Site> getSite(@Nullable YouTubeChannelsPage page) throws ModelException {
         ArrayList<Site> result = new ArrayList<>();
         gotDownloaded = false;
@@ -198,6 +198,7 @@ public class Converter {
                     .setKey(entries.getString(WatchdogContract.Sites.COLUMN_KEY_ID))
             );
         } while (entries.moveToNext());
+        entries.close();
         
         return result;
     }
@@ -247,6 +248,7 @@ public class Converter {
             
             result.add(item);
         } while (entries.moveToNext());
+        entries.close();
         
         Log.w("Converter.class", "going to return converted Collection");
         return result;

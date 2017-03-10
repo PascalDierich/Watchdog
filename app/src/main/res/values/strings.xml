@@ -51,4 +51,10 @@
     <string name="rfc3339_format" translatable="false">yyyy-MM-dd\'T\'HH:mm:ss\'Z\'</string>
 
 
+    <!--
+        network
+    -->
+    <!-- YouTube base-url to append postId for implicit intent -->
+    <string name="youtube_baseUrl">https://wwww.youtube.com/watch?v=</string>
+
 </resources>

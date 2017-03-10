@@ -192,7 +192,7 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     
     @Override
     public void sendIntentToActivity(Intent intent) {
-        
+        mCallback.onStartIntent(intent);
     }
     
     

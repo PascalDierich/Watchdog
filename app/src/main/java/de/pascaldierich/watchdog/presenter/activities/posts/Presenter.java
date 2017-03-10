@@ -40,11 +40,14 @@ public class Presenter implements PostsPresenter {
     @Override
     public void onStart() {
         Bundle args = new Bundle();
-        args.putParcelable(mView.getContext().getString(R.string.parcelable_observable),
-                mView.getIntentExtra().getParcelableExtra(mView.getContext().getString(R.string.parcelable_observable)));
-        mFragment.setArguments(args);
+        if (!mFragment.isAdded()) {
+            args.putParcelable(mView.getContext().getString(R.string.parcelable_observable),
+                    mView.getIntentExtra().getParcelableExtra(mView.getContext().getString(R.string.parcelable_observable)));
+            mFragment.setArguments(args);
+    
+            mView.setFragment(mFragment);
+        }
         
-        mView.setFragment(mFragment);
     }
     
     @Override

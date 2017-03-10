@@ -1,6 +1,7 @@
 package de.pascaldierich.watchdog.presenter.fragments.posts;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -72,6 +73,7 @@ public class Presenter extends AbstractPostPresenter
      */
     @Override
     public void onError(@ErrorPresenter int errorCode) {
+        Log.d("Presenter Post", "onError: " + errorCode);
         mView.showError();
     }
     
@@ -166,7 +168,7 @@ public class Presenter extends AbstractPostPresenter
         if (index < 0) return;
         if (mPosts.get(index) == null) return;
         
-        mView.sendIntentToActivity(null);
+        mView.sendIntentToActivity(createIntent(mPosts.get(index)));
 
 //        mView.startImplicitIntent(null); // TODO: 06.03.17 call create Intent(Site site)
     }
@@ -179,6 +181,7 @@ public class Presenter extends AbstractPostPresenter
     
     private Intent createIntent(Post post) {
         // TODO: 06.03.17 create intent with ACTION etc. 
-        return null;
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(
+                mView.getContext().getString(R.string.youtube_baseUrl) + post.getPostId()));
     }
 }
