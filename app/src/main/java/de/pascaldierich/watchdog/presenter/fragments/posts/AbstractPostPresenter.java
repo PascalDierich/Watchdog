@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
+import de.pascaldierich.domain.interactors.storage.NewsFeedGet;
 import de.pascaldierich.domain.interactors.storage.StorageInteractor;
 import de.pascaldierich.domain.interactors.storage.favorites.Set;
 import de.pascaldierich.domain.interactors.storage.observable.Get;
@@ -34,18 +35,28 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
      * @see {@link Get}
      */
     void getPosts(Context context, StorageInteractor.GetCallback presenter,
-                            boolean selectedPage, int id) {
+                  boolean selectedPage, int id) {
         if (selectedPage) {
-            WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>
-                    wInteractor = new WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>(
-                    new de.pascaldierich.domain.interactors.storage.newsfeed.Get(
-                            super.mExecutor,
-                            super.mMainThread,
+//            WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>
+//                    wInteractor = new WeakReference<de.pascaldierich.domain.interactors.storage.newsfeed.Get>(
+//                    new de.pascaldierich.domain.interactors.storage.newsfeed.Get(
+//                            super.mExecutor,
+//                            super.mMainThread,
+//                            context,
+//                            presenter,
+//                            id));
+//
+//            wInteractor.get().execute();
+            
+            
+            WeakReference<NewsFeedGet> testInteractor = new WeakReference<NewsFeedGet>(
+                    new NewsFeedGet(
                             context,
                             presenter,
-                            id));
+                            id)
+            );
             
-            wInteractor.get().execute();
+            testInteractor.get().execute();
         } else {
             WeakReference<de.pascaldierich.domain.interactors.storage.favorites.Get>
                     wInteractor = new WeakReference<de.pascaldierich.domain.interactors.storage.favorites.Get>(
@@ -64,7 +75,7 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
      * @see {@link Set}
      */
     void setFavorites(Context context, StorageInteractor.SetCallback presenter,
-                                @NonNull Post post) {
+                      @NonNull Post post) {
         WeakReference<Set> wInteractor = new WeakReference<Set>(new Set(
                 super.mExecutor,
                 super.mMainThread,

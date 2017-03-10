@@ -451,7 +451,7 @@ public class Model {
     public ArrayList<Post> getNewsFeed(Context context, int observableId) throws ModelException {
         Log.w("Model.class", "getNewsFeed starts...");
         // Instantiation
-        Looper.prepare();
+//        Looper.prepare();
         WeakReference<CursorLoader> loaderWeakReference = new WeakReference<>(new CursorLoader(context));
         
         Log.w("Model.class", "going to setup Loader");
