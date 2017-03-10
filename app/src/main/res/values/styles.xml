@@ -1,25 +1,38 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/Theme.AppCompat">
-        <!-- Customize your theme here. -->
+    <style name="Watchdog.MainTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/color_Background</item>
+        <item name="android:colorForeground">@color/color_Card</item>
+
+        <item name="android:colorAccent">@color/colorAccent</item>
+
+        <!-- Text Colors -->
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorAlertDialogListItem">@color/colorTextError</item>
+        <item name="android:textColorHighlight">@color/colorTextVerified</item>
+        <item name="android:textColorSecondary">@color/colorTextDisabled</item>
+
+
     </style>
 
 
     <!-- CardView style -->
-    <style name="cardView" parent="AppTheme">
+    <style name="cardView" parent="Watchdog.MainTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_margin">16dp</item>
+        <item name="android:colorBackground">@color/color_Card</item>
     </style>
 
     <!-- FAB style -->
-    <style name="FAB" parent="AppTheme">
+    <style name="FAB" parent="Watchdog.MainTheme">
+        <item name="android:tint">@color/color_Background</item>
         <item name="android:elevation">5dp</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_width">56dp</item>
         <item name="android:layout_margin">16dp</item>
-        <!--<item name="android:layout_gravity">bottom</item>-->
     </style>
 
 

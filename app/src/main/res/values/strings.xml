@@ -34,6 +34,11 @@
     <!-- too many chars -->
     <string name="setObservableActivity_editText_charErrorMessage">you reached the end</string>
 
+    <!--
+        Observable Containter Layout
+    -->
+    <string name="observableContainer_displayName">displayName</string>
+
 
 
 
@@ -79,6 +84,12 @@
     <string name="notification_normal_title">new Activities</string>
     <string name="notification_normal_body"> new Activities got monitored</string>
 
+
+
+    <!--
+        Content Description's
+    -->
+    <string name="contentDescription_profilPic">Observables Profil Pic</string>
 
 
 

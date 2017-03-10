@@ -35,14 +35,15 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_newObservable"
+        app:backgroundTint="@color/colorAccent"
         style="@style/FAB"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:layout_constraintDimensionRatio="h,1:1"/>
+        app:srcCompat="@android:drawable/ic_input_add"/>
 
 </android.support.constraint.ConstraintLayout>
