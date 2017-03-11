@@ -51,15 +51,19 @@ public abstract class AbstractSetObservablePresenter extends AbstractPresenter {
                                 presenter,
                                 null));
         
-        for (int i = 0; i < items.size(); i++) {
-            wInteractor.get().setItem(items.get(i).setUserId((int) mObservableId));
-            wInteractor.get().execute();
-        }
+//        for (int i = 0; i < items.size(); i++) {
+//            wInteractor.get().setItem(items.get(i).setUserId((int) mObservableId));
+//            wInteractor.get().execute();
+//        }
+        
+        /* Right now there's only one supported Network, so we cheat a bit */
+        /* This is 'necessary' because right now we get double-entries */
+        wInteractor.get().setItem(items.get(items.size()-1).setUserId((int) mObservableId)); // we use the latest checked entry
+        wInteractor.get().execute();
         
     }
     
-    @Deprecated
-    void setObservableId(long observableId) {
+    public void setObservableId(long observableId) {
         mObservableId = observableId;
     }
 }

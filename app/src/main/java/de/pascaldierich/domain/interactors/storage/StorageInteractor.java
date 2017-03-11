@@ -41,7 +41,7 @@ public interface StorageInteractor extends BaseInteractor {
         /**
          * @param id, long: unique Id for specific entry
          */
-        void onSuccess(long id);
+        void onSuccess(long id, boolean type);
         
     }
 }

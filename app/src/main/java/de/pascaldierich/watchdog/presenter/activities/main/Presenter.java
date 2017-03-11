@@ -22,7 +22,7 @@ public class Presenter extends AbstractMainPresenter
     
     /**
      * boolean to indicate whether twoPaneMode is set or not.
-     * -> device < 600dp || device > 600dp
+     * -> device < 600dp || device >= 600dp
      */
     private boolean mTwoPaneMode;
     /**
@@ -96,10 +96,10 @@ public class Presenter extends AbstractMainPresenter
         View Methods
      */
     
+    SetObservableActivity.SetObservableCallback callback;
     @Override
     public void onClickFab() {
         if (mDetailView) { // save Data set in SetObservableFragment after verifying it
-            SetObservableActivity.SetObservableCallback callback;
             try {
                 callback = (SetObservableActivity.SetObservableCallback) mFragment;
             } catch (ClassCastException e) {
@@ -110,9 +110,9 @@ public class Presenter extends AbstractMainPresenter
             }
     
             /* if false, Fragment will show error */
-            if (callback.inputVerified()) {
+            if (callback.inputVerified()) { // TODO: 11.03.17 first set Observable -> get observableId and set it for Sites
                 super.setObservable(callback.getObservableCallback(), mView.getContext(), this);
-                super.setSites(callback.getSitesCallback(), mView.getContext(), this);
+//                super.setSites(callback.getSitesCallback(), mView.getContext(), this);
             }
             /* that's why we don't have to do anything... just wait for next onClick */
             
@@ -162,11 +162,18 @@ public class Presenter extends AbstractMainPresenter
      * @param id
      */
     @Override
-    public void onSuccess(long id) {
+    public void onSuccess(long id, boolean type) {
         mDetailView = false;
+    
+        if (id > 0 && type) { // setObservableCallback
+            super.setObservableId(id);
+            super.setSites(callback.getSitesCallback(), mView.getContext(), this);
+        } else {
+            mView.updatePostsFragment(null);
+        }
         
         // TODO: 06.03.17 load Observable with parameter id and update PostsFragment
-        mView.updatePostsFragment(null);
+        
     }
     
 }

@@ -70,7 +70,7 @@ public class Set extends Storage implements StorageInteractor {
                 @Override
                 public void run() {
                     Log.w("SetInteractor", "run: going to post onSuccess");
-                    mCallback.onSuccess(OBSERVABLE_ID);
+                    mCallback.onSuccess(OBSERVABLE_ID, true);
                 }
             });
         } catch (final ModelException modelE) {

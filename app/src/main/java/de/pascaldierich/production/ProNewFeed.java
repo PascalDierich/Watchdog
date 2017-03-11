@@ -40,7 +40,7 @@ public final class ProNewFeed implements StorageInteractor.SetCallback {
     }
    
     @Override
-    public void onSuccess(long id) {
+    public void onSuccess(long id, boolean type) {
         Log.d(LOG_TAG, "onSuccess: id = " + id);
     }
 }

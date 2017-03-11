@@ -136,7 +136,7 @@ public class Presenter extends AbstractPostPresenter
      */
     
     @Override
-    public void onSuccess(long id) {
+    public void onSuccess(long id, boolean type) {
         // TODO: 28.02.17 notify user, e.g. show Toast
     }
     

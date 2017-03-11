@@ -92,13 +92,14 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     /*
         View Methods
      */
+    SetObservableActivity.SetObservableCallback callback;
     
     /**
      *
      */
     @Override
     public void onSaveClicked() {
-        SetObservableActivity.SetObservableCallback callback;
+        
         try {
             callback = (SetObservableActivity.SetObservableCallback) mFragment;
         } catch (ClassCastException e) {
@@ -109,9 +110,9 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         }
     
         /* if false, Fragment will show error */
-        if (callback.inputVerified()) {
+        if (callback.inputVerified()) { // TODO: 11.03.17 first set Observable -> get observableId and set it for Sites
             super.setObservable(callback.getObservableCallback(), mView.getContext(), this);
-            super.setSites(callback.getSitesCallback(), mView.getContext(), this);
+//            super.setSites(callback.getSitesCallback(), mView.getContext(), this);
         }
         /* that's why we don't have to do anything... just wait for next onClick */
     }
@@ -128,7 +129,12 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     }
     
     @Override
-    public void onSuccess(long id) {
-        mView.startMainActivity();
+    public void onSuccess(long id, boolean type) {
+        if (id > 0 && type) { // setObservableCallback
+            super.setObservableId(id);
+            super.setSites(callback.getSitesCallback(), mView.getContext(), this);
+        } else {
+            mView.startMainActivity();
+        }
     }
 }
