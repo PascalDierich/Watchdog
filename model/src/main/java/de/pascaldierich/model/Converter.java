@@ -311,7 +311,6 @@ public class Converter {
      * @param post, Post
      * @return result, ContentValues: converted Post with ColumnName's as key
      */
-    @DebugLog
     public ContentValues getContentValues(@NonNull Post post) {
         ContentValues result = new ContentValues();
         

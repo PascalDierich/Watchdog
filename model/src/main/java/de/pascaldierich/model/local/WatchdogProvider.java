@@ -217,7 +217,7 @@ public class WatchdogProvider extends ContentProvider {
                 return returnCount;
             }
             default:
-                return super.bulkInsert(uri, values);
+                return -2; //super.bulkInsert(uri, values);
         }
     }
 

@@ -2,7 +2,6 @@ package de.pascaldierich.domain.interactors.service;
 
 import android.content.Context;
 import android.support.annotation.IntRange;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -70,12 +69,19 @@ public class Search {
             }
         }
         try {
-            Log.d(LOG_TAG, "execute: result == null -> " + result.isEmpty());
             if (result.isEmpty()) return -1;
-            
-            long numberOfRows = ApiConnector.getApi().get().setNewsFeed(mContext, result);
     
-            Log.d(LOG_TAG, "execute: numberOfRows added = " + numberOfRows);
+            int numberOfRows = 0;
+            long ids;
+            for (int i = 0; i < result.size(); i++) {
+                ids = ApiConnector.getApi().get().setNewsFeed(mContext, result.get(i));
+                numberOfRows++;
+            }
+            
+            
+//            long numberOfRows = ApiConnector.getApi().get().setNewsFeed(mContext, result);
+    
+//            Log.d(LOG_TAG, "execute: numberOfRows added = " + numberOfRows);
             return numberOfRows;
         } catch (ModelException modelE) {
             // TODO: 08.03.17 report to Firebase

@@ -439,7 +439,6 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>: each Post inside 'NewsFeed' for given observableId
      * @throws ModelException
      */
-    @DebugLog
     @MainThread
     public ArrayList<Post> getNewsFeed(Context context, int observableId) throws ModelException {
         Log.w("Model.class", "getNewsFeed starts...");
