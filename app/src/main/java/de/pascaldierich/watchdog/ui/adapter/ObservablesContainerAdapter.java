@@ -60,7 +60,7 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
         
         if (item.getGotThumbnail()) {
             try {
-                holder.vThumbnail.setImageBitmap( // TODO: 28.02.17 use Picasso
+                holder.vThumbnail.setImageBitmap(
                         Converter.getBitmap(item.getThumbnail()));
             } catch (NullPointerException npe) { // just in case there is no boolean set
                 
@@ -106,6 +106,6 @@ public class ObservablesContainerAdapter extends RecyclerView.Adapter<Observable
     public interface AdapterCallback {
         
         void onCardViewClick(int position);
-    
+        
     }
 }

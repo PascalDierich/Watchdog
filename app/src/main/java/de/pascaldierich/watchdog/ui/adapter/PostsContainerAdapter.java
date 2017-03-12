@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -64,6 +66,10 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
         }
     
         // TODO: 06.03.17 add picasso and load with it ThumbnailUrl in vThumbnail
+        Picasso.with(mContext)
+                .load(mItems.get(position).getThumbnailUrl())
+//                .error()
+                .into(holder.vThumbnail);
         
         holder.vTitle.setText(mItems.get(position).getTitle());
         holder.vDescription.setText(mItems.get(position).getDescription());
