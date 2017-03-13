@@ -94,7 +94,8 @@
         Content Description's
     -->
     <string name="contentDescription_profilPic">Observables Profil Pic</string>
-
-
+    <string name="contentDescription_ObservableThumbnail">Thumbnail of selected Observable</string>
+    <string name="contentDescription_PostTitle">TextField for Post-Title</string>
+    <string name="contentDescription_PostThumbnail">Thumbnail of selected Post</string>
 
 </resources>

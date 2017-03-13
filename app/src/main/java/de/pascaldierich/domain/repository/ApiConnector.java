@@ -1,9 +1,5 @@
 package de.pascaldierich.domain.repository;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
 import java.lang.ref.WeakReference;
 
 import de.pascaldierich.model.Model;

@@ -1,10 +1,6 @@
 package de.pascaldierich.domain.interactors.base;
 
 /**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
-/**
  * Main methods for each Interactor
  */
 public interface BaseInteractor {

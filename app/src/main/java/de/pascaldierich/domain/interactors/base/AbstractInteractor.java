@@ -5,9 +5,6 @@ import android.support.annotation.NonNull;
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
 public abstract class AbstractInteractor implements BaseInteractor {
     private static final String LOG_TAG = AbstractInteractor.class.getSimpleName();
     

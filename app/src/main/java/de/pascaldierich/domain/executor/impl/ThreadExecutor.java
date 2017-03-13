@@ -8,9 +8,6 @@ import java.util.concurrent.TimeUnit;
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.interactors.base.AbstractInteractor;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
 public class ThreadExecutor implements Executor {
     // This is a singleton
     private static volatile ThreadExecutor sThreadExecutor;

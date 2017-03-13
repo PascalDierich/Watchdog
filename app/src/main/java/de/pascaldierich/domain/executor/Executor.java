@@ -2,10 +2,6 @@ package de.pascaldierich.domain.executor;
 
 import de.pascaldierich.domain.interactors.base.AbstractInteractor;
 
-/**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
 public interface Executor {
     
     /**

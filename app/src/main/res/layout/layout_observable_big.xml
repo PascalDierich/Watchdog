@@ -21,13 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/layoutObservable_thumbnail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/contentDescription_ObservableThumbnail"
                 android:src="@drawable/thumbnail_observable_default"/>
 
             <TextView
@@ -36,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Pascal Dierich"/>
+                />
 
 
         </LinearLayout>
@@ -55,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:contentDescription="@string/contentDescription_iconYouTube"
             android:src="@drawable/icon_youtube_small"/>
 
     </LinearLayout>

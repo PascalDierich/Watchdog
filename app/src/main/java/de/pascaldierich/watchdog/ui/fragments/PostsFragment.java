@@ -8,9 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -101,38 +98,6 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     public void showError() {
         Toast.makeText(getContext(), "UnknownError", Toast.LENGTH_SHORT).show();
     }
-    
-    
-    
-    /*
-        Menu Methods
-     */
-    
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.post_selection_menu, menu);
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.showFavorites: {
-                mSelectedPage = false;
-                mPresenter.onPageChanged(mSelectedPage);
-                break;
-            }
-            case R.id.showNewsFeed: {
-                mSelectedPage = true;
-                mPresenter.onPageChanged(mSelectedPage);
-                break;
-            }
-        }
-        
-        return true;
-    }
-    
-    
     
     
     /*
