@@ -403,7 +403,6 @@ public class Model {
      * @return POJO Collection, ArrayList<Post>: each Post inside 'NewsFeed'
      * @throws ModelException
      */
-    @DebugLog
     @MainThread
     public ArrayList<Post> getNewsFeed(Context context) throws ModelException {
         // Instantiation

@@ -82,9 +82,9 @@ public class Get extends Storage implements StorageInteractor {
             final ArrayList<Post> result;
             WeakReference<Model> Model = ApiConnector.getApi();
             if (mObservableId < 1)
-                result = Model.get().getNewsFeed(mContext);
+                result = Model.get().getNewsFeed(super.mContext);
             else
-                result = Model.get().getNewsFeed(mContext, mObservableId);
+                result = Model.get().getNewsFeed(super.mContext, mObservableId);
             
             mMainThread.post(new Runnable() {
                 @Override
@@ -96,7 +96,7 @@ public class Get extends Storage implements StorageInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onFailure(modelEx.getErrorCode()); // TODO: 23.02.17 define Interactor ErrorCodes
+                    mCallback.onFailure(modelEx.getErrorCode());
                 }
             });
         }

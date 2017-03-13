@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
+import de.pascaldierich.threading.MainThreadImpl;
 
 public class Get implements StorageInteractor {
     Context mContext;
@@ -26,6 +27,19 @@ public class Get implements StorageInteractor {
             mCallback.onFailure(modelE.getErrorCode());
             // TODO: 10.03.17 define Error-Routine
         }
+    }
+    
+    public void getNewsFeed() {
+        MainThreadImpl.getInstance().post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mCallback.onSuccess(ApiConnector.getApi().get().getNewsFeed(mContext));
+                } catch (final ModelException modelE) {
+                    mCallback.onFailure(modelE.getErrorCode());
+                }
+            }
+        });
     }
     
     public void getSites(int observableId) {

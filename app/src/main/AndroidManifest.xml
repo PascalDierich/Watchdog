@@ -49,6 +49,20 @@
                 android:resource="@xml/authenticator"/>
         </service>
 
+        <!-- AppWidget Provider -->
+        <receiver android:name="de.pascaldierich.widget.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/appwidget_provider"/>
+        </receiver>
+
+        <!-- AppWidget Service -->
+        <service android:name="de.pascaldierich.widget.WidgetService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <!-- 'normal' Activities -->
         <activity android:name=".ui.activities.SetObservableActivity">
         </activity>
         <activity android:name=".ui.activities.PostsActivity">

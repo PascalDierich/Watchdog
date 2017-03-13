@@ -72,9 +72,8 @@ public class Search {
             if (result.isEmpty()) return -1;
     
             int numberOfRows = 0;
-            long ids;
             for (int i = 0; i < result.size(); i++) {
-                ids = ApiConnector.getApi().get().setNewsFeed(mContext, result.get(i));
+                ApiConnector.getApi().get().setNewsFeed(mContext, result.get(i));
                 numberOfRows++;
             }
             
