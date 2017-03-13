@@ -5,6 +5,14 @@ apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        keystore {
+            keyAlias 'udacity'
+            keyPassword 'udacity'
+            storeFile file('/Users/pascaldierich/Desktop/Watchdog/app/release.jks')
+            storePassword 'udacity'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -28,30 +36,23 @@ android {
 dependencies {
     // Data Layer Dependency
     compile project(':model')
-
     // Butterknife
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
     // Support annotations
     compile 'com.android.support:support-annotations:25.2.0'
-
     // Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
-
     testCompile 'junit:junit:4.12'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     // Firebase
     // Crash Reporting
     compile 'com.google.firebase:firebase-crash:10.0.1'
     // Firebase Messaging
     compile 'com.google.firebase:firebase-messaging:10.0.1'
-
-
     compile 'com.android.support:recyclerview-v7:25.2.0'
     compile 'com.android.support:cardview-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'

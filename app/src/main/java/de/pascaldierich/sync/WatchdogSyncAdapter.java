@@ -28,7 +28,6 @@ import de.pascaldierich.domain.interactors.service.Search;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.ui.activities.MainActivity;
-import de.pascaldierich.widget.WidgetDataProvider;
 
 public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     private static final String LOG_TAG = WatchdogSyncAdapter.class.getSimpleName();
@@ -45,7 +44,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         WeakReference<Search> wInteractor = new WeakReference<Search>(new Search(
-                "2017-01-01T00:00:00Z",
+                "2017-01-01T00:00:00Z", // TODO: 13.03.17 don't forget this shit 
 //                getTime(), // time
                 getContext(),
                 RANGE
