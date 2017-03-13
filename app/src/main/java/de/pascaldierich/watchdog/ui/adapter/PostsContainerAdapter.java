@@ -64,8 +64,7 @@ public class PostsContainerAdapter extends RecyclerView.Adapter<PostsContainerAd
             }
             // [...] <-- easy to update for more Networks
         }
-    
-        // TODO: 06.03.17 add picasso and load with it ThumbnailUrl in vThumbnail
+        
         Picasso.with(mContext)
                 .load(mItems.get(position).getThumbnailUrl())
 //                .error()
