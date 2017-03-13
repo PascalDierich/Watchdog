@@ -1,5 +1,6 @@
 package de.pascaldierich.watchdog.ui.activities;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupWindowAnimation();
         
         ButterKnife.bind(this);
         
@@ -139,10 +143,12 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     public void startSetObservableActivity(@Nullable Observable observable) {
         if (observable == null) {
-            startActivity(new Intent(this, SetObservableActivity.class));
+            startActivity(new Intent(this, SetObservableActivity.class),
+                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         } else {
             startActivity(new Intent(this, SetObservableActivity.class)
-                    .putExtra(getString(R.string.parcelable_observable), observable));
+                    .putExtra(getString(R.string.parcelable_observable), observable),
+                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
     }
     
@@ -238,4 +244,13 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
     
     
+    
+    /*
+        private Methods
+     */
+    
+    private void setupWindowAnimation() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
+    }
 }

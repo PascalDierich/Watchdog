@@ -1,11 +1,14 @@
 package de.pascaldierich.watchdog.ui.activities;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 
 import java.util.ArrayList;
 
@@ -43,8 +46,11 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_observable);
+        setupWindowAnimations();
         
         ButterKnife.bind(this);
+    
+        
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
@@ -119,7 +125,8 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
      */
     @Override
     public void startMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class),
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
     
     
@@ -150,6 +157,17 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
          */
         ArrayList<Site> getSitesCallback();
         
+    }
+    
+    
+    
+    /*
+        private Methods
+     */
+    
+    private void setupWindowAnimations() {
+        Fade fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+        getWindow().setEnterTransition(fade);
     }
 }
 
