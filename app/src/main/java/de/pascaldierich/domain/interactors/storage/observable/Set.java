@@ -3,7 +3,8 @@ package de.pascaldierich.domain.interactors.storage.observable;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
@@ -58,8 +59,10 @@ public class Set extends Storage implements StorageInteractor {
                 mMainThread.post(new Runnable() {
                     @Override
                     public void run() {
-                        Log.w("SetInteractor", "run: going to post onFailure");
-                        mCallback.onFailure(-1); // TODO define Interactor ErrorCodes
+                        FirebaseCrash.log("setObservable: Item is null. \n" +
+                                "postFailure in " + Set.class.getSimpleName());
+                        
+                        mCallback.onFailure(-1);
                     }
                 });
             }
@@ -69,7 +72,6 @@ public class Set extends Storage implements StorageInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.w("SetInteractor", "run: going to post onSuccess");
                     mCallback.onSuccess(OBSERVABLE_ID, true);
                 }
             });
@@ -77,7 +79,9 @@ public class Set extends Storage implements StorageInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.w("SetInteractor", "run: going to post onFailure");
+                    FirebaseCrash.log("setObservable: " + modelE.getErrorCode() + ". \n" +
+                            "ModelException in " + Set.class.getSimpleName());
+                    
                     mCallback.onFailure(modelE.getErrorCode());
                 }
             });

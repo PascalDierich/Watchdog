@@ -3,6 +3,8 @@ package de.pascaldierich.watchdog.presenter.fragments.listobservables;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
@@ -105,8 +107,10 @@ public class Presenter extends AbstractObservableListPresenter
     @DebugLog
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
-        // TODO: 27.02.17 define Error-Codes
         onError(errorCode);
+    
+        FirebaseCrash.log("onFailure: " + errorCode + ". \n" +
+                "Storage GetCallback in " + Presenter.class.getSimpleName());
     }
     
     /**

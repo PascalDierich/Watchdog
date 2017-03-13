@@ -80,6 +80,9 @@
     <!-- If no Favorites could get loaded-->
     <string name="error_noFavorites">No Favorites saved yet</string>
 
+    <!-- Storage SetCallbacl Success-->
+    <string name="succeess_setStorage">saved successfully</string>
+
 
     <!--
         Notifications

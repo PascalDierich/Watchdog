@@ -83,10 +83,4 @@ abstract class AbstractPostPresenter extends AbstractPresenter {
         
         wInteractor.get().execute();
     }
-    
-    
-    protected void deleteFavorite() {
-        // TODO: 28.02.17 implement delete-methods
-    }
-    
 }

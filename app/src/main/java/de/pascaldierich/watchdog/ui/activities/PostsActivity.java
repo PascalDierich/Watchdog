@@ -56,7 +56,7 @@ public class PostsActivity extends AppCompatActivity implements PostsPresenter.V
     
     @Override
     public void showError() {
-        Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show(); // TODO: 06.03.17 Error-Routine
+        Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
     }
     
     

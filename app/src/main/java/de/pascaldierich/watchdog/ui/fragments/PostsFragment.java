@@ -75,7 +75,6 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
         return mRootView;
     }
     
-    // TODO: 07.03.17 DEPRECATED!
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

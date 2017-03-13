@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.ArrayList;
 
@@ -114,8 +117,10 @@ public class Presenter extends AbstractPostPresenter
             super.mPosts = (ArrayList<Post>) result;
             mView.setData(super.mPosts);
         } catch (ClassCastException e) {
-            // TODO: 10.03.17 report ot Firebase
-            Log.d("PostPresenter", "ClassCastException in onSuccess: " + e.getMessage());
+    
+            FirebaseCrash.log("ClassCastException: " + e.getMessage() + ". \n" +
+                    "Storage GetCallback in " + Presenter.class.getSimpleName());
+            
             mView.showError();
         }
     }
@@ -137,7 +142,7 @@ public class Presenter extends AbstractPostPresenter
     
     @Override
     public void onSuccess(long id, boolean type) {
-        // TODO: 28.02.17 notify user, e.g. show Toast
+        Toast.makeText(mView.getContext(), mView.getContext().getString(R.string.succeess_setStorage), Toast.LENGTH_SHORT).show();
     }
     
     

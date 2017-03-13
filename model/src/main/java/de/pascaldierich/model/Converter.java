@@ -25,8 +25,6 @@ public class Converter {
     // This boolean value indicates if there are SQL-specific values (_ID and timestamp)
     private boolean gotDownloaded;
     
-    // TODO: 10.03.17 use one ArrayList with Generics for all methods
-    
     /********************************************************************************************
      * getPost methods
      *

@@ -6,9 +6,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,12 +50,8 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public RemoteViews getViewAt(int position) {
         RemoteViews mView = new RemoteViews(mContext.getPackageName(),
                 android.R.layout.simple_list_item_1);
-    
-//        mView.setTextViewText(R.id.layoutPost_title, mCollection.get(position).getTitle());
+        
         mView.setTextViewText(android.R.id.text1, mCollection.get(position).getTitle());
-        // TODO: 13.03.17 add Description etc.
-    
-        // TODO: 13.03.17 maybe set TextColor etc. 
         
         return mView;
     }
@@ -109,8 +106,8 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     
     @Override
     public void onFailure(@ModelErrorsCodes int errorCode) {
-        // TODO: 13.03.17 report to Firebase
-        Log.d("WidgetDataProvider", "getData.onFailure: " + errorCode);
+        FirebaseCrash.log("onFailure: " + errorCode + ". \n" +
+                "Storage GetCallback in " + WidgetDataProvider.class.getSimpleName());
         
         finishedLoading = true;
         getManager().notifyAppWidgetViewDataChanged(getManager()
@@ -130,8 +127,8 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
                     R.id.widget_postContainer);
             
         } catch (ClassCastException e) {
-            // TODO: 10.03.17 report ot Firebase
-            Log.d("WidgetDataProvider", "ClassCastException in onSuccess: " + e.getMessage());
+            FirebaseCrash.log("ClassCastException: " + e.getMessage() + ". \n" +
+                    "Storage GetCallback in " + WidgetDataProvider.class.getSimpleName());
         }
     }
     

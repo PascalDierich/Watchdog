@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
@@ -141,7 +143,10 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
             super.mSiteArrayList = (ArrayList<Site>) result;
             mView.setSites(super.mSiteArrayList);
         } catch (ClassCastException e) {
-            mView.showErrorMessage("" + ModelErrorsCodes.UNKNOWN_FATAL_ERROR); // TODO: 05.03.17 ERROR-ROUTINE (!)
+            mView.showErrorMessage("" + ModelErrorsCodes.UNKNOWN_FATAL_ERROR);
+    
+            FirebaseCrash.log("ClassCastException: " + e.getMessage() + ". \n" +
+                    "Storage GetCallback in " + Presenter.class.getSimpleName());
         }
     }
     
@@ -236,7 +241,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                 mObservable = new Observable()
                         .setDisplayName(mView.getTextDisplayName())
                         .setGotThumbnail(false);
-                // TODO: 05.03.17 set Thumbnail
         
                 return mObservable;
             } catch (NullPointerException npe) {

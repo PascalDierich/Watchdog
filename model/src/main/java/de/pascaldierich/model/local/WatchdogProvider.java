@@ -96,7 +96,6 @@ public class WatchdogProvider extends ContentProvider {
     @NonNull
     @Override
     public String getType(@NonNull Uri uri) {
-        // TODO: 21.02.17 define getType method for contentProvider
         return null;
     }
 
@@ -264,7 +263,6 @@ public class WatchdogProvider extends ContentProvider {
     @IntRange(from = -1, to = 1)
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // TODO: 21.02.17 define update method for contentProvider
         return -1;
     }
 }

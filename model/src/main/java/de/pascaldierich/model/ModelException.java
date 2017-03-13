@@ -1,11 +1,7 @@
 package de.pascaldierich.model;
 
 /**
- * Created by Pascal Dierich on Feb, 2017.
- */
-
-/**
- * TODO: write JAVADOC
+ * Exception as Error-Interface for 'app' - 'model'
  */
 public class ModelException extends Exception {
     @ModelErrorsCodes

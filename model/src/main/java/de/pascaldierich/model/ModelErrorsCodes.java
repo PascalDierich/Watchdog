@@ -25,9 +25,6 @@ import static de.pascaldierich.model.ModelErrorsCodes.UNKNOWN_FATAL_ERROR;
 public @interface ModelErrorsCodes {
     int UNKNOWN_FATAL_ERROR = 10;
     
-    /**
-     * TODO: get normal http-Code from Retrofit as ErrorCode
-     */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
             Network.RUNTIME_ERROR,

@@ -44,12 +44,11 @@
         </LinearLayout>
 
         <!--
-            TODO: This ImageView gets replaced by RecyclerView with ImageViews to
-                  add new Icons automatically.
-                  All saved SupportedNetworks set for this Observable are going to
-                  get showed in this row.
-
-                  As long as there's only one network, Fuck it...
+            This ImageView can get replaced by RecyclerView with ImageViews to
+            add new Icons automatically.
+            All saved SupportedNetworks set for this Observable will shown
+            in this row.
+            As long as there's only one network, Fuck it...
         -->
 
         <ImageView

@@ -110,7 +110,7 @@ public class Presenter extends AbstractMainPresenter
             }
     
             /* if false, Fragment will show error */
-            if (callback.inputVerified()) { // TODO: 11.03.17 first set Observable -> get observableId and set it for Sites
+            if (callback.inputVerified()) {
                 super.setObservable(callback.getObservableCallback(), mView.getContext(), this);
 //                super.setSites(callback.getSitesCallback(), mView.getContext(), this);
             }
@@ -171,9 +171,5 @@ public class Presenter extends AbstractMainPresenter
         } else {
             mView.updatePostsFragment(null);
         }
-        
-        // TODO: 06.03.17 load Observable with parameter id and update PostsFragment
-        
     }
-    
 }

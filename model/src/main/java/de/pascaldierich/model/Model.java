@@ -272,7 +272,7 @@ public class Model {
                 WatchdogContract.Sites.COLUMN_SITE,
                 WatchdogContract.Sites.COLUMN_KEY});
         // set selection to column 'userId'
-        loaderWeakReference.get().setSelection("userId = ?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("userId = ?");
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
@@ -307,7 +307,7 @@ public class Model {
                 WatchdogContract.Sites.COLUMN_SITE,
                 WatchdogContract.Sites.COLUMN_KEY});
         // set selection to column 'site'
-        loaderWeakReference.get().setSelection("site = ?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("site = ?");
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {site});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Sites.COLUMN_USER_ID);
@@ -382,7 +382,7 @@ public class Model {
                 WatchdogContract.Posts.COLUMN_SITE,
                 WatchdogContract.Posts.Favorites.COLUMN_TIME_SAVED});
         // set selection to column 'userId'
-        loaderWeakReference.get().setSelection("userId = ?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("userId = ?");
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
@@ -457,7 +457,7 @@ public class Model {
                 WatchdogContract.Posts.COLUMN_SITE,
                 WatchdogContract.Posts.NewsFeed.COLUMN_TIME_DOWNLOADED});
         // set selection to column 'userId'
-        loaderWeakReference.get().setSelection("userId = ?"); // TODO: 22.02.17 don't know if works
+        loaderWeakReference.get().setSelection("userId = ?");
         // set selectionArgs to parameter 'observableId'
         loaderWeakReference.get().setSelectionArgs(new String[] {Integer.toString(observableId)});
         loaderWeakReference.get().setSortOrder(WatchdogContract.Posts.COLUMN_ID);
@@ -625,7 +625,7 @@ public class Model {
         try {
             context.getContentResolver()
                     .delete(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES,
-                            "userId = ?", new String[] {Integer.toString(observableId)}); // TODO: 04.03.17 don't know if works 
+                            "userId = ?", new String[] {Integer.toString(observableId)});
         } catch (UnsupportedOperationException ue) {
             throw new ModelException(ModelErrorsCodes.Storage.UNKNOWN_URI);
         }

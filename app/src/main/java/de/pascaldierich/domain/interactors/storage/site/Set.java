@@ -4,10 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import de.pascaldierich.domain.executor.Executor;
 import de.pascaldierich.domain.executor.MainThread;
-import de.pascaldierich.domain.interactors.storage.Storage;
-import de.pascaldierich.domain.interactors.storage.StorageInteractor;
+import de.pascaldierich.domain.interactors.storage.*;
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Site;
@@ -59,7 +60,10 @@ public class Set extends Storage implements StorageInteractor {
                 mMainThread.post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onFailure(-1); // TODO define Interactor ErrorCodes
+                        FirebaseCrash.log("setSite: Item is null. \n" +
+                                "postFailure in " + Set.class.getSimpleName());
+                        
+                        mCallback.onFailure(-1);
                     }
                 });
             }
@@ -76,6 +80,9 @@ public class Set extends Storage implements StorageInteractor {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
+                    FirebaseCrash.log("setSite: " + modelE.getErrorCode() + " \n" +
+                            "postFailure in " + Set.class.getSimpleName());
+                    
                     mCallback.onFailure(modelE.getErrorCode());
                 }
             });

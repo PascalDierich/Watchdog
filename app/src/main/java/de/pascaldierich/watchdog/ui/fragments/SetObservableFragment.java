@@ -141,7 +141,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
         
         mTextName.setText(observable.getDisplayName());
         if (observable.getGotThumbnail()) {
-            // TODO: 02.03.17 show Thumbnail
+            
         }
     }
     

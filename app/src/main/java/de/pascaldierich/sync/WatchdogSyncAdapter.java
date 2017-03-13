@@ -17,6 +17,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +28,7 @@ import de.pascaldierich.domain.interactors.service.Search;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.ui.activities.MainActivity;
+import de.pascaldierich.widget.WidgetDataProvider;
 
 public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     private static final String LOG_TAG = WatchdogSyncAdapter.class.getSimpleName();
@@ -55,7 +58,8 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
             }
             saveTime();
         } catch (ModelException modelE) {
-            // TODO: 08.03.17 report ExceptionCode to Firebase
+            FirebaseCrash.log("ModelException: " + modelE.getErrorCode() + ". \n" +
+                    "Storage GetCallback in " + WatchdogSyncAdapter.class.getSimpleName());
         }
     }
     

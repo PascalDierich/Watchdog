@@ -3,6 +3,8 @@ package de.pascaldierich.domain.interactors.storage.site;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 
 import de.pascaldierich.domain.executor.Executor;
@@ -87,11 +89,14 @@ public class Get extends Storage implements StorageInteractor {
                     mCallback.onSuccess(result);
                 }
             });
-        } catch (final ModelException modelEx) {
+        } catch (final ModelException modelE) {
             mMainThread.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onFailure(modelEx.getErrorCode()); // TODO: 23.02.17 define Interactor ErrorCodes
+                    FirebaseCrash.log("setObservable: " + modelE.getErrorCode() + " \n" +
+                            "postFailure in " + Get.class.getSimpleName());
+                    
+                    mCallback.onFailure(modelE.getErrorCode());
                 }
             });
         }

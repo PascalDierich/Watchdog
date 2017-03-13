@@ -3,8 +3,11 @@ package de.pascaldierich.domain.interactors.service;
 import android.content.Context;
 import android.support.annotation.IntRange;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 
+import de.pascaldierich.domain.interactors.storage.Get;
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.SupportedNetworks;
@@ -58,9 +61,8 @@ public class Search {
                     } catch (ModelException modelE) {
                         // ErrorCode < 200 means Fatal and Network Errors
                         if (modelE.getErrorCode() < 200) {
-                            // TODO: 08.03.17 report Code to Firebase
-                        } else {
-                            // TODO: 08.03.17 maybe transmit to Analytics. No big deals, but interesting data
+                            FirebaseCrash.log("searchYouTube: " + modelE.getErrorCode() + ". \n" +
+                                    "ModelException in " + Search.class.getSimpleName());
                         }
                     }
                     break;
@@ -83,7 +85,9 @@ public class Search {
 //            Log.d(LOG_TAG, "execute: numberOfRows added = " + numberOfRows);
             return numberOfRows;
         } catch (ModelException modelE) {
-            // TODO: 08.03.17 report to Firebase
+            FirebaseCrash.log("setNewsFeed: " + modelE.getErrorCode() + ". \n" +
+                    "ModelException in " + Search.class.getSimpleName());
+            
             return -1;
         }
     }

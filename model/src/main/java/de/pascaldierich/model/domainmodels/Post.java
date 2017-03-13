@@ -16,7 +16,7 @@ import de.pascaldierich.model.SupportedNetworks;
 public final class Post implements Parcelable {
     private boolean gotDownloaded;
     private int _ID; // _ID is only set if gotDownloaded = true.
-    private int userId; // TODO: 27.02.17 rename one Id to observable Id
+    private int userId; // observableId
     private String thumbnailUrl;
     private String description;
     private String title;

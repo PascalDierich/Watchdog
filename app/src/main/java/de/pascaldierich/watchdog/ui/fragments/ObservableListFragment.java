@@ -74,7 +74,6 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
         return mRootView;
     }
     
-    // TODO: 06.03.17 Deprecated!
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

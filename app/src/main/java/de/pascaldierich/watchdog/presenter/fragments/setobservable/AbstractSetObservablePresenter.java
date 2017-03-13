@@ -55,9 +55,6 @@ abstract class AbstractSetObservablePresenter extends AbstractPresenter {
                 
                 wInteractor.get().execute();
             }
-            default: {
-                // TODO: 28.02.17 define Error-routine
-            }
         }
     }
     

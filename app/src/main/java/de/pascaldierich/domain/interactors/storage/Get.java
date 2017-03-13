@@ -3,6 +3,8 @@ package de.pascaldierich.domain.interactors.storage;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import de.pascaldierich.domain.repository.ApiConnector;
 import de.pascaldierich.model.ModelException;
 import de.pascaldierich.threading.MainThreadImpl;
@@ -25,7 +27,9 @@ public class Get implements StorageInteractor {
             }
         } catch (ModelException modelE) {
             mCallback.onFailure(modelE.getErrorCode());
-            // TODO: 10.03.17 define Error-Routine
+            
+            FirebaseCrash.log("getNewsFeed: " + modelE.getErrorCode() + ". \n" +
+                    "ModelException in " + Get.class.getSimpleName());
         }
     }
     
@@ -51,7 +55,9 @@ public class Get implements StorageInteractor {
             }
         } catch (ModelException modelE) {
             mCallback.onFailure(modelE.getErrorCode());
-            // TODO: 10.03.17 define Error-Routine
+            
+            FirebaseCrash.log("getSites: " + modelE.getErrorCode() + ". \n" +
+                    "ModelException in " + Get.class.getSimpleName());
         }
     }
     
@@ -64,7 +70,9 @@ public class Get implements StorageInteractor {
             }
         } catch (ModelException modelE) {
             mCallback.onFailure(modelE.getErrorCode());
-            // TODO: 10.03.17 define Error-Routine
+            
+            FirebaseCrash.log("getFavorites: " + modelE.getErrorCode() + ". \n" +
+                    "ModelException in " + Get.class.getSimpleName());
         }
     }
     
@@ -73,7 +81,9 @@ public class Get implements StorageInteractor {
             mCallback.onSuccess(ApiConnector.getApi().get().getObservables(mContext));
         } catch (ModelException modelE) {
             mCallback.onFailure(modelE.getErrorCode());
-            // TODO: 10.03.17 define Error-Routine
+            
+            FirebaseCrash.log("getObservables: " + modelE.getErrorCode() + ". \n" +
+                    "ModelException in " + Get.class.getSimpleName());
         }
     }
     
