@@ -68,7 +68,7 @@
         network
     -->
     <!-- YouTube base-url to append postId for implicit intent -->
-    <string name="youtube_baseUrl">https://wwww.youtube.com/watch?v=</string>
+    <string name="youtube_baseUrl">https://www.youtube.com/watch?v=</string>
 
 
     <!--
