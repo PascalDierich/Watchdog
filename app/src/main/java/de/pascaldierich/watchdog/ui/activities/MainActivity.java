@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
      */
     
     private Presenter mPresenter;
-    private Fragment mFragment;
+    private Fragment mFragmentSet;
+    private Fragment mFragmentPost;
     
     // Fragment Tags for FragmentManager
     private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
@@ -65,12 +66,17 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         
         setSupportActionBar(mToolbar);
     
-        if (savedInstanceState != null) {
-            mGotInstanceState = true;
-            mFragment = getSupportFragmentManager().getFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG);
+        if (savedInstanceState != null) { // problem is that Firebase saves data in savedInstance
+            if (savedInstanceState.containsKey(getString(R.string.instanceState_booleanCheck))) {
+                mFragmentSet = getSupportFragmentManager().getFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG);
+                mGotInstanceState = true;
+            } else {
+                mFragmentSet = new SetObservableFragment();
+                mGotInstanceState = false;
+            }
         } else {
             mGotInstanceState = false;
-            mFragment = new SetObservableFragment();
+            mFragmentSet = new SetObservableFragment();
         }
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
@@ -81,9 +87,13 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        try {
+            getSupportFragmentManager().putFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG, mFragmentSet);
+            savedInstanceState.putBoolean(getString(R.string.instanceState_booleanCheck), true);
+        } catch (Exception E) {
+            // indicates that Fragment was not set yet.
+        }
         super.onSaveInstanceState(savedInstanceState);
-        
-        getSupportFragmentManager().putFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG, mFragment);
     }
     
     @Override
@@ -95,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
-            if (mGotInstanceState) {
+            if (mGotInstanceState && mFragmentSet != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                        .replace(R.id.fragment_container, mFragmentSet, SET_OBSERVABLE_FRAGMENT_TAG)
                         .commit();
             } else {
                 getSupportFragmentManager().beginTransaction()
@@ -192,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void startSetObservableFragment(@NonNull SetObservableFragment fragment, @Nullable Observable observable) {
         if (observable == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                    .replace(R.id.fragment_container, mFragmentSet, SET_OBSERVABLE_FRAGMENT_TAG)
                     .commit();
         } else {
             Bundle args = new Bundle();
@@ -201,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
             fragment.setArguments(args);
             
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                    .replace(R.id.fragment_container, mFragmentSet, SET_OBSERVABLE_FRAGMENT_TAG)
                     .commit();
         }
     }

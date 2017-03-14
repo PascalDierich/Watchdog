@@ -293,6 +293,10 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
      */
     @Override
     public boolean inputVerified() {
+        if (mPresenter == null) {
+            mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
+                    null, this);
+        }
         return mPresenter.inputVerified();
     }
     

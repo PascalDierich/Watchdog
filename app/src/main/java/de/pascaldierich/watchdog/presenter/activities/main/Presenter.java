@@ -139,10 +139,17 @@ public class Presenter extends AbstractMainPresenter
     public void onObservableSelected(@NonNull Observable item, boolean defaultArg) {
         // show Observable only if twoPaneMode = true
         // OR twoPaneMode = false && defaultArg = false -> so PostsActivity will not launched at app-launch
+        if (mTwoPaneMode && mView.getGotInstanceState() && defaultArg) {
+            return;
+        }
         if (mTwoPaneMode && !mView.getGotInstanceState()) {
             mView.updatePostsFragment(item);
-        } else if (!defaultArg){
+        } else if (!mTwoPaneMode && !defaultArg){
             mView.startPostsActivity(item);
+        } else if (!mTwoPaneMode) {
+            return;
+        } else {
+            mView.updatePostsFragment(item);
         }
     }
     

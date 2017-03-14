@@ -39,7 +39,7 @@
     <string name="setObservableActivity_editText_charErrorMessage">you reached the end</string>
 
     <!--
-        Observable Containter Layout
+        Observable Container Layout
     -->
     <string name="observableContainer_displayName">displayName</string>
 
@@ -61,6 +61,8 @@
     -->
     <string name="instanceState_displayName">displayName</string>
     <string name="instanceState_youtubeName">youtubeName</string>
+
+    <string name="instanceState_booleanCheck">containsFragment</string>
 
 
     <!--
