@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
@@ -34,11 +35,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
      */
     
     private Presenter mPresenter;
+    private Fragment mFragment;
     
     // Fragment Tags for FragmentManager
     private static final String OBSERVABLE_LIST_FRAGMENT_TAG = "OL_FragmentTag";
     private static final String POST_LIST_FRAGMENT_TAG = "PL_FragmentTag";
     private static final String SET_OBSERVABLE_FRAGMENT_TAG = "SO_FragmentTag";
+    
+    private boolean mGotInstanceState;
     
     // Layout
     @BindView(R.id.fab_newObservable)
@@ -60,11 +64,26 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         ButterKnife.bind(this);
         
         setSupportActionBar(mToolbar);
+    
+        if (savedInstanceState != null) {
+            mGotInstanceState = true;
+            mFragment = getSupportFragmentManager().getFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG);
+        } else {
+            mGotInstanceState = false;
+            mFragment = new SetObservableFragment();
+        }
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
         
         WatchdogSyncAdapter.initializeSyncAdapter(this);
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        
+        getSupportFragmentManager().putFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG, mFragment);
     }
     
     @Override
@@ -76,9 +95,15 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @Override
     public void setUiMode(boolean twoPaneMode) {
         if (twoPaneMode) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG)
-                    .commit();
+            if (mGotInstanceState) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                        .commit();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PostsFragment(), POST_LIST_FRAGMENT_TAG)
+                        .commit();
+            }
         }
         if (fragment == null) {
             fragment = new ObservableListFragment();
@@ -124,7 +149,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         mPresenter.onClickFab();
     }
     
-    
+    @Override
+    public boolean getGotInstanceState() {
+        return mGotInstanceState;
+    }
     
     /*
         Methods to start/update fragments/activities
@@ -164,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     public void startSetObservableFragment(@NonNull SetObservableFragment fragment, @Nullable Observable observable) {
         if (observable == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                    .replace(R.id.fragment_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
                     .commit();
         } else {
             Bundle args = new Bundle();
@@ -173,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
             fragment.setArguments(args);
             
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                    .replace(R.id.fragment_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
                     .commit();
         }
     }

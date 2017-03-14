@@ -28,7 +28,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     private SetObservablePresenter.View mView;
     
     private Observable mObservable;
-    private Bundle mSavedInstanceState;
 
     /*
         Instantiation
@@ -39,7 +38,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         super(executor, mainThread, savedInstance);
         
         mView = view;
-        mSavedInstanceState = savedInstance;
     }
     
     public static Presenter onCreate(Executor executor, MainThread mainThread, Bundle savedInstance,
@@ -70,13 +68,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
             super.getSitesInteractor(item.getUserId(), mView.getContext(), this);
         } catch (NullPointerException npe) {
             Log.d("dialog.Presenter", "No transmitted Observable...");
-        }
-    
-        if (mSavedInstanceState != null) {
-            mView.setTextDisplayName(mSavedInstanceState.getString(
-                    mView.getContext().getString(R.string.instanceState_displayName)));
-            mView.setTextYouTubeName(mSavedInstanceState.getString(
-                    mView.getContext().getString(R.string.instanceState_youtubeName)));
         }
     }
     

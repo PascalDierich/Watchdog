@@ -3,6 +3,7 @@ package de.pascaldierich.watchdog.ui.fragments;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -77,8 +78,12 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
         /*
             TODO: 14.03.17 to get the Observables a Loader with LoaderManager and LoaderCallbacks is implemented
          */
+        if (savedInstanceState == null) {
+            getLoaderManager().initLoader(LOADER_ID, null, this);
+        } else {
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }
         
-        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
     
     @Override
@@ -193,12 +198,17 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         try {
-            ArrayList<Observable> observables = new Converter().getObservable(data);
+            final ArrayList<Observable> observables = new Converter().getObservable(data);
             
-            mPresenter.setObservables(observables);
-            
-            setData(observables);
-            sendObservableToCallback(observables.get(0), true);
+            Handler handler = new Handler();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mPresenter.setObservables(observables);
+                    setData(observables);
+                    sendObservableToCallback(observables.get(0), true);
+                }
+            });
         } catch (ModelException modelE) {
             FirebaseCrash.log("ModelException on ObservableListFragment: " + modelE.getErrorCode());
             

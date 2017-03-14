@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Fade;
 import android.transition.TransitionInflater;
@@ -34,6 +35,7 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
      */
     
     private Presenter mPresenter;
+    private Fragment mFragment;
     
     // Fragment Tag
     private static final String SET_OBSERVABLE_FRAGMENT_TAG = "SO_FragmentTag";
@@ -47,10 +49,14 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_observable);
         setupWindowAnimations();
+    
+        if (savedInstanceState != null) {
+            mFragment = getSupportFragmentManager().getFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG);
+        } else {
+            mFragment = new SetObservableFragment();
+        }
         
         ButterKnife.bind(this);
-    
-        
         
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstanceState, this);
@@ -76,6 +82,15 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     public void showError() {
         
     }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    
+        getSupportFragmentManager().putFragment(savedInstanceState, SET_OBSERVABLE_FRAGMENT_TAG, mFragment);
+    }
+    
+    
     
     
     
@@ -103,7 +118,7 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
     @Override
     public void setFragment(SetObservableFragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.setObservable_container, fragment, SET_OBSERVABLE_FRAGMENT_TAG)
+                .replace(R.id.setObservable_container, mFragment, SET_OBSERVABLE_FRAGMENT_TAG)
                 .commit();
     }
     

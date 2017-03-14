@@ -51,7 +51,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     @Nullable
     @BindView(R.id.setObservable_textName)
     EditText mTextName;
-        // YouTube
+    // YouTube
     @Nullable
     @BindView(R.id.setObservable_textYouTubeName)
     EditText mTextYouTube;
@@ -63,7 +63,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setHasOptionsMenu(false);
-    
+        
         mPresenter = Presenter.onCreate(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                 savedInstance, this);
     }
@@ -76,7 +76,25 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
         return mRootView;
     }
     
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     
+        if (savedInstanceState != null) {
+            mTextName.setText(getContext().getString(R.string.instanceState_displayName));
+            mTextName.setText(getContext().getString(R.string.instanceState_youtubeName));
+        }
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        
+        outState.putString(getContext().getString(R.string.instanceState_displayName),
+                mTextName.getText().toString());
+        outState.putString(getContext().getString(R.string.instanceState_youtubeName),
+                mTextYouTube.getText().toString());
+    }
     
     /*
         Initial Methods
@@ -91,7 +109,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     /**
      * returns the args the fragment got created with.
      * Args contains (if != null) an Observable which should get edited.
-     *      <b>Note:</b> key := R.string.parcelable_observable
+     * <b>Note:</b> key := R.string.parcelable_observable
      * <p/>
      *
      * @return args, Bundle: if Bundle != null it contains an Observable-Object
@@ -110,26 +128,6 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     @Override
     public void showError() {
         Toast.makeText(getContext(), getContext().getString(R.string.error_unknown), Toast.LENGTH_SHORT).show();
-    }
-    
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        try {
-            String displayName = getTextDisplayName();
-            String youtubeName = getTextNetwork(SupportedNetworks.YOUTUBE);
-    
-            if (displayName != null && !displayName.isEmpty()) {
-                savedInstanceState.putString(getContext().getString(R.string.instanceState_displayName),
-                        displayName);
-            }
-            if (youtubeName != null && !youtubeName.isEmpty()) {
-                savedInstanceState.putString(getContext().getString(R.string.instanceState_youtubeName),
-                        youtubeName);
-            }
-        } catch (NullPointerException npe) {
-            
-        }
-        super.onSaveInstanceState(savedInstanceState);
     }
     
     
@@ -290,6 +288,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     /**
      * Checks if user-input is correct
      * <p/>
+     *
      * @return boolean, true -> input workable
      */
     @Override
@@ -300,6 +299,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     /**
      * returns the Observable set by User
      * <p/>
+     *
      * @return Observable, null
      */
     @Override
@@ -310,6 +310,7 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     /**
      * return the Site-Collection
      * <p/>
+     *
      * @return Site-Collection
      */
     @Override

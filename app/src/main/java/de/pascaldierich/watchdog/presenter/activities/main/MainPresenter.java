@@ -81,6 +81,8 @@ public interface MainPresenter extends BaseUIPresenter {
          * @param intent, Intent
          */
         void startImplicitIntent(@NonNull Intent intent);
+    
+        boolean getGotInstanceState();
         
     }
     
