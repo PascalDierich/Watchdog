@@ -2,22 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/pascaldierich/Desktop/Watchdog/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/pascaldierich/Desktop/Watchdog/model/build/intermediates/bundles/default/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/Users/pascaldierich/Desktop/Watchdog/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_f633fe941a012f803bb1750b095545c72acb53e4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/pascaldierich/Desktop/Watchdog/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="993d98aadba8514f8845042d4797ce194c4a7173">
-        <dex dex="/Users/pascaldierich/Desktop/Watchdog/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_952d844a86e262329c346ed2224665f4c9fe57a6/classes.dex" />
+        sha1="af90bae533a49e0b7c6783003662899d52d75941">
+        <dex dex="/Users/pascaldierich/Desktop/Watchdog/app/build/intermediates/pre-dexed/release/classes_bba431c2cb9a03cd8e578aca9feca1c915e0a2db.jar" />
     </item>
 
 </items>

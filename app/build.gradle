@@ -6,10 +6,10 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
-        keystore {
+        config {
             keyAlias 'udacity'
             keyPassword 'udacity'
-            storeFile file('/Users/pascaldierich/Desktop/Watchdog/app/release.jks')
+            storeFile file("$rootDir/app/release.jks")
             storePassword 'udacity'
         }
     }
@@ -27,6 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
