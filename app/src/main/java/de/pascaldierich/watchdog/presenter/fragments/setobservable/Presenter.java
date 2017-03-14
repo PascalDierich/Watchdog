@@ -111,7 +111,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
         mView.setTextColor(SupportedNetworks.YOUTUBE,
                 ResourcesCompat.getColor(mView.getContext().getResources(), R.color.colorTextError, mView.getContext().getTheme()));
         
-        mView.showErrorMessage("Couldn't find any Channels for user-input");
+        mView.showErrorMessage(mView.getContext().getString(R.string.error_nothingFound));
     }
     
     /**
@@ -123,8 +123,6 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
     
         mView.setTextColor(SupportedNetworks.YOUTUBE,
                 ResourcesCompat.getColor(mView.getContext().getResources(), R.color.colorTextVerified, mView.getContext().getTheme()));
-        
-        Log.i(LOG_TAG, "onSuccess: result.get(0) -> " + result.get(0).getKey());
     }
     
     
@@ -181,7 +179,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                         
                         super.getPossibleIds(SupportedNetworks.YOUTUBE, userInput, this);
                     } catch (NullPointerException npe) {
-                        mView.showErrorMessage("please verify your input");
+                        mView.showErrorMessage(mView.getContext().getString(R.string.error_verifyInput));
                     }
                 } else {
                     for (int i = 0; i < super.mSiteArrayList.size(); i++) {
@@ -267,7 +265,7 @@ public class Presenter extends AbstractSetObservablePresenter implements SetObse
                 return true;
             }
         }
-        mView.showErrorMessage("DisplayName can not be empty");
+        mView.showErrorMessage(mView.getContext().getString(R.string.error_displayName));
         return false;
     }
     

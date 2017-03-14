@@ -262,7 +262,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         startActivity(intent);
     }
     
-    
+    @Override
+    public SetObservableFragment getFragment() {
+        return (SetObservableFragment) mFragmentSet;
+    }
     
     /*
         Fragment Callbacks

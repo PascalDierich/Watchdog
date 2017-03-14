@@ -37,5 +37,7 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          * @return intent, getIntent();
          */
         Intent getIntentExtra();
+    
+        SetObservableFragment getFragment();
     }
 }

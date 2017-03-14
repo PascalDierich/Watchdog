@@ -10,9 +10,6 @@
 
 
     <!--
-
-
-
         intern communication
     -->
 
@@ -93,6 +90,10 @@
 
     <!-- Unknown Error -->
     <string name="error_unknown">UnknownError</string>
+
+    <string name="error_displayName">DisplayName can not be empty</string>
+    <string name="error_verifyInput">please verify your input</string>
+    <string name="error_nothingFound">Could not find any Channels for given name</string>
 
 
     <!--

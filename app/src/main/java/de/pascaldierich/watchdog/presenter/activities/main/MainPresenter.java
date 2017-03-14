@@ -84,6 +84,8 @@ public interface MainPresenter extends BaseUIPresenter {
     
         boolean getGotInstanceState();
         
+        SetObservableFragment getFragment();
+        
     }
     
 }

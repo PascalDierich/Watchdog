@@ -130,6 +130,13 @@ public class SetObservableActivity extends AppCompatActivity implements SetObser
         mPresenter.onSaveClicked();
     }
     
+    @Override
+    public SetObservableFragment getFragment() {
+        return (SetObservableFragment) mFragment;
+    }
+    
+    
+    
     /*
         Methods to start/update fragments/activities
      */

@@ -101,9 +101,9 @@ public class Presenter extends AbstractMainPresenter
     public void onClickFab() {
         if (mDetailView) { // save Data set in SetObservableFragment after verifying it
             try {
-                callback = (SetObservableActivity.SetObservableCallback) mFragment;
+                callback = (SetObservableActivity.SetObservableCallback) mView.getFragment();
             } catch (ClassCastException e) {
-                Log.e("main.Presenter", mFragment.getClass().getSimpleName() + " must implement "
+                Log.e("main.Presenter", mView.getFragment().getClass().getSimpleName() + " must implement "
                         + " SetObservableActivity.Callback interface");
                 mView.showError();
                 return;
