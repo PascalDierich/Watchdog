@@ -44,8 +44,7 @@ public class WatchdogSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         WeakReference<Search> wInteractor = new WeakReference<Search>(new Search(
-                "2017-01-01T00:00:00Z", // TODO: 13.03.17 don't forget this shit 
-//                getTime(), // time
+                getTime(), // time
                 getContext(),
                 RANGE
         ));

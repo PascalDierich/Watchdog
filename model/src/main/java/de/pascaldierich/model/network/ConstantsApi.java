@@ -5,8 +5,6 @@ import android.support.annotation.StringDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import de.pascaldierich.model.BuildConfig;
-
 import static de.pascaldierich.model.network.ConstantsApi.GOOGLE_BASE_URL;
 import static de.pascaldierich.model.network.ConstantsApi.PLUS_API_KEY;
 import static de.pascaldierich.model.network.ConstantsApi.PLUS_COLLECTION;
@@ -55,6 +53,6 @@ public @interface ConstantsApi {
     /**
      * Api Keys
      */
-    public static final String PLUS_API_KEY = BuildConfig.GooglePlus_Api_Key;
-    public static final String YOUTUBE_API_KEY = BuildConfig.YouTube_Api_Key;
+    public static final String PLUS_API_KEY = "AIzaSyDvzgRKo2tmTD0g50FmWQZ0CPZUkxa5ex8";
+    public static final String YOUTUBE_API_KEY = "AIzaSyDbMuQYNRMy51A6pgt8mRaHKEhnQNxi3DU";
 }

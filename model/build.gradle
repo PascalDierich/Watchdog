@@ -20,8 +20,8 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'YouTube_Api_Key', getApiKeyYouTube()
-        it.buildConfigField 'String', 'GooglePlus_Api_Key', getApiKeyGooglePlus()
+//        it.buildConfigField 'String', 'YouTube_Api_Key', getApiKeyYouTube()
+//        it.buildConfigField 'String', 'GooglePlus_Api_Key', getApiKeyGooglePlus()
     }
 }
 
@@ -47,14 +47,10 @@ dependencies {
 
 
 def getApiKeyYouTube() {
-    Properties properties = new Properties()
-    properties.load(new FileInputStream("/Users/pascaldierich/Watchdog_ApiKeys.txt"))
-    return "\"" + properties.getProperty("YouTubeApiKey") + "\""
+    return "\"" + AIzaSyDvzgRKo2tmTD0g50FmWQZ0CPZUkxa5ex8 + "\""
 }
 
 def getApiKeyGooglePlus() {
-    Properties properties = new Properties()
-    properties.load(new FileInputStream("/Users/pascaldierich/Watchdog_ApiKeys.txt"))
-    return "\"" + properties.getProperty("GooglePlusApiKey") + "\""
+    return "\"" + AIzaSyDbMuQYNRMy51A6pgt8mRaHKEhnQNxi3DU + "\""
 }
 

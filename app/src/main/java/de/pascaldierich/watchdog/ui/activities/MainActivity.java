@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                 savedInstanceState, this);
         
         WatchdogSyncAdapter.initializeSyncAdapter(this);
-        WatchdogSyncAdapter.syncImmediately(this); // TODO: 13.03.17 delete this shit 
     }
     
     @Override

@@ -129,5 +129,9 @@ public interface SetObservablePresenter extends BaseUIPresenter {
          */
         @Nullable
         Bundle getArgumentsBundle();
+    
+        void setTextDisplayName(String displayName);
+    
+        void setTextYouTubeName(String youTubeName);
     }
 }

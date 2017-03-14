@@ -56,6 +56,12 @@
     <string name="syncService_sharedPref_timeKey" translatable="false">syncServiceTimeKey</string>
 
 
+    <!--
+        SavedInstanceState SetObservableFragment
+    -->
+    <string name="instanceState_displayName">displayName</string>
+    <string name="instanceState_youtubeName">youtubeName</string>
+
 
     <!--
         intern Constants
@@ -82,6 +88,9 @@
 
     <!-- Storage SetCallbacl Success-->
     <string name="succeess_setStorage">saved successfully</string>
+
+    <!-- Unknown Error -->
+    <string name="error_unknown">UnknownError</string>
 
 
     <!--

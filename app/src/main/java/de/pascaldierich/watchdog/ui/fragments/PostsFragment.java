@@ -95,7 +95,7 @@ public class PostsFragment extends Fragment implements PostPresenter.View {
     
     @Override
     public void showError() {
-        Toast.makeText(getContext(), "UnknownError", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getContext().getString(R.string.error_unknown), Toast.LENGTH_SHORT).show();
     }
     
     

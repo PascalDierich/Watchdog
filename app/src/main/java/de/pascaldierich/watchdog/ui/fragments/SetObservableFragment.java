@@ -109,7 +109,27 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
     
     @Override
     public void showError() {
-        Toast.makeText(getContext(), "UNKNOWN ERROR", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getContext().getString(R.string.error_unknown), Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        try {
+            String displayName = getTextDisplayName();
+            String youtubeName = getTextNetwork(SupportedNetworks.YOUTUBE);
+    
+            if (displayName != null && !displayName.isEmpty()) {
+                savedInstanceState.putString(getContext().getString(R.string.instanceState_displayName),
+                        displayName);
+            }
+            if (youtubeName != null && !youtubeName.isEmpty()) {
+                savedInstanceState.putString(getContext().getString(R.string.instanceState_youtubeName),
+                        youtubeName);
+            }
+        } catch (NullPointerException npe) {
+            
+        }
+        super.onSaveInstanceState(savedInstanceState);
     }
     
     
@@ -217,7 +237,15 @@ public class SetObservableFragment extends Fragment implements SetObservablePres
         return mTextName.getText().toString();
     }
     
+    @Override
+    public void setTextDisplayName(String displayName) {
+        mTextName.setText(displayName);
+    }
     
+    @Override
+    public void setTextYouTubeName(String youTubeName) {
+        mTextYouTube.setText(youTubeName);
+    }
     
     /*
         View-Listener
