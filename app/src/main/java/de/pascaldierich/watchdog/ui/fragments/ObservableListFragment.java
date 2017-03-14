@@ -1,9 +1,13 @@
 package de.pascaldierich.watchdog.ui.fragments;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,12 +15,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.pascaldierich.domain.executor.impl.ThreadExecutor;
+import de.pascaldierich.model.Converter;
+import de.pascaldierich.model.ModelException;
 import de.pascaldierich.model.domainmodels.Observable;
+import de.pascaldierich.model.local.WatchdogContract;
 import de.pascaldierich.threading.MainThreadImpl;
 import de.pascaldierich.watchdog.R;
 import de.pascaldierich.watchdog.presenter.fragments.listobservables.ObservableListPresenter;
@@ -27,8 +36,11 @@ import de.pascaldierich.watchdog.ui.adapter.ObservablesContainerAdapter;
  * Fragment for MainActivity.
  * Presents the List of Observables
  */
-public class ObservableListFragment extends Fragment implements ObservableListPresenter.View {
+public class ObservableListFragment extends Fragment implements ObservableListPresenter.View,
+        LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = ObservableListFragment.class.getSimpleName();
+    
+    private static final int LOADER_ID = 1;
     
     /*
         Instantiation
@@ -61,6 +73,12 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
                 savedInstanceState, this);
         
         mAdapter = new ObservablesContainerAdapter(getContext(), null, mPresenter);
+    
+        /*
+            TODO: 14.03.17 to get the Observables a Loader with LoaderManager and LoaderCallbacks is implemented
+         */
+        
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
     
     @Override
@@ -149,6 +167,47 @@ public class ObservableListFragment extends Fragment implements ObservableListPr
          *                    false -> user actively choose this Observable
          */
         void onObservableSelected(@NonNull Observable observable, boolean defaultArg);
+        
+    }
+    
+    
+    
+    /*
+        StorageCallback methods
+     */
+    
+    @Override
+    public Loader onCreateLoader(int id, Bundle args) {
+        CursorLoader mLoader = new CursorLoader(getContext());
+    
+        mLoader.setUri(WatchdogContract.Observables.CONTENT_URI_OBSERVABLES);
+        mLoader.setProjection(new String[] {
+                WatchdogContract.Observables.COLUMN_USER_ID,
+                WatchdogContract.Observables.COLUMN_NAME,
+                WatchdogContract.Observables.COLUMN_THUMBNAIL});
+        mLoader.setSortOrder(WatchdogContract.Observables.COLUMN_USER_ID);
+        
+        return mLoader;
+    }
+    
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        try {
+            ArrayList<Observable> observables = new Converter().getObservable(data);
+            
+            mPresenter.setObservables(observables);
+            
+            setData(observables);
+            sendObservableToCallback(observables.get(0), true);
+        } catch (ModelException modelE) {
+            FirebaseCrash.log("ModelException on ObservableListFragment: " + modelE.getErrorCode());
+            
+            showError();
+        }
+    }
+    
+    @Override
+    public void onLoaderReset(Loader loader) {
         
     }
 }

@@ -46,7 +46,7 @@ public class Presenter extends AbstractObservableListPresenter
     @Override
     public void onStart() {
         // read out intern Storage to get all Observables
-        super.getObservables(mView.getContext(), this);
+//        super.getObservables(mView.getContext(), this);
     }
     
     @Override
@@ -96,6 +96,11 @@ public class Presenter extends AbstractObservableListPresenter
     
         // defaultArg = false -> indicates that user selected Item
         mView.sendObservableToCallback(mObservables.get(index), false);
+    }
+    
+    @Override
+    public void setObservables(ArrayList<Observable> items) {
+        super.mObservables = items;
     }
     
     

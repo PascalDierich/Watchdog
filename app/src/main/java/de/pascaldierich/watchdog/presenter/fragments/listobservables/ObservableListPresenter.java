@@ -10,6 +10,8 @@ import de.pascaldierich.watchdog.presenter.base.BaseView;
 
 public interface ObservableListPresenter extends BaseUIPresenter {
     
+    void setObservables(ArrayList<Observable> items);
+    
     interface View extends BaseView {
         
         /**
